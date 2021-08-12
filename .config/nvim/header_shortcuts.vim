@@ -120,7 +120,15 @@ endfunction
 " compile and run in c++
 function! CompileAndRunCpp(RunCommand)
 :w!
-exe ':AsyncRun st -T "floating" -e sh -c "' . a:RunCommand . ' %:p -o %< && ./%< ; read -n1"'
+if filereadable("runcpp.cpp")
+	exe ':AsyncRun sh -c "' . a:RunCommand . ' runcpp.cpp -o runcpp && runcpp'
+else
+	if filereadable("In.txt")
+		exe ':AsyncRun st -T "floating" -e sh -c "' . a:RunCommand . ' %:p -o %< && ./%< < In.txt ; read -n1 "'
+	else
+		exe ':AsyncRun st -T "floating" -e sh -c " nvim In.txt ; ' . a:RunCommand . ' %:p -o %< && ./%< < In.txt ; read -n1"'
+	endif
+endif
 endfunction
 "compile and run latex
 function! CompileAndRunLatex()

@@ -1,6 +1,5 @@
 #!/bin/sh
-# Luke's Auto Rice Boostrapping Script (ArchWater)
-# for of luke smith larbs <luke@lukesmith.xyz>
+# taken this code from luke smith
 # by Virgilio Murillo <virgiliomurilloochoa1@gmail.com>
 # License: GNU GPLv3
 
