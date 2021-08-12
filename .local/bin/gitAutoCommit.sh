@@ -2,7 +2,7 @@
 #  AutoCommit multiple repos
 #
 
-declare -a arr=( "$HOME/.local/src/cfiles" "$HOME/.local/src/dmenu" "$HOME/.local/src/dwm" "$HOME/.local/src/dwmblocks" "$HOME/.local/src/st" "$HOME/Documents/GitRepos/archiso-AW" "$HOME/Documents/GitRepos/GitAutoCommit" "$HOME")
+declare -a arr=( "$HOME/.local/src/cfiles" "$HOME/.local/src/dmenu" "$HOME/.local/src/dwm" "$HOME/.local/src/dwmblocks" "$HOME/.local/src/st" "$HOME/Documents/GitRepos/archiso-AW" "$HOME/Documents/GitRepos/GitAutoCommit" "$HOME" "$HOME/Documents/GitRepos/dotFiles-AW")
 
 
 for i in "${arr[@]}"

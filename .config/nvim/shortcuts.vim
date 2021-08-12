@@ -110,11 +110,15 @@ augroup end
 augroup Run_cpp
 execute 'autocmd FileType cpp nnoremap <F11> :call CompileAndRunCpp("g++")<CR>' 
 execute 'autocmd FileType cpp inoremap <F11> <Esc>:call CompileAndRunCpp("g++")<CR>'
+execute 'autocmd FileType cpp nnoremap <F11><F11> :call GenerateCompileAndRunFile("g++")<CR>' 
+execute 'autocmd FileType cpp inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("g++")<CR>'
 augroup end
 
 augroup Run_gcc
 execute 'autocmd FileType c nnoremap <F11> :call CompileAndRunCpp("gcc")<CR>' 
 execute 'autocmd FileType c inoremap <F11> <Esc>:call CompileAndRunCpp("gcc")<CR>'
+execute 'autocmd FileType cpp nnoremap <F11><F11> :call GenerateCompileAndRunFile("gcc")<CR>' 
+execute 'autocmd FileType cpp inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("gcc")<CR>'
 augroup end
 
 

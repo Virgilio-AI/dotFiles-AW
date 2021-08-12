@@ -120,8 +120,8 @@ endfunction
 " compile and run in c++
 function! CompileAndRunCpp(RunCommand)
 :w!
-if filereadable("runcpp.cpp")
-	exe ':AsyncRun sh -c "' . a:RunCommand . ' runcpp.cpp -o runcpp && runcpp'
+if filereadable("runcpp.sh")
+	exe ':AsyncRun sh runcpp.sh '
 else
 	if filereadable("In.txt")
 		exe ':AsyncRun st -T "floating" -e sh -c "' . a:RunCommand . ' %:p -o %< && ./%< < In.txt ; read -n1 "'
@@ -130,6 +130,16 @@ else
 	endif
 endif
 endfunction
+
+function! GenerateCompileAndRunFile(RunCommand)
+	let l:RunCommandInStTerminal='!AsyncRun st -T "floating" -e sh -c '
+	let l:openDoublequotes='"'
+	let l:closeDoublequotes='"'
+	let l:copyGenerationFile='cp ~/.config/nvim/runFileConfigurations/generateRunFile.cpp . ; '
+	let l:runConfigurationFile=a:RunCommand . 'generateRunFile.cpp -o generateRunFile && ./generateRunFile'
+	let l:runruncpp='sh runcpp.sh'
+endfunction
+
 "compile and run latex
 function! CompileAndRunLatex()
 	:w!
