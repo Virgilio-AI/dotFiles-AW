@@ -123,10 +123,18 @@ augroup end
 
 
 augroup Run_Tex
-execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatex()'
-execute 'autocmd FileType tex nnoremap <F11> <Esc>:w<CR>:LLPStartPreview'
-execute 'autocmd FileType tex inoremap <F11> <Esc>:w<CR>:LLPStartPreview'
+" compile and open single proyect
+execute 'autocmd FileType tex nnoremap <F11> <Esc>:call CompileAndRunSingleFile()' 
+" compile and open single file
+execute 'autocmd FileType tex inoremap <F11> <Esc>:call CompileAndRunSingleFile()' 
+" compile and open proyect
+execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunProyect()' 
+execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunProyect()' 
+"preview proyect
+execute 'autocmd FileType tex nnoremap <F10> <Esc>:w<CR>:LLPStartPreview' 
+execute 'autocmd FileType tex inoremap <F10> <Esc>:w<CR>:LLPStartPreview' 
 augroup end
+
 " ------------------ End compile and run code -------------------------
 "
 "
@@ -315,4 +323,4 @@ nmap <leader>gt :GTestRunUnderCursor<cr>
 
 
 " to open links
-nmap gx :AsyncRun qutebrowser <c-r><c-a>
+nmap gx :AsyncRun brave <c-r><c-a>

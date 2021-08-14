@@ -47,6 +47,9 @@
 !/.config/nvim/PlugIns/*
 !/.config/nvim/UltiSnips
 !/.config/nvim/UltiSnips/*
+!/.config/nvim/runFileConfigurations
+!/.config/nvim/runFileConfigurations/*
+
  
  
 !/.config/wget

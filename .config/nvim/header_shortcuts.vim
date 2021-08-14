@@ -141,13 +141,32 @@ function! GenerateCompileAndRunFile(RunCommand)
 endfunction
 
 "compile and run latex
-function! CompileAndRunLatex()
+function! CompileAndRunProyect()
 	:w!
 	let l:PdfFile = b:FileNameNoExtension . ".pdf"
 	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && pdflatex --shell-escape ' . b:FileName .  '"'
 	sleep 4
 	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && zathura ' . l:PdfFile . '"'
 endfunction
+
+" compile and run single file
+function! CompileAndRunSingleFile()
+	let l:OpenTerminal = 'AsyncRun st -e sh -c '
+	let l:OpenPdf = ' zathura ' . b:FileNameNoExtension . '.pdf'
+	let l:PdfFile = b:FileNameNoExtension . ".pdf"
+	if &modified || !filereadable( l:PdfFile )
+		:w!
+		let l:CopyConfigFileToCurrentPath = ' cp ~/.config/nvim/runFileConfigurations/configuration.tex . ; '
+		let l:RunPdfLatex = ' pdflatex --shell-escape configuration.tex ; '
+		let l:ChangeNamePdf = ' mv configuration.pdf ' . b:FileNameNoExtension . '.pdf ; '
+		let l:removeJunkFiles = ' rm -rfd configuration.idx configuration.out configuration.aux configuration.log configuration.tex _minted-configuration ; '
+		exe l:OpenTerminal . '"' . l:CopyConfigFileToCurrentPath . l:RunPdfLatex . l:ChangeNamePdf . l:removeJunkFiles . l:OpenPdf  . '"'
+	else
+		exe l:OpenTerminal . '"' . l:OpenPdf '"'
+	endif
+endfunction
+
+
 
 " ----------- end Compile and run various code -------------------
 
