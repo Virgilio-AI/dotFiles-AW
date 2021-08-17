@@ -151,19 +151,19 @@ endfunction
 
 " compile and run single file
 function! CompileAndRunSingleFile()
-	let l:OpenTerminal = 'AsyncRun st -e sh -c '
-	let l:OpenPdf = ' zathura ' . b:FileNameNoExtension . '.pdf'
-	let l:PdfFile = b:FileNameNoExtension . ".pdf"
-	if &modified || !filereadable( l:PdfFile )
-		:w!
-		let l:CopyConfigFileToCurrentPath = ' cp ~/.config/nvim/runFileConfigurations/configuration.tex . ; '
-		let l:RunPdfLatex = ' pdflatex --shell-escape configuration.tex ; '
-		let l:ChangeNamePdf = ' mv configuration.pdf ' . b:FileNameNoExtension . '.pdf ; '
-		let l:removeJunkFiles = ' rm -rfd configuration.idx configuration.out configuration.aux configuration.log configuration.tex _minted-configuration ; '
-		exe l:OpenTerminal . '"' . l:CopyConfigFileToCurrentPath . l:RunPdfLatex . l:ChangeNamePdf . l:removeJunkFiles . l:OpenPdf  . '"'
-	else
-		exe l:OpenTerminal . '"' . l:OpenPdf '"'
+	:w!
+	if filereadable('tempFileForConfig.tex')
+		echo "there is a tempFileForConfig.tex in the folder, the binding wont work until you delete it"
+		return
 	endif
+	let l:OpenTerminal = 'AsyncRun st -e sh -c '
+	let l:CopyConfigFileToCurrentPath = ' cp ~/.config/nvim/runFileConfigurations/configuration.tex . ; '
+	let l:CopyFileToMainTex = 'cp ' . b:FileNameNoExtension . '.tex tempFileForConfig.tex ; '
+	let l:RunPdfLatex = ' pdflatex --shell-escape configuration.tex ; '
+	let l:ChangeNamePdf = ' mv configuration.pdf ' . b:FileNameNoExtension . '.pdf ; '
+	let l:removeJunkFiles = ' rm -rfd tempFileForConfig.tex configuration.* _minted-configuration ; '
+	let l:OpenPdf = ' zathura ' . b:FileNameNoExtension . '.pdf'
+	exe l:OpenTerminal . '"' . l:CopyConfigFileToCurrentPath . l:CopyFileToMainTex . l:RunPdfLatex . l:RunPdfLatex .  l:ChangeNamePdf . l:removeJunkFiles . l:OpenPdf  . '"'
 endfunction
 
 
