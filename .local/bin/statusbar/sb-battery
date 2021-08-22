@@ -33,7 +33,10 @@ for battery in /sys/class/power_supply/BAT?*; do
 			bgcolor="$colGreen"
 			;;
 		"Discharging")
-			if [ "$capacity" -le 10 ]
+			if [ "$capacity" -le 5 ]
+			then
+				shutdown now
+			elif [ "$capacity" -le 10 ]
 			then
 				bgcolor="$colRed"
 				status=""

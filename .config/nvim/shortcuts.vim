@@ -321,6 +321,10 @@ nmap <leader>cg :CMakeGenerate<cr>
 nmap <leader>cb :CMakeBuild<cr>
 nmap <leader>gt :GTestRunUnderCursor<cr>
 
-
-" to open links
-nmap gx :AsyncRun brave <c-r><c-a>
+" =================================
+" ========== run bash files 
+" =================================
+exe 'nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
+exe 'inoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
+exe 'nnoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
+exe 'inoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
