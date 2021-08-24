@@ -82,3 +82,11 @@ augroup onEnterc
 	autocmd!
 	au FileType c,cpp call CreateCppDotFiles()
 augroup END
+" =================================
+" ========== for python 
+" =================================
+augroup python
+    autocmd!
+    " Add shiftwidth and/or softtabstop if you want to override those too.
+    autocmd FileType python setlocal noexpandtab shiftwidth=3 tabstop=3
+augroup end
