@@ -29,6 +29,9 @@ Plug 'junegunn/vim-peekaboo' " for showing registers before pasting anything
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "for c++ support
 Plug 'voldikss/vim-floaterm' " for the floating terminal
 Plug 'cdelledonne/vim-cmake' " for generating cmake files
+
+" for html code
+Plug 'mattn/emmet-vim'
 call plug#end() 
 
 

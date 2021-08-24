@@ -202,15 +202,32 @@ endfunction
 " =================================
 " ========== elm compile and run 
 " =================================
+function! CompileToJavaScript()
+	let l:ExecuteCommands = ':AsyncRun st -e sh -c '
+	let l:CdRootDir = 'cd $(git rev-parse --show-toplevel) ; '
+	let l:CompileToJavascript = 'elm make src/Main.elm --output app.js ; '
+	let l:RunHtml = 'brave index.html'
+	if system('git status | grep fatal') == 'fatal'
+		echo "fatal not a git repo"
+		return
+	endif
+	exe l:ExecuteCommands . '"' . l:CdRootDir . l:CompileToJavascript . "read -n1 ; " . l:RunHtml . '"'
+endfunction
+
 function! CompileAndRunElm()
 	let l:ExecuteCommands = ':AsyncRun st -e sh -c '
 	let l:CdRootDir = 'cd $(git rev-parse --show-toplevel) ; '
 	let l:CompileElm = 'elm make src/Main.elm ; '
+	let l:CompileToJavascript = 'elm make src/Main.elm --output app.js ; '
 	let l:RunHtml = 'brave index.html'
 	if system('git status | grep fatal') == 'fatal'
 		echo "fatal not a git repo"
 	else
-		exe l:ExecuteCommands . '"' . l:CdRootDir . l:CompileElm . "read -n1 ; " . l:RunHtml . '"'
+		if filereadable('../app.js')
+			exe l:ExecuteCommands . '"' . l:CdRootDir . l:CompileToJavascript . "read -n1 ; " . l:RunHtml . '"'
+		else
+			exe l:ExecuteCommands . '"' . l:CdRootDir . l:CompileElm . "read -n1 ; " . l:RunHtml . '"'
+		endif
 	endif
 endfunction
 

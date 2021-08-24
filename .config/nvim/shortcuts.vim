@@ -350,8 +350,10 @@ augroup CompileAndRunElm
 	let b:ElmFile= b:RootFolder . '/src/Main.elm'
 
 	if filereadable(b:ElmFile) || &filetype ==# 'elm'
-		autocmd BufEnter * inoremap <F11> :w<CR>:call CompileAndRunElm()
+		autocmd BufEnter * inoremap <F11> <Esc>:w<CR>:call CompileAndRunElm()
 		autocmd BufEnter * nnoremap <F11> :w<CR>:call CompileAndRunElm()
+		autocmd BufEnter * inoremap <F11><F11> <Esc>:w<CR>:call CompileToJavaScript()
+		autocmd BufEnter * nnoremap <F11><F11> :w<CR>:call CompileToJavaScript()
 	endif
 augroup end
 " =================================
