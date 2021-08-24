@@ -131,8 +131,8 @@ execute 'autocmd FileType tex inoremap <F11> <Esc>:call CompileAndRunSingleFile(
 execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunProyect()' 
 execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunProyect()' 
 "preview proyect
-execute 'autocmd FileType tex nnoremap <F10> <Esc>:w<CR>:LLPStartPreview' 
-execute 'autocmd FileType tex inoremap <F10> <Esc>:w<CR>:LLPStartPreview' 
+execute 'autocmd FileType tex nnoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
+execute 'autocmd FileType tex inoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
 augroup end
 
 " ------------------ End compile and run code -------------------------
@@ -324,7 +324,38 @@ nmap <leader>gt :GTestRunUnderCursor<cr>
 " =================================
 " ========== run bash files 
 " =================================
-exe 'nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
-exe 'inoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
-exe 'nnoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
-exe 'inoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
+augroup CompileAndRunBashFiles
+	autocmd!
+exe 'autocmd BufEnter *.sh nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
+exe 'autocmd BufEnter *.sh inoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
+exe 'autocmd BufEnter *.sh nnoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
+exe 'autocmd BufEnter *.sh inoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
+augroup end
+" =================================
+" ========== markdown files 
+" =================================
+augroup CompileAndRunMarkDown
+	autocmd!
+	autocmd BufEnter *.md noremap <F11> :w<CR>:call CompileAndRunMarkDown()<CR>
+	autocmd BufEnter *.md noremap <F11> :w<CR>:call CompileAndRunMarkDown()<CR>
+augroup end
+" =================================
+" ========== Run elm projects and files 
+" =================================
+
+
+augroup CompileAndRunElm
+	autocmd!
+	let b:RootFolder = trim(system('git rev-parse --show-toplevel'))
+	let b:ElmFile= b:RootFolder . '/src/Main.elm'
+
+	if filereadable(b:ElmFile) || &filetype ==# 'elm'
+		autocmd BufEnter * inoremap <F11> :w<CR>:call CompileAndRunElm()
+		autocmd BufEnter * nnoremap <F11> :w<CR>:call CompileAndRunElm()
+	endif
+augroup end
+" =================================
+" ========== browser search 
+" =================================
+
+nnoremap gx :AsyncRun st -e sh -c "brave <c-r><c-a>"

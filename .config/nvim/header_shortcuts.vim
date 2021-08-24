@@ -186,4 +186,31 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+" =================================
+" ========== Mark Down 
+" =================================
+
+
+function! CompileAndRunMarkDown()
+	let openTerminal = ':AsyncRun st -T "floating" -e sh -c '
+	let l:CompileHtmlFile = 'pandoc ' . b:FileNameNoExtension . '.md > ' . b:FileNameNoExtension . '.html ; '
+	let l:PrevHtml = 'brave ' . b:FileNameNoExtension . '.html ; '
+	let l:removeHtmlFile = 'rm ' . b:FileNameNoExtension . '.html'
+	exe openTerminal . '"' . l:CompileHtmlFile . l:PrevHtml . l:removeHtmlFile . '"'
+endfunction
+
+" =================================
+" ========== elm compile and run 
+" =================================
+function! CompileAndRunElm()
+	let l:ExecuteCommands = ':AsyncRun st -e sh -c '
+	let l:CdRootDir = 'cd $(git rev-parse --show-toplevel) ; '
+	let l:CompileElm = 'elm make src/Main.elm ; '
+	let l:RunHtml = 'brave index.html'
+	if system('git status | grep fatal') == 'fatal'
+		echo "fatal not a git repo"
+	else
+		exe l:ExecuteCommands . '"' . l:CdRootDir . l:CompileElm . "read -n1 ; " . l:RunHtml . '"'
+	endif
+endfunction
 
