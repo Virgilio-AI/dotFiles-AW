@@ -1,1 +1,1 @@
-sh -c "cfiles" 
+sh -c "ranger" 
