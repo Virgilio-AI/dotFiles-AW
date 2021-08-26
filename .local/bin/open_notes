@@ -2,4 +2,4 @@
 
 # this is a script to open notes in arch water linux, but it can work if you have st installed and 
 # xorg
-st -T "floating" -e sh -c "cfiles ~/Documents/Notas"
+st -T "floating" -e sh -c "ranger ~/Documents/Notas"
