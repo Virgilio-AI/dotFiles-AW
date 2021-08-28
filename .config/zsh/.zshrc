@@ -100,7 +100,7 @@ parse_git_branch() {
 }
 
 setopt PROMPT_SUBST
-PROMPT='%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%f%b '
+
 rm ~/.lesshst ;
 [[ -d ~/.pki ]] && rm ~/.pki ; 
 [[ -d ~/.cargo ]] && rm ~/.cargo ; 
@@ -115,3 +115,4 @@ rm ~/.wget-hsts ;
 ## change sudo default editor
 SUDO_EDITOR=/usr/bin/nvim
 export SUDO_EDITOR
+PROMPT='%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%f%b '
