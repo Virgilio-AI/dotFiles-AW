@@ -90,3 +90,12 @@ augroup python
     " Add shiftwidth and/or softtabstop if you want to override those too.
     autocmd FileType python setlocal noexpandtab shiftwidth=3 tabstop=3
 augroup end
+
+" =================================
+" ========== install vim plug ins on startup 
+" =================================
+
+autocmd VimEnter *
+  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall --sync | q
+  \| endif
