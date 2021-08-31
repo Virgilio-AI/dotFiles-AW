@@ -104,3 +104,5 @@
 !/images/leftbg/*
 !/images/rightbg
 !/images/rightbg/*
+
+.config/mpd/log
