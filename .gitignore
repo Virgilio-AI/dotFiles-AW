@@ -36,6 +36,10 @@
  
 !/.config/ncmpcpp
 !/.config/ncmpcpp/*
+
+
+!/.config/mpd
+!/.config/mpd/*
  
 !/.config/neofetch
 !/.config/neofetch/*
