@@ -361,3 +361,10 @@ augroup end
 " =================================
 
 nnoremap gx :AsyncRun st -e sh -c "brave <c-r><c-a>"
+
+" =================================
+" ========== Run python code and jupyter bindings 
+" =================================
+augroup pythonFiles
+	autocmd BufEnter *.py nnoremap <F11> :w<CR>:AsyncRun st -e sh -c "python %:p ; read -n1 "
+augroup end
