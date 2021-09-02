@@ -100,6 +100,7 @@ parse_git_branch() {
 }
 
 setopt PROMPT_SUBST
+set -o GLOB_SUBST
 
 rm ~/.lesshst ;
 [[ -d ~/.pki ]] && rm ~/.pki ; 
