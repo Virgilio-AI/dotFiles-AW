@@ -52,7 +52,8 @@ alias gitsa='git submodule add'
 # alias for pacman -> greping errors and warnings
 alias pacman='sudo pacman'
 alias tree='tree -a'
-
+# for creating notebooks
+alias create-notebook='python $HOME/.local/bin/create-notebook.py'
 # alias for shutdown commiting all
 
 shutdown()
@@ -110,6 +111,16 @@ rm ~/.fehbg ;
 rm ~/.fzf.bash ; 
 rm ~/.fzf.zsh ;
 rm ~/.wget-hsts ;
+# install brew
+test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+
+# load into the terminal pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 
 # neofetch --gtk-shorthand off --gtk2 off --gtk3 off --color_blocks off
  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

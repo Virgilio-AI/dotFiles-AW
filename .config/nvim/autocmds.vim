@@ -94,8 +94,26 @@ augroup end
 " =================================
 " ========== install vim plug ins on startup 
 " =================================
-
+augroup ViEnter
+	autocmd!
 autocmd VimEnter *
   \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \|   PlugInstall --sync | q
   \| endif
+augroup end
+" =================================
+" ========== jupyter notebooks autocommands 
+" =================================
+augroup jupyterNotebooks
+	autocmd!
+	autocmd TextChanged,InsertLeave * :w
+augroup end
+
+" =================================
+" ========== configurations for firenvim 
+" =================================
+augroup frenvim
+au BufEnter github.com_*.txt set filetype=markdown
+au BufEnter txti.es_*.txt et filetype=typescript
+augroup end 
+
