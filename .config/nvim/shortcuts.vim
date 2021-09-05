@@ -18,6 +18,7 @@ exe 'nnoremap <F6>0 :AsyncRun sh -c "cd %:p:h ; st -T "floating" -g "=80x45+600+
 
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 exe "nnoremap <leader>evs :vsplit " . g:CONFIG_PATH . '/shortcuts.vim'  
+exe "nnoremap <leader>evS :vsplit " . g:CONFIG_PATH . '/skeletons.vim'
 exe "nnoremap <leader>eva :vsplit " . g:CONFIG_PATH . '/autocmds.vim'  
 exe "nnoremap <leader>evp :vsplit " . g:CONFIG_PATH . '/PlugIns.vim'
 exe "nnoremap <leader>evc :vsplit " . g:CONFIG_PATH . '/colors.vim'

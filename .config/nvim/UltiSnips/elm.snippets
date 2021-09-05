@@ -1,0 +1,18 @@
+#sk
+snippet sk "Shebang" b
+module $1 exposing (main)
+
+import Browser
+import Html exposing (..)
+import Html.Attributes exposing(..)
+import List exposing(..)
+import String exposing(..)
+import Html.Events exposing (..)
+-- Main
+${2:main}
+main = Browser.sandbox { init = init, update = update, view = view }
+
+-- Model
+-- Update
+-- View
+endsnippet

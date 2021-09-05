@@ -1,0 +1,128 @@
+# plot2dsk
+# varrange
+# xyaxis
+# label
+# title
+# legend
+# fill_between
+# varlim
+# 2dgrid
+# closestPointInLineToPoint
+# 3din2d
+# plotPoint
+# plotFunction
+snippet plotFunction
+${1:x_var} = np.arange(${2:left_range},${3:right_range},${4:step})
+
+plt.plot($1,${5:f(x)})
+endsnippet
+
+snippet plotPoint
+
+plt.scatter(${1:x},${2:y})
+endsnippet
+
+snippet 3din2d
+${1:x_var} = np.linspace(${2:x_lower_bound},${3:x_upper_bound},${4:step})
+${5:y_var} = np.linspace(${6:y_lower_bound},${7:y_upper_bound},${8:step})
+X_, Y_ = np.meshgrid($1, $5)
+Z_ = mainFunction(X_, Y_)
+plt.contour(X_,Y_,Z_,${9:number_of_curves})
+
+endsnippet
+
+snippet closestPointInLineToPoint
+def getClosestPointToLine(p1,p2,p3):
+	x1, y1 = p1
+	x2, y2 = p2
+	x3, y3 = p3
+	dx, dy = x2-x1, y2-y1
+	det = dx*dx + dy*dy
+	a = (dy*(y3-y1)+dx*(x3-x1))/det
+	return x1+a*dx, y1+a*dy
+endsnippet
+
+snippet 2dgrid
+plt.grid(True)
+endsnippet
+
+snippet varlim
+plt.xlim(${1:left_lim},${2:right_lim})
+plt.ylim(${3:left_lim},${4:right_lim})
+endsnippet
+
+
+snippet fill_between
+
+# here you have to identify the lower function and the bigger function
+# you can use something like below
+# botton = np.maximum(y1,0)
+
+plt.fill_between(${1:function_1},${2:function_2},${3:function_3},where=${4:x_conditions} )
+endsnippet
+
+snippet title
+plt.title('$1')
+endsnippet
+
+snippet legend
+#pass a list and respect the order of the plots
+# format (['f(x)','g(x)'])
+
+plt.legend(['${1:function_mathematical_representation}$2'])
+endsnippet
+
+
+snippet label
+plt.xlabel('${1:x_description}')
+plt.xlabel('${2:y_description}')
+endsnippet
+
+snippet varrange
+x = np.arange(${1:lower_bound},${2:upper_bound},${3:jump})
+y = np.arange($4,$5,$6)
+endsnippet
+
+snippet xyaxis
+plt.xlim(${1:lower_bound},${2:upper_bound})
+plt.ylim(${3:lower_bound},${4:upper_bound})
+endsnippet
+
+
+snippet plot2dsk
+import matplotlib.pyplot as plt
+import numpy as np
+
+# varrange - for range and step
+# varlim - for limit the min and max
+# legend - for creating the legend of the different functions
+# fill_between - to fill in between two functions
+# closestPointInLineToPoint - creates a function for a point to be the closest
+# 3din2d - to plot a 3d function into a 2d plane
+# plotPoint - to plot a simple point
+# plotFunction - to plot a simple function
+
+# main parameters
+x_lower_bound = $1
+x_upper_bound = $2
+
+y_lower_bound = $3
+y_upper_bound = $4
+
+#plot settings
+plt.grid(True)
+
+plt.xlim(x_lower_bound,x_upper_bound)
+plt.ylim(y_lower_bound,y_upper_bound)
+plt.hlines(0,x_lower_bound,x_upper_bound,color='k')
+plt.vlines(0,y_lower_bound,y_upper_bound,color='k')
+plt.xlabel('x1')
+plt.xlabel('y1')
+plt.title('Clase3Actividad4')
+plt.xlabel('${5:x_label}')
+plt.xlabel('${6:y_label}')
+plt.title('$7')
+
+endsnippet
+
+

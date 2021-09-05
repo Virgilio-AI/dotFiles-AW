@@ -104,10 +104,10 @@ augroup end
 " =================================
 " ========== jupyter notebooks autocommands 
 " =================================
-augroup jupyterNotebooks
-	autocmd!
-	autocmd TextChanged,InsertLeave * :w
-augroup end
+" augroup jupyterNotebooks
+" 	autocmd!
+" 	autocmd TextChanged,InsertLeave * :w
+" augroup end
 
 " =================================
 " ========== configurations for firenvim 
@@ -115,5 +115,4 @@ augroup end
 augroup frenvim
 au BufEnter github.com_*.txt set filetype=markdown
 au BufEnter txti.es_*.txt et filetype=typescript
-augroup end 
-
+augroup end

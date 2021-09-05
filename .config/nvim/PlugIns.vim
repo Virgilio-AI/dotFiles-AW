@@ -39,8 +39,6 @@ Plug 'untitled-ai/jupyter_ascending.vim'
 
 " for nvim in brave
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-" for skeletons in vim
-Plug 'pgilad/vim-skeletons'
 
 call plug#end() 
 

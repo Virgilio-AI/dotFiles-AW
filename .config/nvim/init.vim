@@ -20,10 +20,12 @@ let &undodir = expand(   g:CONFIG_PATH . '/.vimdata/undo//')
 exec 'source ' . g:CONFIG_PATH . '/PlugIns.vim'
 exec 'source ' . g:CONFIG_PATH . '/header_shortcuts.vim'
 exec 'source ' . g:CONFIG_PATH . '/header_autocmds.vim'
+exec 'source ' . g:CONFIG_PATH . '/header_skeletons.vim'
 exec 'source ' . g:CONFIG_PATH . '/shortcuts.vim'
 exec 'source ' . g:CONFIG_PATH . '/IconsAndThemes.vim'
 exec 'source ' . g:CONFIG_PATH . '/colors.vim'
 exec 'source ' . g:CONFIG_PATH . '/autocmds.vim'
+exec 'source ' . g:CONFIG_PATH . '/skeletons.vim'
 " =================================
 " ========== PlugIn Variables 
 " =================================
@@ -33,9 +35,8 @@ let NERDTreeIgnore = ['\.aux$','\.idx','\.out$','\.log']   " PlugIn NerdTree
 let g:NERDTreeHijackNetrw=1    " PlugIn NerdTree
 let g:UltiSnipsExpandTrigger="<tab>"    " PlugIn UltiSnips
 let g:UltiSnipsEditSplit="vertical"   " PlugIn UltiSnip
-let g:rainbow_ctermfgs = ['blue', 'green', 'yellow', 'red', 'magenta']   "PlugIn rainbow pair colorizer
-let skeletons#autoRegister = 1
-let skeletons#skeletonsDir = "~/.config/nvim/skeletons/"
+let g:rainbow_ctermfgs = ['blue', 'green', 'yellow', 'red', 'magenta']    "PlugIn rainbow pair colorizer
+
 
 " =================================
 " ========== Set variables 

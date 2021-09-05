@@ -24,6 +24,14 @@ settings:
     global: both
   content.notifications.enabled:
     https://thepiratebay.org: false
+  input.insert_mode.auto_leave:
+    global: false
+  input.insert_mode.auto_load:
+    global: true
+  input.insert_mode.leave_on_load:
+    global: false
+  input.insert_mode.plugins:
+    global: true
   url.default_page:
     global: https://www.google.com
   url.start_pages:

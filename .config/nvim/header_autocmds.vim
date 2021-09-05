@@ -51,9 +51,9 @@ endfunction
 " ========== jupyter notbooks 
 " =================================
 
-" function! SaveLoop()
-" 	while(1)
-" 		:silent write
-" 		sleep 1
-" 	endwhile
-" endfunction
+" =================================
+" ========== skeletons for vim 
+" =================================
+
+
+

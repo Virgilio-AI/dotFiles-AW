@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+jupytext $1.ipynb --to py:percent ;
+jupyter-notebook $1.ipynb &
+st -e sh -c "nvim $1.py"
