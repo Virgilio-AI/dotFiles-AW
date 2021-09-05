@@ -34,6 +34,8 @@ let g:NERDTreeHijackNetrw=1    " PlugIn NerdTree
 let g:UltiSnipsExpandTrigger="<tab>"    " PlugIn UltiSnips
 let g:UltiSnipsEditSplit="vertical"   " PlugIn UltiSnip
 let g:rainbow_ctermfgs = ['blue', 'green', 'yellow', 'red', 'magenta']   "PlugIn rainbow pair colorizer
+let skeletons#autoRegister = 1
+let skeletons#skeletonsDir = "~/.config/nvim/skeletons/"
 
 " =================================
 " ========== Set variables 

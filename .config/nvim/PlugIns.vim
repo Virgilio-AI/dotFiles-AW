@@ -1,22 +1,5 @@
 call plug#begin('~/.config/nvim/PlugIns/')
 
-let g:firenvim_config = { 
-    \ 'globalSettings': {
-        \ 'alt': 'all',
-    \  },
-    \ 'localSettings': {
-        \ '.*': {
-            \ 'cmdline': 'neovim',
-            \ 'content': 'text',
-            \ 'priority': 0,
-            \ 'selector': 'textarea',
-            \ 'takeover': 'always',
-        \ },
-    \ }
-\ }
-let fc = g:firenvim_config['localSettings']
-let fc['.*'] = { 'selector': 'textarea' }
-
 " for color and personalization
 Plug 'rafi/awesome-vim-colorschemes' "ide
 Plug 'vim-airline/vim-airline' "personalization for vim
@@ -56,6 +39,9 @@ Plug 'untitled-ai/jupyter_ascending.vim'
 
 " for nvim in brave
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" for skeletons in vim
+Plug 'pgilad/vim-skeletons'
+
 call plug#end() 
 
 
