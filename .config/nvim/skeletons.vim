@@ -34,3 +34,7 @@ augroup leetCode_sk
 augroup END
 
 
+augroup problems_list
+	autocmd!
+	autocmd BufEnter */dataStructuresAndAlgos/*/*.cpp call ExpandSkeleton('sk')
+augroup END
