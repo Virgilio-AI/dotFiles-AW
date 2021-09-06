@@ -5,18 +5,18 @@
 sudo rsync -aAXv --delete --exclude=.git ~/.config/ ~/Documents/GitRepos/dotFiles-AW/.config/
 sudo rsync -aAXv --delete --exclude=.git ~/.local/ ~/Documents/GitRepos/dotFiles-AW/.local/
 sudo rsync -aAXv --delete --exclude=.git ~/images/ ~/Documents/GitRepos/dotFiles-AW/images/
-sudo rsync -AXv --exclude=.git ~/Documents/GitRepos/installationGuide-AW/main.pdf ~/Documents/GitRepos/archiso-AW/airootfs/root/InstallationGuide.pdf
+sudo rsync -aAXv --exclude=.git ~/Documents/GitRepos/installationGuide-AW/main.pdf ~/Documents/GitRepos/archiso-AW/airootfs/root/InstallationGuide.pdf
 
 # for zsh files and profile file
 
 
-sudo rsync -AXv /etc/profile ~/Documents/GitRepos/archiso-AW/airootfs/root/etc/profile
-sudo rsync -AXv /etc/profile ~/Documents/GitRepos/autoInstaller-AW/profile
+sudo rsync -aAXv /etc/profile ~/Documents/GitRepos/archiso-AW/airootfs/root/etc/profile
+sudo rsync -aAXv /etc/profile ~/Documents/GitRepos/autoInstaller-AW/profile
 
 # work to do after you have users
 # sudo rsync -AXv $ZDOTDIR/.zshrc ~/Documents/GitRepos/archiso-AW/airootfs/root/etc/zsh/zshrc
-sudo rsync -AXv $ZDOTDIR/  ~/Documents/GitRepos/autoInstaller-AW/zdotdir/
-sudo rsync -AXv /etc/zsh/  ~/Documents/GitRepos/autoInstaller-AW/etcZdotdir/
+sudo rsync -aAXv $ZDOTDIR/  ~/Documents/GitRepos/autoInstaller-AW/zdotdir/
+sudo rsync -aAXv /etc/zsh/  ~/Documents/GitRepos/autoInstaller-AW/etcZdotdir/
 
 
 
