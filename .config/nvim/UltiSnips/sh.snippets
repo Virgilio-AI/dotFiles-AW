@@ -4,7 +4,7 @@
 #if 
 #dyesno
 snippet dyesno
-dialog --title "$1" --yesno "$2"
+dialog --title "$1" --yesno "$2" ${3:17} ${4:70}
 
 if [[ $? == 1 ]] 
 then
@@ -37,14 +37,14 @@ endsnippet
 
 snippet din
 if test -f "INPUT.txt"; then
-	dialog --title "$1" --msgbox "warning the INPUT.txt file exist, delete it first" 15 50
+	dialog --title "$1" --msgbox "warning the INPUT.txt file exist, delete it first" ${2:15} ${3:50}
 	exit 1
 fi
 OUTPUT="INPUT.txt"
 >$OUTPUT
 dialog --stdout --title "$1" \
 --inputbox "$@" 0 0 >$OUTPUT
-$3=$(<$OUTPUT)
+$4=$(<$OUTPUT)
 rm $OUTPUT
 endsnippet
 
