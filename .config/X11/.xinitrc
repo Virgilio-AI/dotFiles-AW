@@ -50,11 +50,20 @@ fi
 
 PATH=$PATH:/home/rockhight/.local/bin/statusbar
 
-picom -f & 
+picom -f &
 dunst &			# dunst for notifications
-dwmblocks & 
+dwmblocks &
 mpd &
 flameshot &
-feh --randomize --bg-fill ~/images/leftbg/* --randomize --bg-fill ~/images/rightbg/* & 
+
+xrandr | grep -q "HDMI-1" ;
+if [ $? -eq 0 ]
+then
+	xrandr --output HDMI-1 --primary --left-of eDP-1 & 
+fi
+
+feh --randomize --bg-fill ~/images/leftbg/* --randomize --bg-fill ~/images/rightbg/* &
 #for executing dwm
+# change screen position
+
 exec dwm 
