@@ -22,6 +22,8 @@ settings:
         ms: quickmark-save
   content.blocking.method:
     global: both
+  content.media.audio_capture:
+    https://up-edu-mx.zoom.us: true
   content.notifications.enabled:
     https://thepiratebay.org: false
   input.insert_mode.auto_leave:
