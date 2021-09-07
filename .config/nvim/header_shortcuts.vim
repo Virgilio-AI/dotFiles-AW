@@ -230,4 +230,16 @@ function! CompileAndRunElm()
 		endif
 	endif
 endfunction
+" =================================
+" ========== CompileAndRunAssembly 
+" =================================
 
+function! CompileAndRunAssemblyCode()
+	let l:ExecuteCommands = ':AsyncRun st -e sh -c '
+	let l:FileName = expand("%")
+	let l:Name = expand("%<")
+	let l:createOFiles = "nasm -f elf64 " . l:FileName . " ; "
+	let l:createExecutable = "ld -s -o " . l:Name . " " . l:Name . ".o ; "
+	let l:RunExecutable = "./" . l:Name . " ; "
+	exe l:ExecuteCommands . '"' . l:createOFiles . l:createExecutable . l:RunExecutable . "read -n1" '"'
+endfunction
