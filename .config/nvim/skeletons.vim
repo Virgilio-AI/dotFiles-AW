@@ -34,7 +34,14 @@ augroup leetCode_sk
 augroup END
 
 
-augroup problems_list
+augroup cpp
 	autocmd!
 	autocmd BufEnter */dataStructuresAndAlgos/*/*.cpp call ExpandSkeleton('sk')
 augroup END
+
+
+augroup assembly_sk
+	autocmd!
+	autocmd BufEnter *.asm call ExpandSkeleton('micrcontrolador_atmega16a')
+augroup END
+

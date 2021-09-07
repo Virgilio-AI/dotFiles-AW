@@ -382,6 +382,6 @@ nnoremap <space><space>X <Plug>JupyterExecuteAll
 " =================================
 
 augroup assembly
-	autocmd BufEnter *.asm nnoremap <F11> :w<CR>:call CompileAndRunAssemblyCode()
+	autocmd FileType asm nnoremap <F11> :w<CR>:call CompileAndRunAssemblyCode()
 augroup end
 

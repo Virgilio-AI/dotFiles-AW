@@ -235,7 +235,7 @@ endfunction
 " =================================
 
 function! CompileAndRunAssemblyCode()
-	let l:ExecuteCommands = ':AsyncRun st -e sh -c '
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:FileName = expand("%")
 	let l:Name = expand("%<")
 	let l:createOFiles = "nasm -f elf64 " . l:FileName . " ; "
