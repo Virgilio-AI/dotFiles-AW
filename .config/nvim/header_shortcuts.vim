@@ -242,4 +242,4 @@ function! CompileAndRunAssemblyCode()
 	let l:createExecutable = "ld -s -o " . l:Name . " " . l:Name . ".o ; "
 	let l:RunExecutable = "./" . l:Name . " ; "
 	exe l:ExecuteCommands . '"' . l:createOFiles . l:createExecutable . l:RunExecutable . "read -n1" '"'
-endfunction
+endfunction\

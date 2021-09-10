@@ -1,13 +1,16 @@
 snippet micrcontrolador_atmega16a
+
 ;*******************
-; Título del proyecto
+; ${1:Titulo_del_proyecto}
 ;
-; Created: Poner aquí la fecha
-; Author : Poner aquí el autor
+; Created:
+; Nombre del Author : Virgilio Murillo Ochoa
+; github : Virgilio-AI
+
 ;*******************
 
-.include "m16adef.inc"     
-   
+.include "m16adef.inc"
+
 ;*******************
 ;Registros (aquí pueden definirse)
 ;.def temporal=r19
@@ -54,7 +57,7 @@ out SPL, r16
 ;Aquí comienza el programa...
 ;No olvides configurar al inicio todo lo que utilizarás
 ;*********************************
-
+$2
 
 
 
