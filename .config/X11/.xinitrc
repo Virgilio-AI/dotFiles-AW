@@ -62,7 +62,7 @@ then
 	xrandr --output HDMI-1 --primary --left-of eDP-1 & 
 fi
 
-feh --randomize --bg-fill ~/images/leftbg/* --randomize --bg-fill ~/images/rightbg/* &
+feh --randomize --bg-fill ~/images/background/* --randomize --bg-fill ~/images/background/* &
 #for executing dwm
 # change screen position
 
