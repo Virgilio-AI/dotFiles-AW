@@ -1,0 +1,2 @@
+#!/bin/sh
+st -T "floating" -e shutdown_menu
