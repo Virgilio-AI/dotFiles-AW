@@ -42,6 +42,6 @@ augroup END
 
 augroup assembly_sk
 	autocmd!
-	autocmd BufEnter *.asm call ExpandSkeleton('micrcontrolador_atmega16a')
+	autocmd BufEnter *.asm call ExpandSkeleton('sk')
 augroup END
 

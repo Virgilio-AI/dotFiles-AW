@@ -1,0 +1,16 @@
+#!/bin/sh
+printf "(c)ancel\n(r)eestart \n(n)shutdown \nshutdown_(n)ow ---\n(Default:s)"
+read doit 
+if [[ $doit == "" || $doit == "s" ]] ;
+then
+	shutdown
+elif [[ $doit == "r" ]] ;
+then
+	reestart
+elif [[ $doit == "n" ]] ;
+then
+	shutdown now
+else
+	echo "canceled shutdown"
+fi
+
