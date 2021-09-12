@@ -63,6 +63,7 @@ then
 fi
 
 feh --randomize --bg-fill ~/images/background/* --randomize --bg-fill ~/images/background/* &
+udiskie &
 #for executing dwm
 # change screen position
 
