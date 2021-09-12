@@ -1,16 +1,16 @@
-#!/bin/sh
-printf "(c)ancel\n(r)eestart \n(n)shutdown \nshutdown_(n)ow ---\n(Default:s)"
-read doit 
+#!/bin/zsh
+printf "(c)ancel\n(r)eestart \n(s)shutdown \nshutdown_(n)ow\n-------------\n(Default:s)\n"
+read doit
 if [[ $doit == "" || $doit == "s" ]] ;
 then
-	shutdown
+	gitAutoCommit.sh ; sudo shutdown
 elif [[ $doit == "r" ]] ;
 then
-	reestart
+	gitAutoCommit.sh ; reestart
 elif [[ $doit == "n" ]] ;
 then
 	shutdown now
 else
 	echo "canceled shutdown"
+	shutdown -c
 fi
-
