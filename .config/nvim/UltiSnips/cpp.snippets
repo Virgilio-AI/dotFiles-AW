@@ -1,11 +1,33 @@
 snippet sk
 #include<bits/stdc++.h>
+`date`
 using namespace std;
 int main()
 {
 	$1
 	return 0;
 }
-$2
+${2:content}
+${3:hola}
 endsnippet
 
+snippet sk_ncurses
+#include<bits/stdc++.h>
+#include<ncurses.h>
+using namespace std;
+int main()
+{
+	initscr();
+
+	${1:raw();// for line buffering disabled}
+	${2:noecho(); //so that what we write doesn't gets seen}
+	$3
+	endwin();
+	return 0;
+}
+endsnippet
+snippet ndoc
+// getch(); so you get a character
+// printw(); print in screen
+// refresh(); to refresh screen
+endsnippet
