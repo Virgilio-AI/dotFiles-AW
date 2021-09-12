@@ -116,3 +116,5 @@ augroup frenvim
 au BufEnter github.com_*.txt set filetype=markdown
 au BufEnter txti.es_*.txt et filetype=typescript
 augroup end
+
+

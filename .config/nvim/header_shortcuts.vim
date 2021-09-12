@@ -118,8 +118,8 @@ endfunction
 " =========== Compile and run various code ===================
 " ==================================================
 " compile and run in c++
-function! CompileAndRunCpp(RunCommand)
-:w!
+
+function! CompileAndRunCppForCompetition(RunCommand)
 if filereadable("runcpp.sh")
 	exe ':AsyncRun sh runcpp.sh '
 else
@@ -129,6 +129,19 @@ else
 		exe ':AsyncRun st -T "floating" -e sh -c " nvim In.txt ; ' . a:RunCommand . ' %:p -o %< && ./%< < In.txt ; read -n1"'
 	endif
 endif
+endfunction
+
+
+function! CompileAndRunCppForNcurses(RunCommand)
+	exe ':AsyncRun st -T "floating" -e sh -c " ' . a:RunCommand . ' -lncurses %:p -o %< && ./%< ; read -n1"'
+endfunction
+function! CompileAndRunCpp(RunCommand)
+:w!
+if filereadable("In.txt") || filereadable("runcpp.sh")
+		:call CompileAndRunCppForCompetition(a:RunCommand)
+	else
+		:call CompileAndRunCppForNcurses(a:RunCommand)
+	endif
 endfunction
 
 function! GenerateCompileAndRunFile(RunCommand)

@@ -385,3 +385,14 @@ augroup assembly
 	autocmd FileType asm nnoremap <F11> :w<CR>:call CompileAndRunAssemblyCode()
 augroup end
 
+augroup brackets
+	autocmd FileType cpp inoremap for for<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
+	autocmd FileType cpp inoremap if if<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
+	autocmd FileType cpp inoremap else else<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
+
+	autocmd FileType cpp inoremap cout cout<esc>:inoremap < <\| inoremap > ><CR>a
+	autocmd FileType cpp inoremap cin cout<esc>:inoremap < <\| inoremap > ><CR>a
+
+	autocmd FileType cpp autocmd BufLeave *.cpp inoremap < <
+	autocmd FileType cpp autocmd BufLeave *.cpp inoremap > >
+augroup end
