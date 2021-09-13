@@ -12,7 +12,7 @@ augroup END
 
 augroup onEnter
 	autocmd!
-	au FileType .tex,c,cpp call rainbow#load()
+	au FileType tex,c,cpp RainbowToggle
 augroup END
 
 " =================================
@@ -117,4 +117,5 @@ au BufEnter github.com_*.txt set filetype=markdown
 au BufEnter txti.es_*.txt et filetype=typescript
 augroup end
 
+" shortcuts for hacker rank
 
