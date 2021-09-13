@@ -3,9 +3,10 @@ call plug#begin('~/.config/nvim/PlugIns/')
 " for color and personalization
 Plug 'rafi/awesome-vim-colorschemes' "ide
 Plug 'vim-airline/vim-airline' "personalization for vim
+
 Plug 'vim-airline/vim-airline-themes' "temas
 Plug 'ryanoasis/vim-devicons' "vim icons for windows 10
-Plug 'frazrepo/vim-rainbow'  " bracket pair colorier
+" Plug 'frazrepo/vim-rainbow'  " bracket pair colorier
 Plug 'junegunn/vim-easy-align' " for easy alignment
 " for better motion
 Plug 'easymotion/vim-easymotion'  " jump into words using a mapped array of positions
@@ -39,6 +40,7 @@ Plug 'untitled-ai/jupyter_ascending.vim'
 
 " for nvim in brave
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'luochen1990/rainbow'
 
 call plug#end() 
 
