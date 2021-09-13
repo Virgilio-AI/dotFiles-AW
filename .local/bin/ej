@@ -1,6 +1,23 @@
-#!/bin/sh
+#!/usr/bin/zsh
 
-
-jupytext $1.ipynb --to py:percent ;
-jupyter-notebook $1.ipynb &
-st -e sh -c "nvim $1.py"
+if [[ "$1" == *.sync.py ]] ; then
+	echo "warnig you choosed the python file"
+	exit
+fi
+if [[ "$1" == *.sync.ipynb ]] ; then
+	echo "heey"
+	if [ ! -f "$1" ] ; then
+		python $HOME/.local/bin/create-notebook.py
+	fi
+	jupytext $1 --to py:percent ;
+	jupyter-notebook $1 &
+	st -e sh -c "nvim $1:r.py" &
+else
+	echo "segundo"
+	if [ ! -f "$1.sync.ipynb" ] ; then
+		python $HOME/.local/bin/create-notebook.py $1.sync.ipynb
+	fi
+	jupytext $1.sync.ipynb --to py:percent ;
+	jupyter-notebook $1.sync.ipynb &
+	st -e sh -c "nvim $1.sync.py" &
+fi

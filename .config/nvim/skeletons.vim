@@ -22,12 +22,6 @@ augroup codeForces_sk
 	autocmd BufEnter */codeForces/*.cpp call ExpandSkeleton('sk')
 augroup END
 
-
-augroup hackerRank_sk
-	autocmd!
-	autocmd BufEnter */hackerRank/*.cpp call ExpandSkeleton('hackerRank')
-augroup END
-
 augroup leetCode_sk
 	autocmd!
 	autocmd BufEnter */leetCode/*.cpp call ExpandSkeleton('leetCode')
@@ -39,9 +33,27 @@ augroup cpp
 	autocmd BufEnter */dataStructuresAndAlgos/*/*.cpp call ExpandSkeleton('sk')
 augroup END
 
+augroup cpp_main
+	autocmd!
+	autocmd BufEnter *.cpp call ChooseSkeleton()
+augroup END
+" =================================
+" ========== assembly  
+" =================================
 
-augroup assembly_sk
+
+augroup assembly_avr
 	autocmd!
 	autocmd BufEnter *.asm call ExpandSkeleton('sk')
 augroup END
 
+augroup assembly_linux
+	autocmd!
+	autocmd BufEnter *.asm call ExpandSkeleton('sk')
+augroup END
+
+
+augroup assembly_main
+	autocmd!
+	autocmd BufEnter *.asm call ExpandSkeleton('sk')
+augroup END

@@ -373,9 +373,13 @@ augroup end
 " =================================
 " ========== bindings for vim and jupyter notebooks 
 " =================================
+augroup jupyterNoteBook
+	autocmd BufEnter *.sync.py nnoremap <space>x :w<CR>:call jupyter_ascending#execute()<CR>
+	autocmd BufEnter *.sync.py nnoremap <space>X :w<CR>:call jupyter_ascending#execute_all()<CR>
+	autocmd BufEnter *.sync.py nnoremap B :normal! i# %%<CR>
+	autocmd BufEnter *.sync.py nnoremap M :normal! i# %% [markdown]<CR>
+augroup end
 
-nnoremap <space><space>x <Plug>JupyterExecute
-nnoremap <space><space>X <Plug>JupyterExecuteAll
 
 " =================================
 " ========== assembly code 
@@ -385,14 +389,19 @@ augroup assembly
 	autocmd FileType asm nnoremap <F11> :w<CR>:call CompileAndRunAssemblyCode()
 augroup end
 
-augroup brackets
-	autocmd FileType cpp inoremap for for<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
-	autocmd FileType cpp inoremap if if<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
-	autocmd FileType cpp inoremap else else<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
+" augroup brackets
+" 	autocmd FileType cpp inoremap for for<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
+" 	autocmd FileType cpp inoremap if if<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
+" 	autocmd FileType cpp inoremap else else<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
+" 
+" 	autocmd FileType cpp inoremap cout cout<esc>:inoremap < <\| inoremap > ><CR>a
+" 	autocmd FileType cpp inoremap cin cout<esc>:inoremap < <\| inoremap > ><CR>a
+" 
+" 	autocmd FileType cpp autocmd BufLeave *.cpp inoremap < <
+" 	autocmd FileType cpp autocmd BufLeave *.cpp inoremap > >
+" augroup end
 
-	autocmd FileType cpp inoremap cout cout<esc>:inoremap < <\| inoremap > ><CR>a
-	autocmd FileType cpp inoremap cin cout<esc>:inoremap < <\| inoremap > ><CR>a
-
-	autocmd FileType cpp autocmd BufLeave *.cpp inoremap < <
-	autocmd FileType cpp autocmd BufLeave *.cpp inoremap > >
-augroup end
+augroup hackerRank_clean
+	autocmd!
+	autocmd BufEnter *.cpp nnoremap <space>h :call CleanHackerRankFile()
+augroup END

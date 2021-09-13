@@ -35,9 +35,38 @@ let NERDTreeIgnore = ['\.aux$','\.idx','\.out$','\.log']   " PlugIn NerdTree
 let g:NERDTreeHijackNetrw=1    " PlugIn NerdTree
 let g:UltiSnipsExpandTrigger="<tab>"    " PlugIn UltiSnips
 let g:UltiSnipsEditSplit="vertical"   " PlugIn UltiSnip
-let g:rainbow_ctermfgs = ['blue', 'green', 'yellow', 'red', 'magenta']    "PlugIn rainbow pair colorizer
-
-
+let g:rainbow_active = 0
+let g:rainbow_conf = {
+\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\	'ctermfgs': ['Blue', 'Yellow', 'Cyan', 'Magenta','Red'],
+\	'guis': [''],
+\	'cterms': [''],
+\	'operators': '_,\|+\|-\|*\|\/\|===\|!==\|!==\|==\|=\|!\|<\|>\|||\||\|&\|&&_',
+\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\	'separately': {
+\		'*': {},
+\		'markdown': {
+\			'parentheses_options': 'containedin=markdownCode contained', 
+\		},
+\		'lisp': {
+\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'], 
+\		},
+\		'haskell': {
+\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'], 
+\		},
+\		'vim': {
+\			'parentheses_options': 'containedin=vimFuncBody', 
+\		},
+\		'perl': {
+\			'syn_name_prefix': 'perlBlockFoldRainbow', 
+\		},
+\		'tex': {
+	\	'parentheses': [ 'start=/\\begin/ end=/\\end/ '],
+	\			'operators': '_{\|}\|+\|-\|$\|$$_',
+\		},
+\		'css': 0, 
+\	}
+\}
 " =================================
 " ========== Set variables 
 " =================================

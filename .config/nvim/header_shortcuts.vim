@@ -133,14 +133,23 @@ endfunction
 
 
 function! CompileAndRunCppForNcurses(RunCommand)
-	exe ':AsyncRun st -T "floating" -e sh -c " ' . a:RunCommand . ' -lncurses %:p -o %< && ./%< ; read -n1"'
+	exe ':AsyncRun st -T "floating" -e sh -c " ' . a:RunCommand . ' -lncurses %:p -o %<_nc && ./%<_nc ; read -n1"'
 endfunction
 function! CompileAndRunCpp(RunCommand)
 :w!
 if filereadable("In.txt") || filereadable("runcpp.sh")
 		:call CompileAndRunCppForCompetition(a:RunCommand)
 	else
-		:call CompileAndRunCppForNcurses(a:RunCommand)
+		if filereadable("%<_nc")
+			:call CompileAndRunCppForNcurses(a:RunCommand)
+			return
+		endif
+		let tempChar = input("(c)ompetition-(n)curses: ")
+		if tempChar == "c"
+			:call CompileAndRunCppForCompetition(a:RunCommand)
+		else
+			:call CompileAndRunCppForNcurses(a:RunCommand)
+		endif
 	endif
 endfunction
 
@@ -169,7 +178,7 @@ function! CompileAndRunSingleFile()
 		echo "there is a tempFileForConfig.tex in the folder, the binding wont work until you delete it"
 		return
 	endif
-	let l:OpenTerminal = 'AsyncRun st -e sh -c '
+	let l:OpenTerminal = 'AsyncRun st -T "floating" -e sh -c '
 	let l:CopyConfigFileToCurrentPath = ' cp ~/.config/nvim/runFileConfigurations/configuration.tex . ; '
 	let l:CopyFileToMainTex = 'cp ' . b:FileNameNoExtension . '.tex tempFileForConfig.tex ; '
 	let l:RunPdfLatex = ' pdflatex --shell-escape configuration.tex ; '
@@ -255,4 +264,11 @@ function! CompileAndRunAssemblyCode()
 	let l:createExecutable = "ld -s -o " . l:Name . " " . l:Name . ".o ; "
 	let l:RunExecutable = "./" . l:Name . " ; "
 	exe l:ExecuteCommands . '"' . l:createOFiles . l:createExecutable . l:RunExecutable . "read -n1" '"'
-endfunction\
+endfunction
+
+function! CleanHackerRankFile()
+  execute "% " . 'g/ofstream/d'
+  execute "% " . 's/cout/cout/g'
+  execute "% " . 'g/.close()/d'
+endfunction
+
