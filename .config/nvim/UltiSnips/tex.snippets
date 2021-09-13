@@ -39,4 +39,65 @@ snippet image
 \includegraphics{$1}
 $2
 endsnippet
+snippet sk
 
+% Fecha: `date +%d/%B/%Y\ -\ %A`
+% Autor: Virgilio Murillo Ochoa
+% personal github: Virgilio-AI
+% linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+% contact: virgiliomurilloochoa1@gmail.com
+
+\documentclass[15pt]{extarticle}
+\usepackage[utf8]{inputenc}
+
+%personal information
+\title{${2:Title}}
+\author{Virgilio Murillo Ochoa}
+\makeindex
+%langauge of the document spanish english french
+\usepackage[$1]{babel}
+\usepackage{graphicx}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{authblk}
+\usepackage{multicol}
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage[export]{adjustbox}
+\usepackage{amssymb}
+
+%\usepackage{example}
+\usepackage{makeidx}
+%to set the references inside the document
+\usepackage{url}
+%so that references don't get out of the file
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+%to import and to use reference
+
+\usepackage{import}
+\usepackage[colorlinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+colorlinks = true,
+urlcolor=blue
+}
+\newcommand{\sech}{\mathrm{sech} \,}
+\newcommand{\csch}{\mathrm{csch} \,}
+
+\begin{document}
+
+$3
+
+\end{document}
+endsnippet
+
+snippet info
+% Fecha: `date +%d/%B/%Y\ -\ %A`
+% Autor: Virgilio Murillo Ochoa
+% personal github: Virgilio-AI
+% linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+endsnippet
