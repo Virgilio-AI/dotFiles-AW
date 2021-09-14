@@ -12,7 +12,7 @@ augroup END
 
 augroup onEnter
 	autocmd!
-	au FileType tex,c,cpp RainbowToggle
+	au FileType python,tex,c,cpp RainbowToggle
 augroup END
 
 " =================================
