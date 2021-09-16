@@ -28,8 +28,12 @@ exe "nnoremap <leader>evh :call OpenVimrcHeaderRelatedFile()"
 " ==================================================
 " =========== For editing better ===================
 " ================================================== 
+" for centering vim
+"nnoremap j jzz
+"nnoremap k kzz
 
 " for copy paste
+nnoremap -Y ggVG"+y
 nnoremap -y "+y
 vnoremap -y "+y
 

@@ -2,10 +2,10 @@
 " =================================
 " ========== when cursor moved 
 " =================================
-augroup onCursorMoved
-	autocmd!
-	autocmd CursorMoved,CursorMovedI * call CentreCursor()
-augroup END
+"augroup onCursorMoved
+"	autocmd!
+"	autocmd CursorMoved,CursorMovedI * call CentreCursor()
+"augroup END
 " =================================
 " ========== Latex 
 " =================================
