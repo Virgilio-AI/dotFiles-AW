@@ -153,7 +153,7 @@ if filereadable("In.txt") || filereadable("runcpp.sh")
 	endif
 endfunction
 
-function! GenerateCompileAndRunFile(RunCommand)
+function! GenerateCompileAndRun(RunCommand)
 	let l:RunCommandInStTerminal='!AsyncRun st -T "floating" -e sh -c '
 	let l:openDoublequotes='"'
 	let l:closeDoublequotes='"'
@@ -163,16 +163,21 @@ function! GenerateCompileAndRunFile(RunCommand)
 endfunction
 
 "compile and run latex
-function! CompileAndRunProyect()
+function! CompileAndRunLatexProject()
 	:w!
 	let l:PdfFile = b:FileNameNoExtension . ".pdf"
-	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && pdflatex --shell-escape ' . b:FileName .  '"'
-	sleep 4
-	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && zathura ' . l:PdfFile . '"'
+	let l:TerminalCall = 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c '
+	let l:cdIntoDir = 'cd %:p:h && '
+	let l:RunCommand = 'pdflatex --shell-escape ' . b:FileName . ' ; '
+	let l:OpenPdf = 'zathura ' . l:PdfFile
+	exe l:TerminalCall . '"' . l:cdIntoDir . l:RunCommand . l:OpenPdf  . '"'
+"	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && pdflatex --shell-escape ' . b:FileName .  '"'
+"	sleep 4
+"	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && zathura ' . l:PdfFile . '"'
 endfunction
 
 " compile and run single file
-function! CompileAndRunSingleFile()
+function! CompileAndRunLatexSingleFile()
 	:w!
 	if filereadable('tempFileForConfig.tex')
 		echo "there is a tempFileForConfig.tex in the folder, the binding wont work until you delete it"

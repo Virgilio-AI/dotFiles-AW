@@ -1,4 +1,4 @@
-" =================================
+" tex=================================
 " ========== Shortcuts file
 " =================================
 
@@ -125,12 +125,12 @@ augroup end
 
 augroup Run_Tex
 " compile and open single proyect
-execute 'autocmd FileType tex nnoremap <F11> <Esc>:call CompileAndRunSingleFile()' 
+execute 'autocmd FileType tex nnoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
 " compile and open single file
-execute 'autocmd FileType tex inoremap <F11> <Esc>:call CompileAndRunSingleFile()' 
+execute 'autocmd FileType tex inoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
 " compile and open proyect
-execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunProyect()' 
-execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunProyect()' 
+execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProject()' 
+execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProject()' 
 "preview proyect
 execute 'autocmd FileType tex nnoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
 execute 'autocmd FileType tex inoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
