@@ -1,6 +1,5 @@
 
-" =================================
-" ========== Main Variables 
+" ================================= ========== Main Variables 
 " =================================
 
 let g:CONFIG_PATH = '~/.config/nvim'
@@ -61,8 +60,9 @@ let g:rainbow_conf = {
 \			'syn_name_prefix': 'perlBlockFoldRainbow', 
 \		},
 \		'tex': {
-	\	'parentheses': [ 'start=/\\begin/ end=/\\end/ '],
-	\			'operators': '_{\|}\|+\|-\|$\|$$_',
+	\	'parentheses': [ 'start=/\\begin/ end=/\\end/' , 'start=/\\begin{large}/ end=/\\end{large}/ ','start=/\\begin{Large}/ end=/\\end{Large}/ ','start=/\\begin{LARGE}/ end=/\\end{LARGE}/ ','start=/\\begin{itemize}/ end=/\\end{itemize}/ ','start=/\\begin{tikzpicture}/ end=/\\end{tikzpicture}/ ','start=/\\begin{document}/ end=/\\end{document}/ ','start=/\\begin{paracol}/ end=/\\end{paracol}/ ','start=/\\begin{rightcolumn}/ end=/\\end{rightcolumn}/ ','start=/\\begin{leftcolumn}/ end=/\\end{leftcolumn}/ ' ,'start=/{/ end=/}/' , 'start=/\\begin{cvsection}/ end=/\\end{cvsection}/' , ' start=/\\begin{minipage}/ end=/\\end{minipage}/ '
+		\],
+	\			'operators': '_[\|]\|{\|}\|+\|-\|$\|$$_',
 \		},
 \		'css': 0, 
 \	}
