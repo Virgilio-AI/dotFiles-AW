@@ -108,3 +108,4 @@
 .config/mpd/log
 .config/mpd/database
 .config/mpd/pid
+.config/pavucontrol.ini
