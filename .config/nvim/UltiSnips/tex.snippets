@@ -9,8 +9,13 @@
 #sk skeleton
 #info - create the info header
 #tex - import tex document
+#header - header for preview
+snippet header
+% !TEX root = % !TEX root = ${1:<root-filename>}
+endsnippet
+
 snippet tex
-import{${1:path}/}{${2:name}}
+\import{${1:path}/}{${2:name}}
 endsnippet
 
 snippet cen
