@@ -170,7 +170,7 @@ function! CompileAndRunLatexProject()
 	let l:cdIntoDir = 'cd %:p:h && '
 	let l:RunCommand = 'pdflatex --shell-escape ' . b:FileName . ' ; '
 	let l:OpenPdf = 'zathura ' . l:PdfFile
-	exe l:TerminalCall . '"' . l:cdIntoDir . l:RunCommand . l:OpenPdf  . '"'
+	exe l:TerminalCall . '"' . l:cdIntoDir . l:RunCommand  . l:RunCommand . l:OpenPdf . '"'
 "	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && pdflatex --shell-escape ' . b:FileName .  '"'
 "	sleep 4
 "	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && zathura ' . l:PdfFile . '"'
