@@ -1,4 +1,77 @@
-#sk
+# sk - skeleton for a web page
+# model - help for model
+# update - help for alias
+# view - help for view
+# -- button - for creating a button in div
+# -- div - for creating a div
+# --------------------------------
+# func - basic function
+# list - create a basic list
+# applyFuncToList - to apply a function into a list 
+# record - like a python dictionary
+# fromInt - convert int to string
+snippet fromInt
+String.fromInt ${1:name_of_int}
+endsnippet
+
+snippet button
+button[ ${1:onClick} ${2:case} ] [ text "$3" ],
+endsnippet
+snippet div
+div [] [$1]
+endsnippet
+
+snippet record
+${1:name} = 
+{
+--  nombre_str = "cadena"
+--  nombre_Int = number
+$2
+}
+endsnippet
+
+snippet model
+-- = { content: String }, = Int
+type alias Model = $1
+init : Model
+-- = { content = ""}, = 0
+init = $2
+endsnippet
+
+snippet update
+-- = Change String, = Increment | Decrement
+type Msg = $1
+-- update msg model = 
+--	case msg of
+-- 	Increment ->
+-- 		model + 1
+-- case msg of
+-- 	Change newContent -> 
+-- 	{ model | content = newContent }
+endsnippet
+
+snippet view
+view : Model -> Html Msg
+view model = 
+   div[]
+   [
+   -- input [ placeholder "Text to reverse", value model.content, onInput Change ] []
+   -- div [] [ text(String.reverse model.content)]
+   -- button,div
+   ]
+endsnippet
+
+snippet func
+${1:name_of_function} = $2
+endsnippet
+
+snippet list
+${1:name} = [${2:csv}]
+endsnippet
+
+snippet applyFuncToList
+List.map ${1:func} ${2:numbers}
+endsnippet
 
 snippet info
 -- Fecha: `date +%d/%B/%Y\ -\ %A`
@@ -15,7 +88,7 @@ snippet sk
 -- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 -- contact: virgiliomurilloochoa1@gmail.com
 
-module $1 exposing (main)
+module ${2:Main} exposing (main)
 
 import Browser
 import Html exposing (..)
@@ -24,7 +97,7 @@ import List exposing(..)
 import String exposing(..)
 import Html.Events exposing (..)
 -- Main
-${2:main}
+${1}
 main = Browser.sandbox { init = init, update = update, view = view }
 
 -- Model
