@@ -1,3 +1,6 @@
+# ---------------   python
+
+# ---------------   matplotlib
 # plot2dsk
 # varrange
 # xyaxis
@@ -11,6 +14,23 @@
 # 3din2d
 # plotPoint
 # plotFunction
+# ----------------    pandas
+# ploadcsv
+# pcombinecsv
+snippet pcombinecsv
+${1:name_of_files} = glob.glob("${2:PATH/TO/FILES/file*_.csv}")
+${1}_dt = pd.concat)[pd.read_csv(f) for f in ${1} ])
+endsnippet
+
+
+snippet ploadcsv
+${1:nombre} = "${2:path}"
+${1}_dt = pd.read_csv($1)
+$!
+endsnippet
+
+
+
 snippet plotFunction
 ${1:x_var} = np.arange(${2:left_range},${3:right_range},${4:step})
 
