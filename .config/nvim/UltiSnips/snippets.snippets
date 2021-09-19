@@ -1,0 +1,23 @@
+
+# zsh snippets
+snippet forFolder
+# :h for name only
+# :t for name with extension
+for ${1:file} in ${2:\$1/*} ; do
+	${3:echo "\$file:t" # for filename only}
+done
+endsnippet
+
+snippet forstring
+for ${1:char_it} in \$( echo \$${2:str} )
+do
+	$3
+done
+endsnippet
+snippet if
+if [[ $1 ]]
+then
+	$2
+fi
+endsnippet
+
