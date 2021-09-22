@@ -260,8 +260,19 @@ endfunction
 " =================================
 " ========== CompileAndRunAssembly 
 " =================================
+function! BurnAtmel16()
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+	let l:FileName = expand("%")
+	let l:Name = expand("%<")
+	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
+	exe l:ExecuteCommands . '"' . l:BurnMicro . ' ;  read -n1 '
+endfunction
 
-function! CompileAndRunAssemblyCode()
+function BurnMicroChip()
+	:call BurnAtmel16()
+endfunction
+
+function! CompileAndRunAssemblyForLinux()
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:FileName = expand("%")
 	let l:Name = expand("%<")
@@ -269,6 +280,22 @@ function! CompileAndRunAssemblyCode()
 	let l:createExecutable = "ld -s -o " . l:Name . " " . l:Name . ".o ; "
 	let l:RunExecutable = "./" . l:Name . " ; "
 	exe l:ExecuteCommands . '"' . l:createOFiles . l:createExecutable . l:RunExecutable . "read -n1" '"'
+endfunction
+
+function! CompileAndRunAssemblyForAvr()
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+	let l:FileName = expand("%")
+	let l:CreateHex = 'gavrasm ' . l:FileName
+	exe l:ExecuteCommands . '"' . l:CreateHex . ' ; read -n1 ' . '"'
+endfunction
+
+function! CompileAndRunAssemblyCode()
+	let tempchar=input("(l)inux (a)tmega16: ")
+	if tempchar == "l"
+		:call CompileAndRunAssemblyForLinux()
+	else
+		:call CompileAndRunAssemblyForAvr()
+	endif
 endfunction
 
 function! CleanHackerRankFile()

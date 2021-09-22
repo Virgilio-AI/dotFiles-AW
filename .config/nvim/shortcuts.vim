@@ -391,6 +391,7 @@ augroup end
 
 augroup assembly
 	autocmd FileType asm nnoremap <F11> :w<CR>:call CompileAndRunAssemblyCode()
+	autocmd FileType asm nnoremap <F5>  :w<CR>:call BurnMicroChip()
 augroup end
 
 " augroup brackets
