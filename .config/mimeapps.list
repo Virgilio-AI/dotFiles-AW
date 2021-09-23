@@ -5,3 +5,4 @@ application/pdf=org.pwmt.zathura.desktop
 text/plain=nvim.desktop
 image/png=sxiv.desktop
 text/csv=libreoffice-calc.desktop
+inode/directory=ranger.desktop
