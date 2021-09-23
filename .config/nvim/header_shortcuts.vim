@@ -265,7 +265,7 @@ function! BurnAtmel16()
 	let l:FileName = expand("%")
 	let l:Name = expand("%<")
 	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
-	exe l:ExecuteCommands . '"' . l:BurnMicro . ' ;  read -n1 '
+	exe l:ExecuteCommands . '"' . l:BurnMicro . ' ;  read -n1 ' . '"'
 endfunction
 
 function BurnMicroChip()
