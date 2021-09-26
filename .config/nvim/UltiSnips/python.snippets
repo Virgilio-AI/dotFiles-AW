@@ -2,6 +2,13 @@
 
 # ---------------   python
 
+# list - for creating a python list
+# set - unordered collection of data type, no duplicate
+# tuple - same to list but inmutable
+
+# dictionary - ordered collection of data values key:val
+
+# 
 # ---------------   matplotlib
 # plot2dsk
 # varrange
@@ -19,6 +26,18 @@
 # ----------------    pandas
 # ploadcsv
 # pcombinecsv
+snippet list
+${1:temp} = [$2]
+endsnippet
+
+snippet set
+${1:temp} = {$2}
+endsnippet
+
+snippet tuple
+${1:temp} = ($2)
+endsnippet
+
 snippet pcombinecsv
 ${1:name_of_files} = glob.glob("${2:PATH/TO/FILES/file*_.csv}")
 ${1}_dt = pd.concat)[pd.read_csv(f) for f in ${1} ])

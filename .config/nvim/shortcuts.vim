@@ -378,10 +378,10 @@ augroup end
 " ========== bindings for vim and jupyter notebooks 
 " =================================
 augroup jupyterNoteBook
-	autocmd BufEnter *.sync.py nnoremap <space>x :w<CR>:call jupyter_ascending#execute()<CR>
+	autocmd BufEnter *.sync.py nnoremap <space>x :w<CR>:call jupyter_ascending#execute()<CR>:call jupyter_ascending#execute()<CR>
 	autocmd BufEnter *.sync.py nnoremap <space>X :w<CR>:call jupyter_ascending#execute_all()<CR>
-	autocmd BufEnter *.sync.py nnoremap B :normal! i# %%<CR>
-	autocmd BufEnter *.sync.py nnoremap M :normal! i# %% [markdown]<CR>
+	autocmd BufEnter *.sync.py nnoremap B $a<CR><Esc>:normal! i# %%<CR>o<Esc>
+	autocmd BufEnter *.sync.py nnoremap M $a<CR><Esc>:normal! i# %% [markdown]<CR>o<Esc>
 augroup end
 
 

@@ -1,17 +1,22 @@
 # resizestr - to resize a c string
 # random - to input the random function
 # copenFile - to open a file in c style format
+
+
+
+# sk_ncurses - skeleton for ncurses
+# ndoc - basic documentation for ncurses
 snippet copenFile
-# r reading,w write, a append
-# r+ open for reading and writing
-# w+ open for both reading and writing
-# a+ open for both appending and reading
-# append b for binary mode
+// r reading,w write, a append
+// r+ open for reading and writing
+// w+ open for both reading and writing
+// a+ open for both appending and reading
+// append b for binary mode
 ptr = fopen("${1:path}","${2:mode}");
 endsnippet
 
 snippet random
-#float num = rand()%maxNUm;
+// float num = rand()%maxNUm;
 srand(time(NULL));
 endsnippet
 

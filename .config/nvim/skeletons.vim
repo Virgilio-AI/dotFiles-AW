@@ -57,3 +57,11 @@ augroup assembly_main
 	autocmd!
 	autocmd BufEnter *.asm call ExpandSkeleton('sk')
 augroup END
+" =================================
+" ========== for html files 
+" =================================
+
+augroup html
+	autocmd!
+	autocmd BufEnter *.html call ExpandSkeleton('sk')
+augroup END
