@@ -66,6 +66,11 @@ feh --randomize --bg-fill ~/images/background/* --randomize --bg-fill ~/images/b
 udiskie &
 #for executing dwm
 # change screen position
-pulseaudio --start &
+pulseaudio --start
+
+if [ -f ".Xmodmap" ] ; then
+	setxkbmap us
+	xmodmap .Xmodmap
+fi
 
 exec dwm 
