@@ -3,6 +3,12 @@
 #for 
 #if 
 #dyesno
+# ifFile
+snippet ifFile
+if test -f "$1"; then
+	$2
+fi
+endsnippet
 
 snippet sk
 #!/usr/bin/zsh
