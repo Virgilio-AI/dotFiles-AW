@@ -6,7 +6,7 @@ then
 	gitAutoCommit.sh ; sudo shutdown
 elif [[ $doit == "r" ]] ;
 then
-	gitAutoCommit.sh ; reestart
+	gitAutoCommit.sh ; reboot
 elif [[ $doit == "n" ]] ;
 then
 	shutdown now
