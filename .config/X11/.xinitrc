@@ -66,5 +66,6 @@ feh --randomize --bg-fill ~/images/background/* --randomize --bg-fill ~/images/b
 udiskie &
 #for executing dwm
 # change screen position
+pulseaudio --start &
 
 exec dwm 
