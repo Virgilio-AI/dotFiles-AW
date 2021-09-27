@@ -40,7 +40,7 @@ let g:rainbow_conf = {
 \	'ctermfgs': ['Blue', 'Yellow', 'Cyan', 'Magenta','Red'],
 \	'guis': [''],
 \	'cterms': [''],
-\	'operators': '_,\|+\|-\|*\|\/\|===\|!==\|!==\|==\|=\|!\|<\|>\|||\||\|&\|&&_',
+\	'operators': '_,\|+\|-\|*\|\/\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
 \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 \	'separately': {
 \		'*': {},
