@@ -1,4 +1,13 @@
-" tex=================================
+
+" =================================
+" ========== Compile And Run code in markdown 
+" =================================
+augroup markdown
+	autocmd!
+	autocmd! FileType markdown nnoremap <F11> :w<CR>:call CompileAndRunMarkDown()
+augroup END
+
+" =================================
 " ========== Shortcuts file
 " =================================
 
@@ -337,14 +346,6 @@ exe 'autocmd BufEnter *.sh nnoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" 
 exe 'autocmd BufEnter *.sh inoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
 augroup end
 " =================================
-" ========== markdown files 
-" =================================
-augroup CompileAndRunMarkDown
-	autocmd!
-	autocmd BufEnter *.md noremap <F11> :w<CR>:call CompileAndRunMarkDown()<CR>
-	autocmd BufEnter *.md noremap <F11> :w<CR>:call CompileAndRunMarkDown()<CR>
-augroup end
-" =================================
 " ========== Run elm projects and files 
 " =================================
 
@@ -394,19 +395,9 @@ augroup assembly
 	autocmd FileType asm nnoremap <F5>  :w<CR>:call BurnMicroChip()
 augroup end
 
-" augroup brackets
-" 	autocmd FileType cpp inoremap for for<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
-" 	autocmd FileType cpp inoremap if if<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
-" 	autocmd FileType cpp inoremap else else<esc>:inoremap < <lt>space><<lt>space> \| inoremap > <lt>space>><lt>space><CR>a
-" 
-" 	autocmd FileType cpp inoremap cout cout<esc>:inoremap < <\| inoremap > ><CR>a
-" 	autocmd FileType cpp inoremap cin cout<esc>:inoremap < <\| inoremap > ><CR>a
-" 
-" 	autocmd FileType cpp autocmd BufLeave *.cpp inoremap < <
-" 	autocmd FileType cpp autocmd BufLeave *.cpp inoremap > >
-" augroup end
 
 augroup hackerRank_clean
 	autocmd!
 	autocmd BufEnter *.cpp nnoremap <space>h :call CleanHackerRankFile()
 augroup END
+

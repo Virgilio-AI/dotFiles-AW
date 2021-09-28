@@ -41,7 +41,6 @@ Plug 'untitled-ai/jupyter_ascending.vim'
 " for nvim in brave
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'luochen1990/rainbow'
-
 call plug#end() 
 
 

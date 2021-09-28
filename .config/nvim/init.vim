@@ -29,6 +29,8 @@ exec 'source ' . g:CONFIG_PATH . '/skeletons.vim'
 " ========== PlugIn Variables 
 " =================================
 
+
+" latex preview
 let g:livepreview_previewer = 'zathura'    " For Latex
 let NERDTreeIgnore = ['\.aux$','\.idx','\.out$','\.log']   " PlugIn NerdTree
 let g:NERDTreeHijackNetrw=1    " PlugIn NerdTree

@@ -69,7 +69,7 @@ udiskie &
 pulseaudio --start
 
 if [ -f ".Xmodmap" ] ; then
-	setxkbmap us
+	setxkbmap us ;
 	xmodmap .Xmodmap
 fi
 

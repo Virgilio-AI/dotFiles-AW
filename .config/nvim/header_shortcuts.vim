@@ -218,13 +218,13 @@ endfunction
 " =================================
 
 
-function! CompileAndRunMarkDown()
-	let openTerminal = ':AsyncRun st -T "floating" -e sh -c '
-	let l:CompileHtmlFile = 'pandoc ' . b:FileNameNoExtension . '.md > ' . b:FileNameNoExtension . '.html ; '
-	let l:PrevHtml = 'brave ' . b:FileNameNoExtension . '.html ; '
-	let l:removeHtmlFile = 'rm ' . b:FileNameNoExtension . '.html'
-	exe openTerminal . '"' . l:CompileHtmlFile . l:PrevHtml . l:removeHtmlFile . '"'
-endfunction
+" function! CompileAndRunMarkDown()
+" 	let openTerminal = ':AsyncRun st -T "floating" -e sh -c '
+" 	let l:CompileHtmlFile = 'pandoc ' . b:FileNameNoExtension . '.md > ' . b:FileNameNoExtension . '.html ; '
+" 	let l:PrevHtml = 'brave ' . b:FileNameNoExtension . '.html ; '
+" 	let l:removeHtmlFile = 'rm ' . b:FileNameNoExtension . '.html'
+" 	exe openTerminal . '"' . l:CompileHtmlFile . l:PrevHtml . l:removeHtmlFile . '"'
+" endfunction
 
 " =================================
 " ========== elm compile and run 
@@ -303,4 +303,17 @@ function! CleanHackerRankFile()
   execute "% " . 's/cout/cout/g'
   execute "% " . 'g/.close()/d'
 endfunction
+
+function! CompileAndRunMarkDown()
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+
+	let l:FileName = expand("%")
+	let l:Name = expand("%<")
+
+	let l:CreatePandoc = 'pandoc ' . l:FileName. ' -t beamer -o ' . l:Name . '.pdf ; '
+	let l:OpenPandoc = ' zathura ' . l:Name . '.pdf '
+	exe l:ExecuteCommands . '"' . l:CreatePandoc . l:OpenPandoc . ' ; read -n1 ' . '"'
+endfunction
+
+
 
