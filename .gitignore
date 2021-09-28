@@ -109,3 +109,10 @@
 .config/mpd/database
 .config/mpd/pid
 .config/pavucontrol.ini
+.config/nvim/PlugIns/firenvim
+.config/nvim/PlugIns/fzf
+.config/nvim/PlugIns/fzf.vim
+.config/nvim/PlugIns/vim-airline
+.config/nvim/PlugIns/vim-fugitive
+.config/nvim/PlugIns/vim-rainbow
+.config/nvim/PlugIns/vimspector
