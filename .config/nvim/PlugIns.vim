@@ -41,6 +41,8 @@ Plug 'untitled-ai/jupyter_ascending.vim'
 " for nvim in brave
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'luochen1990/rainbow'
+" paste files from clipboard into vim
+Plug 'ferrine/md-img-paste.vim'
 call plug#end() 
 
 
