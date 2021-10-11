@@ -1,3 +1,10 @@
+" Fecha: 10/October/2021 - Sunday
+" Autor: Virgilio Murillo Ochoa
+" personal github: Virgilio-AI
+" linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+" contact: virgiliomurilloochoa1@gmail.com
+
+
 
 " =================================
 " ========== Compile And Run code in markdown 
@@ -6,6 +13,7 @@ augroup markdown
 	autocmd!
 	autocmd! FileType markdown nnoremap <F11> :w<CR>:call CompileAndRunMarkDown()
 augroup END
+autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 
 " =================================
 " ========== Shortcuts file
@@ -48,7 +56,6 @@ vnoremap -y "+y
 
 nnoremap -p "+p
 vnoremap -p "+p
-
 
 " change surroundings
 noremap <leader>[ a[<Esc>h%xi]<Esc>%hx

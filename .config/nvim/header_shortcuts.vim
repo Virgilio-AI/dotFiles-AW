@@ -1,3 +1,13 @@
+" Fecha: 10/October/2021 - Sunday
+" Autor: Virgilio Murillo Ochoa
+" personal github: Virgilio-AI
+" linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+" contact: virgiliomurilloochoa1@gmail.com
+
+" =================================
+" ========== helper functions for the whole file 
+" =================================
+
 " ==================================================
 " =========== vimrc ===================
 " ==================================================
@@ -218,13 +228,6 @@ endfunction
 " =================================
 
 
-" function! CompileAndRunMarkDown()
-" 	let openTerminal = ':AsyncRun st -T "floating" -e sh -c '
-" 	let l:CompileHtmlFile = 'pandoc ' . b:FileNameNoExtension . '.md > ' . b:FileNameNoExtension . '.html ; '
-" 	let l:PrevHtml = 'brave ' . b:FileNameNoExtension . '.html ; '
-" 	let l:removeHtmlFile = 'rm ' . b:FileNameNoExtension . '.html'
-" 	exe openTerminal . '"' . l:CompileHtmlFile . l:PrevHtml . l:removeHtmlFile . '"'
-" endfunction
 
 " =================================
 " ========== elm compile and run 
@@ -306,9 +309,20 @@ endfunction
 
 function! CompileAndRunMarkDown()
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
-
 	let l:FileName = expand("%")
-	let l:Name = expand("%<")
+
+	let l:Temp = expand("%<")
+	let l:Name = ""
+
+	let l:chars = split(l:Temp,'\zs')
+	let l:strlen = len(l:Temp)
+	let l:cont =0
+	while l:cont < l:strlen
+		if l:cont != 0 || l:chars[l:cont] != '.'
+			let l:Name = l:Name . l:chars[l:cont]
+		endif
+		let l:cont = l:cont + 1
+	endwhile
 
 	let l:CreatePandoc = 'pandoc ' . l:FileName. ' -t beamer -o ' . l:Name . '.pdf ; '
 	let l:OpenPandoc = ' zathura ' . l:Name . '.pdf '
