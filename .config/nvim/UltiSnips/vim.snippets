@@ -1,3 +1,25 @@
+# conditionals
+# info
+# sec
+# if -- simple if
+# sk -- simple skeleton
+# cin -- read string from input
+# conditionals -- for expanation of conditionals
+# forString -- traverse string in a for
+snippet forString
+let l:${1:chars} = split(l:${2:Temp},'\zs')
+let l:strlen = len(l:$2)
+let l:${3:cont} =0
+while l:$3 < l:strlen
+	${4:let l:Name = l:Name . l:chars[l:cont]}
+	let l:$3 = l:$3 + 1
+endwhile
+endsnippet
+
+snippet conditionals
+" c style conditionals == != && || 
+endsnippet
+
 snippet info
 " Fecha: `date +%d/%B/%Y\ -\ %A`
 " Autor: Virgilio Murillo Ochoa
