@@ -118,4 +118,11 @@ au BufEnter txti.es_*.txt et filetype=typescript
 augroup end
 
 " shortcuts for hacker rank
-
+" =================================
+" ========== Mark Down 
+" =================================
+autocmd FileType markdown let g:PasteImageFunction = 'g:MarkdownPasteImage'
+" =================================
+" ========== latex 
+" =================================
+autocmd FileType tex let g:PasteImageFunction = 'g:LatexPasteImage'
