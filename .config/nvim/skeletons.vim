@@ -65,3 +65,11 @@ augroup html
 	autocmd!
 	autocmd BufEnter *.html call ExpandSkeleton('sk')
 augroup END
+" =================================
+" ========== markdown template 
+" =================================
+augroup markDown
+	autocmd!
+	autocmd BufEnter *.md call ExpandSkeleton('sk')
+augroup END
+
