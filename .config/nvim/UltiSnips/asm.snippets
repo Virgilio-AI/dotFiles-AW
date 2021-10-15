@@ -6,6 +6,20 @@
 # +   - to add
 # -   - to substract
 # retButton - ratard for button
+# display - for all numbers in display
+# {#}d - for number in display
+# if - similar to if
+# goto - rjmp
+snippet goto
+rjmp ${1:name}
+; name:
+endsnippet
+
+snippet if
+	cpi ${1:register}, ${2:binary_Number}
+	breq ${3:instruction}
+endsnippet
+
 
 snippet retButton
 retardo:
@@ -41,7 +55,7 @@ endsnippet
 snippet inset
 ; name of register has to be bigger than 16 for inmediate load
 ldi ${1:name_of_register}, 0b0000_0000
-out ddr${2:a-b-c-d}, r16
+out ddr${2:a-b-c-d}, $1
 ldi $1, 0b1111_1111
 out port$2, $1
 endsnippet
@@ -49,7 +63,7 @@ endsnippet
 snippet outset
 ; name of register must be bigger than 16
 ldi ${1:name_of_register}, 0b1111_1111
-out ddr${2:a-b-c-d}, r16
+out ddr${2:a-b-c-d}, $1
 ldi $1,0b0000_0000
 out port$2,$1
 endsnippet
@@ -180,4 +194,112 @@ reti
 SPM_RDY: 
 reti ; Store Program Memory Ready Handler
 endsnippet
+snippet 0d
+CERO:
+	ldi ${1:register}, 0b1110_0111
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 1d
+ONE:
+	ldi ${1:register},0b0010_0001
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 2d
+TWO:
+	ldi ${1:register},0b1100_1011
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 3d
+TREE:
+	ldi ${1:register},0b0110_1011
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 4d
+FOUR:
+	ldi ${1:register},0b0010_1101
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 5d
+FIVE:
+	ldi ${1:register},0b0110_1110
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 6d
+SIX:
+	ldi ${1:register},0b1110_1110
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 7d
+SEVEN:
+	ldi ${1:register},0b0010_0011
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 8d
+EIGHT:
+	ldi ${1:register},0b1110_1111
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+snippet 9d
+NINE:
+	ldi ${1:register},0b0010_1111
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+endsnippet
+
+snippet display
+; ==============================
+; ** definition of display
+; ==============================
+CERO:
+	ldi ${1:register}, 0b1110_0111
+	out port${2:a-b-c-d}, $1
+	rjmp $3
+ONE:
+	ldi $1,0b0010_0001
+	out port$2, $1
+	rjmp $3
+TWO:
+	ldi $1,0b1100_1011
+	out port$2, $1
+	rjmp $3
+TREE:
+	ldi $1,0b0110_1011
+	out port$2, $1
+	rjmp $3
+FOUR:
+	ldi $1,0b0010_1101
+	out port$2, $1
+	rjmp $3
+FIVE:
+	ldi $1,0b0110_1110
+	out port$2, $1
+	rjmp $3
+SIX:
+	ldi $1,0b1110_1110
+	out port$2, $1
+	rjmp $3
+SEVEN:
+	ldi $1,0b0010_0011
+	out port$2, $1
+	rjmp $3
+EIGHT:
+	ldi $1,0b1110_1111
+	out port$2, $1
+	rjmp $3
+NINE:
+	ldi $1,0b0010_1111
+	out port$2, $1
+	rjmp $3
+endsnippet
+
+
 
