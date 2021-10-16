@@ -264,6 +264,7 @@ endfunction
 " ========== CompileAndRunAssembly 
 " =================================
 function! BurnAtmel16()
+	:w!
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:FileName = expand("%")
 	let l:Name = expand("%<")
@@ -276,20 +277,31 @@ function BurnMicroChip()
 endfunction
 
 function! CompileAndRunAssemblyForLinux()
+	:w!
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:FileName = expand("%")
 	let l:Name = expand("%<")
-	let l:createOFiles = "nasm -f elf64 " . l:FileName . " ; "
+	let l:createOFiles = "nasm -F obj -f elf64 " . l:FileName . " ; "
 	let l:createExecutable = "ld -s -o " . l:Name . " " . l:Name . ".o ; "
 	let l:RunExecutable = "./" . l:Name . " ; "
 	exe l:ExecuteCommands . '"' . l:createOFiles . l:createExecutable . l:RunExecutable . "read -n1" '"'
 endfunction
 
 function! CompileAndRunAssemblyForAvr()
+	:w!
+	" for burning the microchip
+	let l:Name = expand("%<")
+	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
+	" for compiling the code
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:FileName = expand("%")
 	let l:CreateHex = 'gavrasm ' . l:FileName
-	exe l:ExecuteCommands . '"' . l:CreateHex . ' ; read -n1 ' . '"'
+	let l:burn = input("do you want to burn into the phisical microchip(y/n)")
+	if l:burn == 'y'
+		exe l:ExecuteCommands . '"' . l:CreateHex . ' ; read -n1 ; ' . l:BurnMicro . ' ; read -n1 ' .'"'
+	else
+		exe l:ExecuteCommands . '"' . l:CreateHex . ' ; read -n1 ' . '"'
+	endif
 endfunction
 
 function! CompileAndRunAssemblyCode()

@@ -46,11 +46,13 @@ endsnippet
 
 snippet in
 ; name of the register to load info
+ldi $1, 0
 in ${1:register}, pin${2:a-b-c-d}
 com $1
 endsnippet
 
 snippet out
+ldi $2, 0
 out port${1:a-b-c-d}, ${2:register}
 endsnippet
 
