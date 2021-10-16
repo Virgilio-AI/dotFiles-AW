@@ -10,19 +10,20 @@
 # {#}d - for number in display
 # if - similar to if
 # goto - rjmp
+
 snippet goto
 rjmp ${1:name}
 ; name:
 endsnippet
 
 snippet if
-	cpi ${1:register}, ${2:binary_Number}
-	breq ${3:instruction}
+cpi ${1:register}, ${2:binary_Number}
+breq ${3:instruction}
 endsnippet
 
 
 snippet retButton
-retardo:
+retButton:
 	; ============================= 
 	;    delay loop generator 
 	;     5000 cycles:
@@ -46,6 +47,7 @@ endsnippet
 snippet in
 ; name of the register to load info
 in ${1:register}, pin${2:a-b-c-d}
+com $1
 endsnippet
 
 snippet out
@@ -53,7 +55,8 @@ out port${1:a-b-c-d}, ${2:register}
 endsnippet
 
 snippet inset
-; name of register has to be bigger than 16 for inmediate load
+; input setting
+; inmediate registers are bigger than 16
 ldi ${1:name_of_register}, 0b0000_0000
 out ddr${2:a-b-c-d}, $1
 ldi $1, 0b1111_1111
@@ -61,6 +64,7 @@ out port$2, $1
 endsnippet
 
 snippet outset
+; output setting
 ; name of register must be bigger than 16
 ldi ${1:name_of_register}, 0b1111_1111
 out ddr${2:a-b-c-d}, $1
@@ -198,61 +202,61 @@ snippet 0d
 CERO:
 	ldi ${1:register}, 0b1110_0111
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 1d
 ONE:
 	ldi ${1:register},0b0010_0001
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 2d
 TWO:
 	ldi ${1:register},0b1100_1011
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 3d
 TREE:
 	ldi ${1:register},0b0110_1011
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 4d
 FOUR:
 	ldi ${1:register},0b0010_1101
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 5d
 FIVE:
 	ldi ${1:register},0b0110_1110
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 6d
 SIX:
 	ldi ${1:register},0b1110_1110
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 7d
 SEVEN:
 	ldi ${1:register},0b0010_0011
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 8d
 EIGHT:
 	ldi ${1:register},0b1110_1111
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 snippet 9d
 NINE:
 	ldi ${1:register},0b0010_1111
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 endsnippet
 
 snippet display
@@ -262,43 +266,43 @@ snippet display
 CERO:
 	ldi ${1:register}, 0b1110_0111
 	out port${2:a-b-c-d}, $1
-	rjmp $3
+	${3:rjmp|ret}
 ONE:
 	ldi $1,0b0010_0001
 	out port$2, $1
-	rjmp $3
+	$3
 TWO:
 	ldi $1,0b1100_1011
 	out port$2, $1
-	rjmp $3
+	$3
 TREE:
 	ldi $1,0b0110_1011
 	out port$2, $1
-	rjmp $3
+	$3
 FOUR:
 	ldi $1,0b0010_1101
 	out port$2, $1
-	rjmp $3
+	$3
 FIVE:
 	ldi $1,0b0110_1110
 	out port$2, $1
-	rjmp $3
+	$3
 SIX:
 	ldi $1,0b1110_1110
 	out port$2, $1
-	rjmp $3
+	$3
 SEVEN:
 	ldi $1,0b0010_0011
 	out port$2, $1
-	rjmp $3
+	$3
 EIGHT:
 	ldi $1,0b1110_1111
 	out port$2, $1
-	rjmp $3
+	$3
 NINE:
 	ldi $1,0b0010_1111
 	out port$2, $1
-	rjmp $3
+	$3
 endsnippet
 
 
