@@ -14,6 +14,11 @@
 # traba - for retarding if the button is pressed
 # var - alias for a register
 # = - for info on asingnign 
+# def - for definition of port pin or ddr
+
+snippet def
+.equ ${1:nombre} = ${2:port|pin}
+endsnippet
 
 snippet =
 ; mov reg_target, second_reg
@@ -26,14 +31,14 @@ traba$1:
 	rcall retButton
 	retenido$1:
 		; name of the register to load info
-		sbis pin${3:a-b-c-d}, 0 ; check if pin is set
+		sbis pin${3:a-b-c-d}, ${2:number_of_pin} ; check if pin is set
 			rjmp retenido$1
 	rcall retButton
 endsnippet
 
 snippet var
 ldi ${1:register_number}, ${2:0b0000_0000|#|0x#}
-.def ${3:register_name} = $2
+.def ${3:register_name} = $1
 endsnippet
 
 snippet goto
@@ -174,10 +179,11 @@ out SPL, r16
 ;******************************************************
 
 
-; ******* definition of input output ports ******
+; ******* definition of input output ports ****** def
 $3
+; ******* setting input output ******************  inset, outset
 
-; ************** definition of variables *********
+; ************** definition of variables ********* var
 
 ; ************** actions to do at the beggining ***
 
@@ -246,43 +252,53 @@ snippet setdisplay
 ; ============================
 
 CERO:
+	ldi $1, 0b0000_0000
 	ldi ${1:register}, 0b0111_1110
 	out port${2:a-b-c-d}, $1
 	${3:rjmp|ret}
 ONE:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0100_1000
 	out port$2, $1
 	$3
 
 TWO:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0011_1101
 	out port$2, $1
 	$3
 TREE:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0110_1101
 	out port$2, $1
 	$3
 FOUR:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0100_1011
 	out port$2, $1
 	$3
 FIVE:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0110_0111
 	out port$2, $1
 	$3
 SIX:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0111_0011
 	out port$2, $1
 	$3
 SEVEN:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0100_1100
 	out port$2, $1
 	$3
 EIGHT:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0111_1111
 	out port$2, $1
 	$3
 NINE:
+	ldi $1, 0b0000_0000
 	ldi $1,0b0100_1111
 	out port$2, $1
 	$3
