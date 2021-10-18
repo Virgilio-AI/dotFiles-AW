@@ -45,6 +45,10 @@ exe "nnoremap <leader>evh :call OpenVimrcHeaderRelatedFile()"
 " ==================================================
 " =========== For editing better ===================
 " ================================================== 
+
+" for reversing a string better
+vnoremap ;rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
+
 " for centering vim
 "nnoremap j jzz
 "nnoremap k kzz

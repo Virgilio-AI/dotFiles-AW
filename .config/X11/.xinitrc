@@ -53,6 +53,7 @@ PATH=$PATH:/home/rockhight/.local/bin/statusbar
 picom -f &
 dunst &			# dunst for notifications
 dwmblocks &
+pulseaudio --start
 mpd &
 flameshot &
 
@@ -66,7 +67,6 @@ feh --randomize --bg-fill ~/images/background/* --randomize --bg-fill ~/images/b
 udiskie &
 #for executing dwm
 # change screen position
-pulseaudio --start
 
 if [ -f ".Xmodmap" ] ; then
 	setxkbmap us ;

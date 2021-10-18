@@ -1,7 +1,8 @@
 #sk
 # inset - define in port
 # outset - define out port
-# in
+# inp - for reading the whole port
+# in - for reading a single pin
 # out
 # +   - to add
 # -   - to substract
@@ -10,6 +11,30 @@
 # {#}d - for number in display
 # if - similar to if
 # goto - rjmp
+# traba - for retarding if the button is pressed
+# var - alias for a register
+# = - for info on asingnign 
+
+snippet =
+; mov reg_target, second_reg
+; ldi reg_target, numerical value
+endsnippet
+
+snippet traba
+traba$1:
+	; after the action of the button is done
+	rcall retButton
+	retenido$1:
+		; name of the register to load info
+		sbis pin${3:a-b-c-d}, 0 ; check if pin is set
+			rjmp retenido$1
+	rcall retButton
+endsnippet
+
+snippet var
+ldi ${1:register_number}, ${2:0b0000_0000|#|0x#}
+.def ${3:register_name} = $2
+endsnippet
 
 snippet goto
 rjmp ${1:name}
@@ -40,19 +65,24 @@ retButton:
 			  nop
 			  nop
 	; ============================= 
-
 ret
 endsnippet
 
-snippet in
+snippet inp
 ; name of the register to load info
 ldi $1, 0
 in ${1:register}, pin${2:a-b-c-d}
 com $1
 endsnippet
 
+snippet in
+sbis pina, ${1:0-7} ; check if pin is set
+	rjmp ${2:function} ; always return to main in this function
+endsnippet
+
+
+
 snippet out
-ldi $2, 0
 out port${1:a-b-c-d}, ${2:register}
 endsnippet
 
@@ -142,10 +172,16 @@ out SPL, r16
 ;Para las salidas deberás indicar cuál es la salida inicial
 ;Los registros que vayas a utilizar inicializalos si es necesario
 ;******************************************************
+
+
+; ******* definition of input output ports ******
 $3
 
+; ************** definition of variables *********
 
+; ************** actions to do at the beggining ***
 
+; ************* main program **********************
 
 
 
@@ -200,112 +236,54 @@ reti
 SPM_RDY: 
 reti ; Store Program Memory Ready Handler
 endsnippet
-snippet 0d
-CERO:
-	ldi ${1:register}, 0b1110_0111
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 1d
-ONE:
-	ldi ${1:register},0b0010_0001
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 2d
-TWO:
-	ldi ${1:register},0b1100_1011
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 3d
-TREE:
-	ldi ${1:register},0b0110_1011
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 4d
-FOUR:
-	ldi ${1:register},0b0010_1101
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 5d
-FIVE:
-	ldi ${1:register},0b0110_1110
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 6d
-SIX:
-	ldi ${1:register},0b1110_1110
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 7d
-SEVEN:
-	ldi ${1:register},0b0010_0011
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 8d
-EIGHT:
-	ldi ${1:register},0b1110_1111
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
-snippet 9d
-NINE:
-	ldi ${1:register},0b0010_1111
-	out port${2:a-b-c-d}, $1
-	${3:rjmp|ret}
-endsnippet
 
-snippet display
-; ==============================
-; ** definition of display
-; ==============================
+
+
+
+snippet setdisplay
+; ============================
+; ====== definition of display
+; ============================
+
 CERO:
-	ldi ${1:register}, 0b1110_0111
+	ldi ${1:register}, 0b0111_1110
 	out port${2:a-b-c-d}, $1
 	${3:rjmp|ret}
 ONE:
-	ldi $1,0b0010_0001
+	ldi $1,0b0100_1000
 	out port$2, $1
 	$3
+
 TWO:
-	ldi $1,0b1100_1011
+	ldi $1,0b0011_1101
 	out port$2, $1
 	$3
 TREE:
-	ldi $1,0b0110_1011
+	ldi $1,0b0110_1101
 	out port$2, $1
 	$3
 FOUR:
-	ldi $1,0b0010_1101
+	ldi $1,0b0100_1011
 	out port$2, $1
 	$3
 FIVE:
-	ldi $1,0b0110_1110
+	ldi $1,0b0110_0111
 	out port$2, $1
 	$3
 SIX:
-	ldi $1,0b1110_1110
+	ldi $1,0b0111_0011
 	out port$2, $1
 	$3
 SEVEN:
-	ldi $1,0b0010_0011
+	ldi $1,0b0100_1100
 	out port$2, $1
 	$3
 EIGHT:
-	ldi $1,0b1110_1111
+	ldi $1,0b0111_1111
 	out port$2, $1
 	$3
 NINE:
-	ldi $1,0b0010_1111
+	ldi $1,0b0100_1111
 	out port$2, $1
 	$3
 endsnippet
-
-
-
