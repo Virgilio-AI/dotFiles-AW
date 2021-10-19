@@ -15,12 +15,64 @@
 # var - alias for a register
 # = - for info on asingnign 
 # def - for definition of port pin or ddr
+# teclado_menu
+snippet teclado_menu
+	ldi sendSignal, 0b1111_1111
+	out PORT_TECLADO, sendSignal
+
+	cbi PORT_TECLADO, 0
+	nop
+	nop
+
+	sbis PIN_TECLADO, 4
+		rjmp TECLADO_UNO
+	sbis PIN_TECLADO, 5
+		rjmp TECLADO_DOS
+	sbis PIN_TECLADO, 6
+		rjmp TECLADO_TRES
+
+	sbi PORT_TECLADO, 0
+	cbi PORT_TECLADO, 1
+	nop
+	nop
+
+	sbis PIN_TECLADO, 4
+		rjmp TECLADO_CUATRO
+	sbis PIN_TECLADO, 5
+		rjmp TECLADO_CINCO
+	sbis PIN_TECLADO, 6
+		rjmp TECLADO_SEIS
+
+	sbi PORT_TECLADO, 1
+	cbi PORT_TECLADO, 2
+	nop
+	nop
+
+	sbis PIN_TECLADO, 4
+		rjmp TECLADO_SIETE
+	sbis PIN_TECLADO, 5
+		rjmp TECLADO_OCHO
+	sbis PIN_TECLADO, 6
+		rjmp TECLADO_NUEVE
+
+	sbi PORT_TECLADO, 2
+	cbi PORT_TECLADO, 3
+	nop
+	nop
+
+	sbis PIN_TECLADO, 5
+		rjmp TECLADO_CERO
+endsnippet
+
 
 snippet def
-.equ ${1:nombre} = ${2:port|pin}
+.equ ${1:nombre}_ddr = ddr${2:a-b-c-d}
+.equ $1_port = port$2
+.equ $1_pin = pin$2
 endsnippet
 
 snippet =
+; set value to cero before doing anything
 ; mov reg_target, second_reg
 ; ldi reg_target, numerical value
 endsnippet
@@ -31,14 +83,15 @@ traba$1:
 	rcall retButton
 	retenido$1:
 		; name of the register to load info
-		sbis pin${3:a-b-c-d}, ${2:number_of_pin} ; check if pin is set
+		sbis ${3:pina-b-c-d}, ${2:number_of_pin} ; check if pin is set
 			rjmp retenido$1
 	rcall retButton
+	${4:ret|jmp main}
 endsnippet
 
 snippet var
-ldi ${1:register_number}, ${2:0b0000_0000|#|0x#}
-.def ${3:register_name} = $1
+.def ${1:register_name} = ${2:register_number}
+ldi $1, ${3:0b0000_0000|#|0x#}
 endsnippet
 
 snippet goto
@@ -48,7 +101,7 @@ endsnippet
 
 snippet if
 cpi ${1:register}, ${2:binary_Number}
-breq ${3:instruction}
+	${3:rcall|jmp}
 endsnippet
 
 
@@ -76,25 +129,25 @@ endsnippet
 snippet inp
 ; name of the register to load info
 ldi $1, 0
-in ${1:register}, pin${2:a-b-c-d}
+in ${1:register}, ${2:pina-b-c-d}
 com $1
 endsnippet
 
 snippet in
-sbis pina, ${1:0-7} ; check if pin is set
-	rjmp ${2:function} ; always return to main in this function
+sbis ${1:pina-b-c-d}, ${2:0-7} ; check if pin is set
+	jmp ${3:function} ; always return to main in this function
 endsnippet
 
 
 
 snippet out
-out port${1:a-b-c-d}, ${2:register}
+out ${1:porta-b-c-d}, ${2:register}
 endsnippet
 
 snippet inset
 ; input setting
 ; inmediate registers are bigger than 16
-ldi ${1:name_of_register}, 0b0000_0000
+ldi ${1:register}, 0b0000_0000
 out ddr${2:a-b-c-d}, $1
 ldi $1, 0b1111_1111
 out port$2, $1
@@ -179,9 +232,8 @@ out SPL, r16
 ;******************************************************
 
 
-; ******* definition of input output ports ****** def
-$3
 ; ******* setting input output ******************  inset, outset
+$3
 
 ; ************** definition of variables ********* var
 
@@ -251,55 +303,55 @@ snippet setdisplay
 ; ====== definition of display
 ; ============================
 
-CERO:
+CERO$4:
 	ldi $1, 0b0000_0000
 	ldi ${1:register}, 0b0111_1110
-	out port${2:a-b-c-d}, $1
+	out ${2:porta-b-c-d}, $1
 	${3:rjmp|ret}
-ONE:
+ONE$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0100_1000
-	out port$2, $1
+	out $2, $1
 	$3
 
-TWO:
+TWO$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0011_1101
-	out port$2, $1
+	out $2, $1
 	$3
-TREE:
+TREE$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0110_1101
-	out port$2, $1
+	out $2, $1
 	$3
-FOUR:
+FOUR$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0100_1011
-	out port$2, $1
+	out $2, $1
 	$3
-FIVE:
+FIVE$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0110_0111
-	out port$2, $1
+	out $2, $1
 	$3
-SIX:
+SIX$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0111_0011
-	out port$2, $1
+	out $2, $1
 	$3
-SEVEN:
+SEVEN$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0100_1100
-	out port$2, $1
+	out $2, $1
 	$3
-EIGHT:
+EIGHT$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0111_1111
-	out port$2, $1
+	out $2, $1
 	$3
-NINE:
+NINE$4:
 	ldi $1, 0b0000_0000
 	ldi $1,0b0100_1111
-	out port$2, $1
+	out $2, $1
 	$3
 endsnippet
