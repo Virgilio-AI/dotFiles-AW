@@ -77,6 +77,6 @@ if [ -f ".Xmodmap" ] ; then
 	xmodmap .Xmodmap
 fi
 
-# sh -c " cd /home/rockhight/Documents/GitRepos/automationSuite ; python main.py " & # comment for now
+sh -c " cd /home/rockhight/Documents/GitRepos/automationSuite ; python main.py " & # comment for now
 
 exec dwm 
