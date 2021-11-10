@@ -1,5 +1,5 @@
 
-" ================================= ========== Main Variables 
+ "mage} ================================= ========== Main Variables 
 " =================================
 
 let g:CONFIG_PATH = '~/.config/nvim'
@@ -12,6 +12,21 @@ let g:tex_flavor='latex'
 let &directory = expand( g:CONFIG_PATH .'/.vimdata/swap//')
 let &backupdir = expand( g:CONFIG_PATH . '/.vimdata/backup//')
 let &undodir = expand(   g:CONFIG_PATH . '/.vimdata/undo//')
+
+" =================================
+" ========== buffer variables 
+" =================================
+augroup BufferVariables
+au BufEnter * let b:FilePathNoExtension = expand("%:r") " path/main
+au BufEnter * let b:Extension = expand("%:e") " tex
+au BufEnter * let b:FileName = expand("%:t") " main.tex
+au BufEnter * let b:FilePath = expand("%") " path/main.tex
+au BufEnter * let b:FileNameNoExtension = expand("%:t:r") " main
+au BufEnter * let b:CurrentFolder = expand("%:p:h") "pathFolder/folder
+augroup end
+" for copy paste
+
+let g:mdip_imgdir='img_' . expand("%:t:r")
 " !!!!!=================================
 " !!!!!========== Source files 
 " !!!!!=================================
@@ -25,10 +40,10 @@ exec 'source ' . g:CONFIG_PATH . '/IconsAndThemes.vim'
 exec 'source ' . g:CONFIG_PATH . '/colors.vim'
 exec 'source ' . g:CONFIG_PATH . '/autocmds.vim'
 exec 'source ' . g:CONFIG_PATH . '/skeletons.vim'
+
 " =================================
 " ========== PlugIn Variables 
 " =================================
-
 
 " latex preview
 let g:livepreview_previewer = 'zathura'    " For Latex
@@ -49,6 +64,12 @@ let g:rainbow_conf = {
 \		'markdown': {
 \			'parentheses_options': 'containedin=markdownCode contained', 
 \		},
+\		'cpp': {
+\			'operators': '_,\+\-\|*\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
+\		},
+\		'c': {
+\			'operators': '_,\+\-\|*\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
+\		},
 \		'lisp': {
 \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'], 
 \		},
@@ -56,7 +77,7 @@ let g:rainbow_conf = {
 \			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'], 
 \		},
 \		'vim': {
-\			'parentheses_options': 'containedin=vimFuncBody', 
+\		'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 \		},
 \		'perl': {
 \			'syn_name_prefix': 'perlBlockFoldRainbow', 
@@ -69,6 +90,8 @@ let g:rainbow_conf = {
 \		'css': 0, 
 \	}
 \}
+let g:minimap_width = 10
+
 " =================================
 " ========== Set variables 
 " =================================
@@ -96,7 +119,7 @@ set nowritebackup
 set cmdheight=2
 set updatetime=300
 set shortmess+=c
-"set shortmess=300
+set scrolloff=10 " keep the mouse centerd
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.

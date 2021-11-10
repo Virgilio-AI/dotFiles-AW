@@ -35,7 +35,7 @@ augroup END
 
 augroup cpp_main
 	autocmd!
-	autocmd BufEnter *.cpp call ChooseSkeleton()
+	autocmd BufEnter *.cpp call ChooseSkeletonCpp()
 augroup END
 " =================================
 " ========== assembly  
@@ -73,3 +73,18 @@ augroup markDown
 	autocmd BufEnter *.md call ExpandSkeleton('sk')
 augroup END
 
+" =================================
+" ========== zsh squeleton 
+" =================================
+augroup zshSkeleton
+	autocmd!
+	autocmd BufEnter *.zsh call ExpandSkeleton('sk')
+augroup END
+
+" =================================
+" ========== python 
+" =================================
+augroup pythonSkeleton
+	autocmd!
+	autocmd BufEnter *.py\(.sync.py\|.sync.sync.py\)\@<! call ExpandSkeleton('sk')
+augroup END

@@ -50,12 +50,16 @@ fi
 
 PATH=$PATH:/home/rockhight/.local/bin/statusbar
 
+# ===========
+# daemonds
+# ===========
 picom -f &
 dunst &			# dunst for notifications
 dwmblocks &
 pulseaudio --start
 mpd &
 flameshot &
+# for music
 
 xrandr | grep -q "HDMI-1" ;
 if [ $? -eq 0 ]
@@ -72,5 +76,7 @@ if [ -f ".Xmodmap" ] ; then
 	setxkbmap us ;
 	xmodmap .Xmodmap
 fi
+
+# sh -c " cd /home/rockhight/Documents/GitRepos/automationSuite ; python main.py " & # comment for now
 
 exec dwm 

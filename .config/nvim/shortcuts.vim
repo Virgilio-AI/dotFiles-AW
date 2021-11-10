@@ -7,12 +7,15 @@
 
 
 " =================================
-" ========== Compile And Run code in markdown 
+" ========== markdown auto commands
 " =================================
+"
 augroup markdown
 	autocmd!
 	autocmd! FileType markdown nnoremap <F11> :w<CR>:call CompileAndRunMarkDown()
+autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup END
+
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 
 " =================================
@@ -20,7 +23,7 @@ autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownCli
 " =================================
 
 " open file manager
-exec 'nnoremap <F6>3 :AsyncRun st -T "floating" -g "=150x50+250+100" -e sh -c "cfiles" '
+exec 'nnoremap <F6>3 :AsyncRun st -T "floating" -g "=150x50+250+100" -e sh -c "ranger" '
 " toggle side file manager nerdtree
 " nnoremap <C-b> :NERDTreeToggle<CR>
 " inoremap <C-b> <Esc>:NERDTreeToggle<CR>
@@ -55,11 +58,16 @@ vnoremap ;rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 
 " for copy paste
 nnoremap -Y ggVG"+y
-nnoremap -y "+y
-vnoremap -y "+y
+" nnoremap -y "+y
+" vnoremap -y "+y
 
-nnoremap -p "+p
-vnoremap -p "+p
+" nnoremap -p "+p
+" vnoremap -p "+p
+nnoremap -p "_dhp
+vnoremap -p "_dhp
+
+" vnoremap <leader>p "_dP
+
 
 " change surroundings
 noremap <leader>[ a[<Esc>h%xi]<Esc>%hx
@@ -113,6 +121,7 @@ nnoremap <leader>gl  :call GitLog()
 " ----------- end Git commands -------------------
 
 " ==================================================
+"
 " =========== File Operations ==========================
 " ==================================================
 
@@ -146,8 +155,12 @@ execute 'autocmd FileType cpp nnoremap <F11><F11> :call GenerateCompileAndRunFil
 execute 'autocmd FileType cpp inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("gcc")<CR>'
 augroup end
 
+" =================================
+" ========== latex shorcuts 
+" =================================
 
-augroup Run_Tex
+augroup Tex_Shortcuts
+autocmd FileType tex nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 " compile and open single proyect
 execute 'autocmd FileType tex nnoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
 " compile and open single file
@@ -158,6 +171,7 @@ execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProjec
 "preview proyect
 execute 'autocmd FileType tex nnoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
 execute 'autocmd FileType tex inoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
+
 augroup end
 
 " ------------------ End compile and run code -------------------------
@@ -203,12 +217,10 @@ nnoremap <leader>dx :call vimspector#ClearBreakpoints()<CR>
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsEditSplit="vertical"
 noremap <leader>es :UltiSnipsEdit
+" vim minimap bindings
+nnoremap <C-l> <esc>:MinimapToggle<CR>
+inoremap <C-l> <Esc>:MinimapToggle<CR>i
 
-
-"nerd tree bindings
-"let NERDTreeMapChangeRoot ='l'
-"let NERDTreeMapUpdir = 'h'
-"nnoremap -b :NERDTreeFind<CR>
 
 " ========================Easy allign commands
 " " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -386,6 +398,7 @@ augroup pythonFiles
 	autocmd BufEnter *.py nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "python %:p ; read -n1 "
 augroup end
 
+autocmd FileType python nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 " =================================
 " ========== bindings for vim and jupyter notebooks 
 " =================================
@@ -406,9 +419,27 @@ augroup assembly
 	autocmd FileType asm nnoremap <F5>  :w<CR>:call BurnMicroChip()
 augroup end
 
+" =================================
+" ========== coding competitions 
+" =================================
 
 augroup hackerRank_clean
 	autocmd!
 	autocmd BufEnter *.cpp nnoremap <space>h :call CleanHackerRankFile()
+augroup END
+" =================================
+" ========== r programming 
+" =================================
+
+augroup r_autocmds
+	autocmd FileType r nnoremap <F11> :w<CR>:call CompileAndRunRCode()
+	autocmd FileType r inoremap <F11>  :w<CR>:call CompileAndRunRCode()
+augroup end
+" =================================
+" ========== zsh scripting 
+" =================================
+augroup zsh_scripting
+	autocmd!
+	autocmd FileType zsh nnoremap <F11> :w<CR>:call RunZshScript()
 augroup END
 

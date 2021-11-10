@@ -6,7 +6,7 @@ function! ExpandSkeleton(sni)
 	endif
 endfunction
 
-function! ChooseSkeleton()
+function! ChooseSkeletonCpp()
 	let filename = expand('%')
 	if (!filereadable(filename) || getfsize ( expand('%'))==0 ) && getline('$') == '' && line('$') == 1
 		let opt = input('(l)eetcode (c)code-forces (h)ackerank (d)ataStructuresAndAlgos\n')
@@ -22,5 +22,3 @@ function! ChooseSkeleton()
 	endif
 
 endfunction
-
-
