@@ -39,6 +39,10 @@ urlcolor=blue
 \newcommand{\sech}{\mathrm{sech} \,}
 \newcommand{\csch}{\mathrm{csch} \,}
 
+% Avoid pandoc bug when there are lists in the body. 
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 \begin{document}
 
 \import{./}{tempFileForConfig.tex}
