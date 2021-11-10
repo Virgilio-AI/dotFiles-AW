@@ -1,3 +1,9 @@
+# c++
+
+
+# ======= c style snippets ========
+# iar -- for init array
+# imat -- for init mat
 # resizestr - to resize a c string
 # random - to input the random function
 # copenFile - to open a file in c style format
@@ -6,6 +12,19 @@
 
 # sk_ncurses - skeleton for ncurses
 # ndoc - basic documentation for ncurses
+snippet iar
+for(int i=0;i<$1;i++) $2[i] = $3;
+endsnippet
+snippet imat
+for(int i=0;i<$2;i++)
+{
+	for(int j=0;j<$2;j++)
+	{
+		$3[i][j] = $4;
+	}
+}
+endsnippet
+
 snippet copenFile
 // r reading,w write, a append
 // r+ open for reading and writing
@@ -38,13 +57,64 @@ snippet sk
 // linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 // contact: virgiliomurilloochoa1@gmail.com
 #include<bits/stdc++.h>
-
 using namespace std;
+const int N = ${2:1000};
+int n,m,k,x,x2,x3,y,y2,y3,z,z2,z3,t1,t2,t3,ans;
+void imat(int mat[N][N]);
+void iar(int ar[N]);
+void par(int ar[N],int m);
+void pmat(int mat[N][N],int n,int m);
+
+$3
 int main()
 {
 	$1
 	return 0;
 }
+
+
+
+void par(int ar[N],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		cout<<ar[i]<<" ";
+	}
+	cout<<endl;
+}
+
+void pmat(int mat[N][N],int n,int m)
+{
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			cout<<mat[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	cout<<endl;
+}
+
+void imat(int mat[N][N])
+{
+	for(int i=0;i<N;i++)
+	{
+		for(int j=0;j<N;j++)
+		{
+			mat[i][j] = 0;
+		}
+	}
+}
+
+void iar(int ar[N])
+{
+	for(int i=0;i<N;i++)
+	{
+		ar[i] = 0;
+	}
+}
+
 endsnippet
 
 snippet sk_ncurses

@@ -10,12 +10,21 @@
 # applyFuncToList - to apply a function into a list 
 # record - like a python dictionary
 # fromInt - convert int to string
+# input - for text box in program
+# strrev - for reversing a string
+snippet strrev
+	String.reverse model.content
+endsnippet
+snippet input
+input [ placeholder "$1", ${2:value model.content}, ${3:onInput Change} ] [] 
+endsnippet
+
 snippet fromInt
 String.fromInt ${1:name_of_int}
 endsnippet
 
 snippet button
-button[ ${1:onClick} ${2:case} ] [ text "$3" ],
+button[ ${1:onClick} ${2:case} ] [ text "$3" ]
 endsnippet
 snippet div
 div [] [$1]
@@ -41,6 +50,7 @@ endsnippet
 snippet update
 -- = Change String, = Increment | Decrement
 type Msg = $1
+update : Msg -> Model -> Model
 -- update msg model = 
 --	case msg of
 -- 	Increment ->
@@ -87,6 +97,9 @@ snippet sk
 -- personal github: Virgilio-AI
 -- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 -- contact: virgiliomurilloochoa1@gmail.com
+
+
+${3: -- make sure to elm init and git init in main folder}
 
 module ${2:Main} exposing (main)
 

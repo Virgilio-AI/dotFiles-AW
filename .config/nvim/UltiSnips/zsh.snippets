@@ -1,16 +1,66 @@
-# forFolder -- traverse folder non recursive
+# ===== comparisons =====
+#
 # ifFolder -- check if argument is a folder
 # ifFile -- check if argument is a file
-# function
-# sk 
-# info
-# traverse folder recursive
-# recurseFolder -- recurse folder
 # compareFile -- compare file names
+# if -- simple if
+#
+# ===== loops =====
+#
+# recurseFolder -- recurse folder
+# cfor -- for in a c way
+# forFolder -- traverse folder non recursive
+# for -- basic structure of a for loop
+# forString -- char for loop on string
+# forFile
+#
+# ===== main functionalities =====
+#
+# split -- for spliting a string from a character
+# function -- for creating a function
+# stringArr -- a string as an array
+# lineArr -- for an array of lines
+#
+# ===== external =====
+#
+# sk -- for creating an skeletin
+# info -- for giving info 
+# variables -- explanation for different types of variables
+# lineArr -- for line array 
+#
+
+
+# ==========================
+# ========== comparisons ======
+# ==========================
+snippet ifFolder
+if [[ -d $file ]]
+then
+	${2:echo " folder "}
+fi
+endsnippet
+
+snippet ifFile
+if [[ -f $file ]]
+then
+	${1:echo "file"}
+fi
+endsnippet
+
 snippet compareFile
 # "$1" == *.cpp
 endsnippet
 
+snippet if
+# use () instead of [[]] for some examples
+if [[ $1 ]]
+then
+	$2
+fi
+endsnippet
+# ==========================
+# ========== loops ======
+# ==========================
 snippet recurseFolder
 recurseFolder(){
 	# :h for name only
@@ -26,14 +76,70 @@ recurseFolder(){
 }
 endsnippet
 
+snippet cfor
+for (( i=$1;i<$2;i$3 )); do
+	$4
+done
+endsnippet
+snippet forFolder
+# :h for name only
+# :t for name with extension
+for ${1:file} in ${2:\$1/*} ; do
+	${3:echo "\$file:t" # for filename only}
+done
+endsnippet
+
+snippet for
+for ${1:iterator} in ${2:\$array} ; do
+	$3
+done
+endsnippet
+
+snippet forString
+# this doesn't prints new lines
+for (( i=0; i<${#${1:string_name}}; i++ )); do
+	printf "${$1:\$i:1}"
+done
+endsnippet
+
+snippet forFile
+for ${1:line} in "${(@f)"$(<${2:name.extendion})"}"
+	{
+		${3:echo $line}
+	}
+endsnippet
+# ==========================
+# ========== main functionalities ======
+# ==========================
+
+snippet split
+${1:parts}=("${(@s[${2:character}])${3:string}}") # ex: a line
+endsnippet
+
+snippet function
+function ${1:name} (){
+	if (( $# < ${2:number of inputs} )); then
+		${3:print "usage: $0 BEAN_NAME" >&2}
+		exit -1
+	fi
+	$4
+}
+endsnippet
+
+# ==========================
+# ========== external ======
+# ==========================
+
 snippet sk
+#!/usr/bin/zsh
 ###############################
-# Fecha: `date +%d/%B/%Y\ -\ %A`
-# Autor: Virgilio Murillo Ochoa
+# Author: Virgilio Murillo Ochoa
+# Date: `date +%d/%B/%Y\ -\ %A`
 # personal github: Virgilio-AI
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
 # #########################################
+$1
 endsnippet
 
 snippet info
@@ -46,45 +152,139 @@ snippet info
 # ############################
 endsnippet
 
-snippet function
-${1:name}(){
+
+snippet variables
+# is very important avoid spaces when declaring 
+# for integers floats etc just evaluate in $(( ))
+# for strings the declaration is string=hola 
+endsnippet
+
+snippet lineArr
+array=(${(ps:\n:)"\$(${1:command})"})
+endsnippet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ==========================
+# ========== fixes for current bug ======
+# ==========================
+
+snippet sec
+# ==========================
+# ========== $1 ======
+# ==========================
+endsnippet
+
+snippet sp
+snippet $1
 	$2
-}
+\endsnippet
 endsnippet
 
-snippet ifFolder
-if [[ -d $file ]]
-then
-	${2:echo " folder "}
-fi
+
+snippet zsh
+\`#!/usr/bin/zsh
+$1\`
 endsnippet
 
-snippet ifFile
-if [[ -f $file ]]
-then
-	${1:echo "file"}
-fi
+snippet vims
+\`!v
+\`
+endsnippet
+snippet visual
+\${VISUAL}
 endsnippet
 
-snippet forFolder
-# :h for name only
-# :t for name with extension
-for ${1:file} in ${2:\$1/*} ; do
-	${3:echo "\$file:t" # for filename only}
-done
+snippet python
+\`#!/usr/bin/python
+$1\`
 endsnippet
-
-snippet forstring
-for ${1:char_it} in \$( echo \$${2:str} )
-do
-	$3
-done
+snippet pyint
+# check the tutorial on how to do it
 endsnippet
-snippet if
-if [[ $1 ]]
-then
-	$2
-fi
-endsnippet
-
 

@@ -10,6 +10,55 @@
 #info - create the info header
 #tex - import tex document
 #header - header for preview
+#color - changes text color
+# cover - template for cover english
+# portada - template para portada
+snippet portada
+\begin{center}
+
+	%Título del trabajo
+	\huge\textbf{
+		$1
+	}\linebreak[4]
+
+	\huge\textbf{
+		$2
+	}\linebreak[4]
+
+	\LARGE\textbf{
+		$3
+	}\linebreak[4]
+
+	\LARGE\textbf{
+		$4
+	}\linebreak[4]
+	\newline
+	\newline
+	\newline
+	\newline
+	\begin{LARGE}
+
+\color{blue}
+
+	Fecha: `date +%d/%B/%Y\ -\ %A`
+
+	Autor: Virgilio Murillo Ochoa
+
+	personal github: Virgilio-AI
+
+	linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+
+\color{blue}
+
+	\end{LARGE}
+\end{center}
+\newpage
+endsnippet
+
+snippet color
+\textcolor{$1}{}
+endsnippet
+
 snippet header
 % !TEX root = % !TEX root = ${1:<root-filename>}
 endsnippet
@@ -46,7 +95,8 @@ snippet list
 \end{itemize}
 endsnippet 
 snippet charsize
-\begin{$1}
+% Huge huge LARGE Large large normalsize(default) small footnotesize scriptsize tiny
+begin{$1}
 	$2
 \end{$1}
 endsnippet

@@ -1,7 +1,8 @@
+#infoj
 # temp templates
 
 # ---------------   python
-
+# forString - for iterate string c style
 # list - for creating a python list
 # set - unordered collection of data type, no duplicate
 # tuple - same to list but inmutable
@@ -26,6 +27,47 @@
 # ----------------    pandas
 # ploadcsv
 # pcombinecsv
+# dataDrop
+# ----------------    system interaction
+# shOutput
+# ---------------- organization
+# sec
+# subsec
+snippet sec
+# =============
+# ==== $1 =====
+# =============
+endsnippet
+snippet subsec
+# ======== $1
+endsnippet
+snippet shOutput
+	${1:strinName}=str(subprocess.check_output([${2:list_commands}]))
+endsnippet
+
+snippet dataDrop
+${1:name_of_db}.drop(
+labels=["name","example"],
+axis=1, # 0 -> rows 1 -> columns
+inplace=False # alter the dataFrame
+)
+endsnippet
+
+
+snippet forString
+for element in range(0, len(${1:string_name})):
+	print($1[element])
+endsnippet
+
+snippet infoj
+# %% [markdown]
+- Fecha: 20/October/2021 - Wednesday
+- Autor: Virgilio Murillo Ochoa
+- personal github: Virgilio-AI
+- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+- contact: virgiliomurilloochoa1@gmail.com
+endsnippet
+
 snippet list
 ${1:temp} = [$2]
 endsnippet
@@ -46,8 +88,7 @@ endsnippet
 
 snippet ploadcsv
 ${1:nombre} = "${2:path}"
-${1}_dt = pd.read_csv($1)
-$!
+$1_dt = pd.read_csv($1)
 endsnippet
 
 

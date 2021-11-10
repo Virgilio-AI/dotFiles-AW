@@ -1,25 +1,95 @@
-# image
+# img
 # info
 # sk
+# co -- for code
+# col -- for color
+# cs -- for char size
+# // -- for comments
+snippet //
+[//]: # ($1)
+endsnippet
+
 snippet info
-*Fecha: `date +%d/%B/%Y\ -\ %A`
-*Autor: Virgilio Murillo Ochoa
-*personal github: Virgilio-AI
-*linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
-*contact: virgiliomurilloochoa1@gmail.com
+* Fecha: `date +%d/%B/%Y\ -\ %A`
+* Autor: Virgilio Murillo Ochoa
+* personal github: Virgilio-AI
+* linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+* contact: virgiliomurilloochoa1@gmail.com
 endsnippet
 
 snippet sk
-# ${1:title}
-Fecha: `date +%d/%B/%Y\ -\ %A`
-*Autor: Virgilio Murillo Ochoa
-*personal github: Virgilio-AI
-*linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
-*contact: virgiliomurilloochoa1@gmail.com
+---
+theme:
+- Dresden
+colrTheme:
+- seahorse
+
+output: beamer_presentation
+header-includes:
+  - \usepackage{color}
+---
+\begin{center}
+\color{red}
+\LARGE\textbf{ ${1:title}
+}
+\color{black}
+\vspace{1cm}
+\large
+
+Virgilio Murillo Ochoa
+\vspace{0.2cm}
+
+`date +%d/%B/%Y`
+\end{center}
+\vspace{1cm}
+\color{blue}
+\small
+linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+
+github: Virgilio-AI
+
+mail: virgiliomurilloochoa1@gmail.com
+
+
+[//]: # (empieza el programa)
+
+$2
 endsnippet
 
 
-snippet image
+snippet img
 ![][$1]
 endsnippet
 
+snippet col
+	\begin{color}{${1:blue-red-green-etc}}
+		$2
+	\end{color}
+endsnippet
+
+snippet cs
+	\begin{${1:large-small-huge}}
+		$2
+	\end{$1}
+endsnippet
+
+snippet red
+\begin{color}{red}
+	\begin{small}
+		$1
+	\end{small}
+\end{color}
+endsnippet
+snippet blue
+\begin{color}{blue}
+	\begin{small}
+		$1
+	\end{small}
+\end{color}
+endsnippet
+
+snippet code
+\begin{minted}{$1}
+	$2
+\end{minted}
+endsnippet
