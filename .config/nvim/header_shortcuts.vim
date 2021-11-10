@@ -4,23 +4,18 @@
 " linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 " contact: virgiliomurilloochoa1@gmail.com
 
+
+
+" =================================
+" ========== helper variables 
+" =================================
+
+
+
 " =================================
 " ========== helper functions for the whole file 
 " =================================
 
-" ==================================================
-" =========== vimrc ===================
-" ==================================================
-augroup BufferVariables
-"au BufEnter * let b:FilePathNoExtension = expand("%:e") file name no
-
-au BufEnter * let b:FilePathNoExtension = expand("%:r") " path/main
-au BufEnter * let b:Extension = expand("%:e") " tex
-au BufEnter * let b:FileName = expand("%:t") " main.tex
-au BufEnter * let b:FilePath = expand("%") " path/main.tex
-au BufEnter * let b:FileNameNoExtension = expand("%:t:r") " main
-au BufEnter * let b:CurrentFolder = expand("%:p:h") "pathFolder/folder
-augroup end
 
 
 function! OpenVimrcHeaderRelatedFile()
@@ -128,6 +123,9 @@ endfunction
 " =========== Compile and run various code ===================
 " ==================================================
 " compile and run in c++
+function! CompileAndRunCppDefault(RunCommand)
+	exe ':AsyncRun st -T "floating" -e sh -c "' . a:RunCommand . ' %:p -o %< && ./%< ; read -n1 "'
+endfunction
 
 function! CompileAndRunCppForCompetition(RunCommand)
 if filereadable("runcpp.sh")
@@ -154,9 +152,11 @@ if filereadable("In.txt") || filereadable("runcpp.sh")
 			:call CompileAndRunCppForNcurses(a:RunCommand)
 			return
 		endif
-		let tempChar = input("(c)ompetition-(n)curses: ")
+		let tempChar = input("(c)ompetition-(n)curses-(d)efault: ")
 		if tempChar == "c"
 			:call CompileAndRunCppForCompetition(a:RunCommand)
+		elseif tempChar == "d"
+			:call CompileAndRunCppDefault(a:RunCommand)
 		else
 			:call CompileAndRunCppForNcurses(a:RunCommand)
 		endif
@@ -288,21 +288,47 @@ function! CompileAndRunAssemblyForLinux()
 endfunction
 
 function! CompileAndRunAssemblyForAvr()
+	:% s/\(\d\)_\(\d\)/\1\2/g
 	:w!
 	" for burning the microchip
 	let l:Name = expand("%<")
 	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
 	" for compiling the code
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
-	let l:FileName = expand("%")
-	let l:CreateHex = 'gavrasm ' . l:FileName
+	let l:FileName = expand("%") "' . l:Name . '
+	let l:CreateHex = 'avra ' . l:Name . '.asm ; ' " the alternative is gavrasm if you don't need proteus to debug
+	" recieve user input to burn the mcirochip
 	let l:burn = input("do you want to burn into the phisical microchip(y/n)")
 	if l:burn == 'y'
-		exe l:ExecuteCommands . '"' . l:CreateHex . ' ; read -n1 ; ' . l:BurnMicro . ' ; read -n1 ' .'"'
+		exe l:ExecuteCommands . '"'  . l:CreateHex  . ' read -n1 ; ' . l:BurnMicro . ' ; read -n1 ' .'"'
 	else
-		exe l:ExecuteCommands . '"' . l:CreateHex . ' ; read -n1 ' . '"'
+		". l:CreateHex . l:moveAndClean
+		exe l:ExecuteCommands . '"'  . l:CreateHex  . '  read -n1 ; ' . '"'
 	endif
+	:undo
+	:w!
 endfunction
+"function! CompileAndRunAssemblyForAvr()
+"	:w!
+"	" for burning the microchip
+"	let l:Name = expand("%<")
+"	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
+"	" for compiling the code
+"	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+"	let l:FileName = expand("%") "' . l:Name . '
+"	" parsing the file so that binary numbers can use _ as a separation
+"	let l:parseFile = ' cp /home/rockhight/.config/nvim/runFileConfigurations/parseAtmegaCode.zsh . ; zsh parseAtmegaCode.zsh ' . l:Name . ' ; '
+"	let l:moveAndClean = 'mv ' . l:Name . '_out.hex ' . l:Name . '.hex ; mv ' . l:Name . '_out.obj ' . l:Name . '.obj ; mv ' . l:Name . '_out.eep.hex ' . l:Name . '.eep.hex ; rm parseAtmegaCode.zsh ;  rm '. l:Name . '_out.asm ; '
+"	let l:CreateHex = 'avra ' . l:Name . '_out.asm ; ' " the alternative is gavrasm if you don't need proteus to debug
+"	" recieve user input to burn the mcirochip
+"	let l:burn = input("do you want to burn into the phisical microchip(y/n)")
+"	if l:burn == 'y'
+"		exe l:ExecuteCommands . '"' . l:parseFile  . l:CreateHex . l:moveAndClean . ' read -n1 ; ' . l:BurnMicro . ' ; read -n1 ' .'"'
+"	else
+"		". l:CreateHex . l:moveAndClean
+"		exe l:ExecuteCommands . '"' . l:parseFile  . l:CreateHex . l:moveAndClean . '  read -n1 ; ' . '"'
+"	endif
+"endfunction
 
 function! CompileAndRunAssemblyCode()
 	let tempchar=input("(l)inux (a)tmega16: ")
@@ -342,4 +368,44 @@ function! CompileAndRunMarkDown()
 endfunction
 
 
+" =================================
+" ========== r programming 
+" =================================
+function! CompileAndRunRCode()
+
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+	let l:FileName = expand("%")
+
+	let l:FileName_NoExtension = expand("%<")
+	let l:runScript = 'Rscript ' . l:FileName . ' '
+
+	exe l:ExecuteCommands . '"' . l:runScript . ' ; read -n1 ' . '"'
+endfunction
+
+" =================================
+" ========== zsh scripting 
+" =================================
+
+function! RunZshScript()
+
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+	let l:FileName = expand("%")
+	let l:FileName_NoExtension = expand("%<")
+	let l:runScript = 'zsh ' . l:FileName . ' '
+	exe l:ExecuteCommands . '"' . l:runScript . ' ; read -n1 ' . '"'
+endfunction
+
+
+" =================================
+" ========== python 
+" =================================
+
+
+function! g:PythonPasteImage(relpath)
+        execute "normal! i" . g:mdip_tmpname[0:0]
+        let ipos = getcurpos()
+        execute "normal! a" . g:mdip_tmpname[1:] . "='" . a:relpath . "'"
+"        call setpos('.', ipos)
+"        execute "normal! vt]\<C-g>"
+endfunction
 
