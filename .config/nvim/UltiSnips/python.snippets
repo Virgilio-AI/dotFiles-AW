@@ -30,6 +30,7 @@
 # dataDrop
 # ----------------    system interaction
 # shOutput
+# shCommand
 # ---------------- organization
 # sec
 # subsec
@@ -42,7 +43,10 @@ snippet subsec
 # ======== $1
 endsnippet
 snippet shOutput
-	${1:strinName}=str(subprocess.check_output([${2:list_commands}]))
+${1:strinName}=str(subprocess.check_output([${2:list_commands}]).decode('utf-8'))
+endsnippet
+snippet shCommand
+os.system('$1')
 endsnippet
 
 snippet dataDrop
