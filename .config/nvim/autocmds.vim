@@ -86,10 +86,12 @@ augroup END
 " ========== for python 
 " =================================
 augroup python
-    autocmd!
-    " Add shiftwidth and/or softtabstop if you want to override those too.
-    autocmd FileType python setlocal noexpandtab shiftwidth=3 tabstop=3
+	autocmd!
+	" Add shiftwidth and/or softtabstop if you want to override those too.
+	autocmd FileType python setlocal noexpandtab shiftwidth=3 tabstop=3
+	autocmd FileType python let g:PasteImageFunction = 'g:PythonPasteImage'
 augroup end
+
 
 " =================================
 " ========== install vim plug ins on startup 
@@ -124,5 +126,6 @@ augroup end
 autocmd FileType markdown let g:PasteImageFunction = 'g:MarkdownPasteImage'
 " =================================
 " ========== latex 
-" =================================
+" =======================
 autocmd FileType tex let g:PasteImageFunction = 'g:LatexPasteImage'
+

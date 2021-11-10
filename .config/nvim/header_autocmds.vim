@@ -1,4 +1,21 @@
 " =================================
+" ========== patches for plugIns
+" =================================
+function! s:RandomNamePatch()
+	" help feature-list
+	if has('win16') || has('win32') || has('win64') || has('win95')
+		let l:new_random = strftime("%Y_%m_%d_%H_%M_%S")
+		" creates a file like this: `2019-11-12-10-27-10.png`
+		" the filesystem on Windows does not allow : character.
+	else
+		let l:new_random = strftime("%Y_%m_%d_%H_%M_%S")
+	endif
+	return l:new_random
+endfunction
+
+
+
+" =================================
 " ========== autocommands section 
 " =================================
 
@@ -59,4 +76,20 @@ endfunction
 " =================================
 " ========== clean hacker rank 
 " =================================
+
+" =================================
+" ========== cop 
+" =================================
 "
+" =================================
+" ========== Latex 
+" =================================
+
+function! g:LatexPasteImage(relpath)
+    execute "normal! i\\includegraphics{" . a:relpath . "}\r\\caption{I"
+    let ipos = getcurpos()
+    execute "normal! a" . "mage}"
+    call setpos('.', ipos)
+    execute "normal! ve\<C-g>"
+endfunction
+
