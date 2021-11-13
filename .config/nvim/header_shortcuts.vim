@@ -288,8 +288,11 @@ function! CompileAndRunAssemblyForLinux()
 endfunction
 
 function! CompileAndRunAssemblyForAvr()
+	sleep 100m
 	:% s/\(\d\)_\(\d\)/\1\2/g
+	sleep 100m
 	:w!
+	sleep 100m
 	" for burning the microchip
 	let l:Name = expand("%<")
 	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
@@ -305,30 +308,11 @@ function! CompileAndRunAssemblyForAvr()
 		". l:CreateHex . l:moveAndClean
 		exe l:ExecuteCommands . '"'  . l:CreateHex  . '  read -n1 ; ' . '"'
 	endif
+	sleep 100m
 	:undo
+	sleep 100m
 	:w!
 endfunction
-"function! CompileAndRunAssemblyForAvr()
-"	:w!
-"	" for burning the microchip
-"	let l:Name = expand("%<")
-"	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
-"	" for compiling the code
-"	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
-"	let l:FileName = expand("%") "' . l:Name . '
-"	" parsing the file so that binary numbers can use _ as a separation
-"	let l:parseFile = ' cp /home/rockhight/.config/nvim/runFileConfigurations/parseAtmegaCode.zsh . ; zsh parseAtmegaCode.zsh ' . l:Name . ' ; '
-"	let l:moveAndClean = 'mv ' . l:Name . '_out.hex ' . l:Name . '.hex ; mv ' . l:Name . '_out.obj ' . l:Name . '.obj ; mv ' . l:Name . '_out.eep.hex ' . l:Name . '.eep.hex ; rm parseAtmegaCode.zsh ;  rm '. l:Name . '_out.asm ; '
-"	let l:CreateHex = 'avra ' . l:Name . '_out.asm ; ' " the alternative is gavrasm if you don't need proteus to debug
-"	" recieve user input to burn the mcirochip
-"	let l:burn = input("do you want to burn into the phisical microchip(y/n)")
-"	if l:burn == 'y'
-"		exe l:ExecuteCommands . '"' . l:parseFile  . l:CreateHex . l:moveAndClean . ' read -n1 ; ' . l:BurnMicro . ' ; read -n1 ' .'"'
-"	else
-"		". l:CreateHex . l:moveAndClean
-"		exe l:ExecuteCommands . '"' . l:parseFile  . l:CreateHex . l:moveAndClean . '  read -n1 ; ' . '"'
-"	endif
-"endfunction
 
 function! CompileAndRunAssemblyCode()
 	let tempchar=input("(l)inux (a)tmega16: ")

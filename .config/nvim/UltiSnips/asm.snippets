@@ -1,242 +1,59 @@
-#sk
+# Fecha: 12/November/2021 - Friday                                        #
+# Autor: Virgilio Murillo Ochoa                                           #
+# personal github: Virgilio-AI                                            #
+# linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203  #
+# contact: virgiliomurilloochoa1@gmail.com                                #
+# #########################################################################
+
+# ========== vim related ======
+# sk -- for getting a skeleton
+# info -- for getting info of the author
+
+# ========== basic input output ======
 # inset - define in port
 # outset - define out port
 # inp - for reading the whole port
 # in - for reading a single pin
-# out
+# out - for getting out a single pin
+# outp - for getting out a hole port with a register
+
+# ========== basic operations ======
+# goto -- to jump to an other part of the code
 # +   - to add
 # -   - to substract
-# retButton - ratard for button
-# display - for all numbers in display
-# {#}d - for number in display
-# if - similar to if
-# goto - rjmp
-# traba - for retarding if the button is pressed
-# var - alias for a register
-# = - for info on asingnign 
-# def - for definition of port pin or ddr
-# teclado_menu - a menu template for keyboard
-# delay_button -- retrado boton help
 
+# ========== buttons ======
+# retButton - ratard for button
+# retButton_h -- retrado boton help
+# traba - for retarding if the button is pressed
+
+# ========== bcd display ======
+# {#}d - for number in display
 # displayButBinary -- display button binary 
 # displayButproteus --- to display with buttons the way should it should
 # displayButtonRaw -- display numbers when connecting manually
 
+# ========== comparisons ======
+# if - similar to if
+# goto - rjmp
+
+# ========== asingning ======
+# var - alias for a register
+# = - for info on asingnign 
+# def - for definition of port pin or ddr
+
+# ========== keybaord ======
+# teclado_menu - a menu template for keyboard
+
+# ========== timers and interruptions ======
 # interrupciones -- configuration for interruptions
 # timers -- configurar los timers
-snippet timers
-; configure:
-; ocr0
-; TIFR
-; TIMSK
-; TCNT0
-; TCCR0
-endsnippet
 
-snippet interrupciones
-; command to set interruptions
-sei
-; cargamos al registro GICR para abilitar las interrupciones de forma individual
-; general interrupt control register
-; |int1|int0|int2|-|-|-|IVSEL|IVCE|
-; default 0, 1 to enable interruptions
-ldi r16, 0b${1:0}${2:0}${3:0}0_0000
-out GICR, r16
+# ******************* snippets
 
-; cargamos al registro GIFR
-; general interrupt flag register
-; |intf1|intf0|intf2|-|-|-|-|-|
-; limpiados por default, 0=interruption in use; 1=default
-ldi r16, 0b1110_0000
-out GICR, r16
-
-; cargamos al registro MCUCR
-; configuracion de int0 y int1
-; |sm2|se|sm1|isc11|isc10|isc01|isc00|
-; same table with int1=isc11-isc10|int0=isc01-isc00|
-; 0 0 -> low level 
-; 0 1 -> any logical change
-; 1 0 -> failing edge
-; 1 1 -> rising edge
-ldi r16, 0b_0000_${4:00}${5:00}
-out MCUCR, r16
-
-; cargamos el registro MCUCSR
-; para configurar int2
-; |JTD|ISC2|-|JTRF|WDRF|BORF|EXTRF|PORF|
-; ISC2 == 1 : flanco de subida
-; ISC2 == 0 : flanco de bajada
-ldi r16,0b0${6:0}00_0000
-out MCUCSR,r16
-
-endsnippet
-
-snippet delay_button
-;megahertz = 1/frecuencia del micro en ms
-; ejemplo:
-; 2mhz 
-; #ciclos = (50 mili second - 100 mili seconds)/(1/2mhz)
-endsnippet
-
-snippet teclado_menu
-	ldi sendSignal, 0b1111_1111
-	out PORT_TECLADO, sendSignal
-
-	cbi PORT_TECLADO, 0
-	nop
-	nop
-
-	sbis PIN_TECLADO, 4
-		rjmp TECLADO_1
-	sbis PIN_TECLADO, 5
-		rjmp TECLADO_2
-	sbis PIN_TECLADO, 6
-		rjmp TECLADO_3
-
-	sbi PORT_TECLADO, 0
-	cbi PORT_TECLADO, 1
-	nop
-	nop
-
-	sbis PIN_TECLADO, 4
-		rjmp TECLADO_4
-	sbis PIN_TECLADO, 5
-		rjmp TECLADO_5
-	sbis PIN_TECLADO, 6
-		rjmp TECLADO_6
-
-	sbi PORT_TECLADO, 1
-	cbi PORT_TECLADO, 2
-	nop
-	nop
-
-	sbis PIN_TECLADO, 4
-		rjmp TECLADO_7
-	sbis PIN_TECLADO, 5
-		rjmp TECLADO_8
-	sbis PIN_TECLADO, 6
-		rjmp TECLADO_9
-
-	sbi PORT_TECLADO, 2
-	cbi PORT_TECLADO, 3
-	nop
-	nop
-
-	sbis PIN_TECLADO, 5
-		rjmp TECLADO_0
-endsnippet
-
-
-snippet def
-.equ ${1:nombre}_ddr = ddr${2:a-b-c-d}
-.equ $1_port = port$2
-.equ $1_pin = pin$2
-endsnippet
-
-snippet =
-; set value to cero before doing anything
-; mov reg_target, second_reg
-; ldi reg_target, numerical value
-endsnippet
-
-snippet traba
-traba$1:
-	; after the action of the button is done
-	rcall retButton
-	retenido$1:
-		; name of the register to load info
-		sbis ${3:pina-b-c-d}, ${2:number_of_pin} ; check if pin is set
-			rjmp retenido$1
-	rcall retButton
-	${4:ret|jmp main}
-endsnippet
-
-snippet var
-.def ${1:register_name} = ${2:register_number}
-ldi $1, ${3:0b0000_0000|#|0x#}
-endsnippet
-
-snippet goto
-rjmp ${1:name}
-; name:
-endsnippet
-
-snippet if
-cpi ${1:register}, ${2:binary_Number}
-	breq $3
-endsnippet
-
-
-snippet retButton
-retButton:
-	; ============================= 
-	;    delay loop generator 
-	;     5000 cycles:
-	; ----------------------------- 
-	; delaying 4998 cycles:
-			  ldi  t2, \$07
-	WGLOOP0:  ldi  t1, $ED
-	WGLOOP1:  dec  t1
-			  brne WGLOOP1
-			  dec  t2
-			  brne WGLOOP0
-	; ----------------------------- 
-	; delaying 2 cycles:
-			  nop
-			  nop
-	; ============================= 
-ret
-endsnippet
-
-snippet inp
-; name of the register to load info
-ldi $1, 0
-in ${1:register}, pin${2:a-b-c-d}
-com $1
-endsnippet
-
-snippet in
-sbis pin${1:a-b-c-d}, ${2:0-7} ; check if pin is set
-	jmp ${3:function} ; always return to main in this function
-endsnippet
-
-
-snippet out
-;set clear
-${1:s-c}bi port${2:a-b-c-d}, ${3:number_of_pin}
-endsnippet
-
-snippet outp
-out port${1:a-b-c-d}, ${2:register}
-endsnippet
-
-snippet inset
-; input setting
-; inmediate registers are bigger than 16
-ldi r16, 0b0000_0000
-out ddr${1:a-b-c-d}, r16
-ldi r16, 0b1111_1111
-out port$1, r16
-endsnippet
-
-snippet outset
-; output setting
-; name of register must be bigger than 16
-ldi r16, 0b1111_1111
-out ddr${1:a-b-c-d}, r16
-ldi r16,0b0000_0000
-out port$1,r16
-endsnippet
-
-
-snippet info
-; Fecha: `date +%d/%B/%Y\ -\ %A`
-; Autor: Virgilio Murillo Ochoa
-; personal github: Virgilio-AI
-; linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
-; contact: virgiliomurilloochoa1@gmail.com
-endsnippet
-
+# ==========================
+# ========== vim related ======
+# ==========================
 snippet sk
 ;******************************************************
 ; ${2:Titulo del proyecto}
@@ -364,8 +181,124 @@ SPM_RDY:
 reti ; Store Program Memory Ready Handler
 endsnippet
 
+snippet info
+; Fecha: `date +%d/%B/%Y\ -\ %A`
+; Autor: Virgilio Murillo Ochoa
+; personal github: Virgilio-AI
+; linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+; contact: virgiliomurilloochoa1@gmail.com
+endsnippet
+
+# ==========================
+# ========== basic input output ======
+# ==========================
+snippet inset
+; input setting
+; inmediate registers are bigger than 16
+ldi r16, 0b0000_0000
+out ddr${1:a-b-c-d}, r16
+ldi r16, 0b1111_1111
+out port$1, r16
+endsnippet
+
+snippet outset
+; output setting
+; name of register must be bigger than 16
+ldi r16, 0b1111_1111
+out ddr${1:a-b-c-d}, r16
+ldi r16,0b0000_0000
+out port$1,r16
+endsnippet
+
+snippet inp
+; name of the register to load info
+ldi $1, 0
+in ${1:register}, pin${2:a-b-c-d}
+com $1
+endsnippet
+
+snippet in
+sbis pin${1:a-b-c-d}, ${2:0-7} ; check if pin is set
+	jmp ${3:function} ; always return to main in this function
+endsnippet
 
 
+snippet out
+;set clear
+${1:s-c}bi port${2:a-b-c-d}, ${3:number_of_pin}
+endsnippet
+
+snippet outp
+out port${1:a-b-c-d}, ${2:register}
+endsnippet
+
+
+
+# ==========================
+# ========== basic operations ======
+# ==========================
+
+snippet goto
+rjmp ${1:name}
+; name:
+endsnippet
+
+snippet +
+	subi ${1:register},-${2:number}
+endsnippet
+
+snippet -
+	subi ${1:register},${2:number}
+endsnippet
+
+# ==========================
+# ========== buttons ======
+# ==========================
+
+snippet retButton
+retButton:
+	; ============================= 
+	;    delay loop generator 
+	;     5000 cycles:
+	; ----------------------------- 
+	; delaying 4998 cycles:
+			  ldi  t2, \$07
+	WGLOOP0:  ldi  t1, $ED
+	WGLOOP1:  dec  t1
+			  brne WGLOOP1
+			  dec  t2
+			  brne WGLOOP0
+	; ----------------------------- 
+	; delaying 2 cycles:
+			  nop
+			  nop
+	; ============================= 
+ret
+endsnippet
+
+snippet retButton_h
+;megahertz = 1/frecuencia del micro en ms
+; ejemplo:
+; 2mhz 
+; #ciclos = (50 mili second - 100 mili seconds)/(1/2mhz)
+endsnippet
+
+snippet traba
+traba$1:
+	; after the action of the button is done
+	rcall retButton
+	retenido$1:
+		; name of the register to load info
+		sbis ${3:pina-b-c-d}, ${2:number_of_pin} ; check if pin is set
+			rjmp retenido$1
+	rcall retButton
+	${4:ret|jmp main}
+endsnippet
+
+
+# ==========================
+# ========== bdc display ======
+# ==========================
 
 snippet displayButBinary
 ; ============================
@@ -900,4 +833,155 @@ sacar_9$2:
 		rcall retButton
 		$5
 endsnippet
+
+
+# ==========================
+# ========== comparisons ======
+# ==========================
+
+snippet if
+cpi ${1:register}, ${2:binary_Number}
+	breq $3
+endsnippet
+# ==========================
+# ========== asingninng ======
+# ==========================
+
+snippet var
+.def ${1:register_name} = ${2:register_number}
+ldi $1, ${3:0b0000_0000|#|0x#}
+endsnippet
+
+snippet =
+; set value to cero before doing anything
+; mov reg_target, second_reg
+; ldi reg_target, numerical value
+endsnippet
+
+snippet def
+.equ ${1:nombre}_ddr = ddr${2:a-b-c-d}
+.equ $1_port = port$2
+.equ $1_pin = pin$2
+endsnippet
+
+# ==========================
+# ========== keyboard ======
+# ==========================
+
+snippet teclado_menu
+	ldi sendSignal, 0b1111_1111
+	out PORT_TECLADO, sendSignal
+
+	cbi PORT_TECLADO, 0
+	nop
+	nop
+
+	sbis PIN_TECLADO, 4
+		rjmp TECLADO_1
+	sbis PIN_TECLADO, 5
+		rjmp TECLADO_2
+	sbis PIN_TECLADO, 6
+		rjmp TECLADO_3
+
+	sbi PORT_TECLADO, 0
+	cbi PORT_TECLADO, 1
+	nop
+	nop
+
+	sbis PIN_TECLADO, 4
+		rjmp TECLADO_4
+	sbis PIN_TECLADO, 5
+		rjmp TECLADO_5
+	sbis PIN_TECLADO, 6
+		rjmp TECLADO_6
+
+	sbi PORT_TECLADO, 1
+	cbi PORT_TECLADO, 2
+	nop
+	nop
+
+	sbis PIN_TECLADO, 4
+		rjmp TECLADO_7
+	sbis PIN_TECLADO, 5
+		rjmp TECLADO_8
+	sbis PIN_TECLADO, 6
+		rjmp TECLADO_9
+
+	sbi PORT_TECLADO, 2
+	cbi PORT_TECLADO, 3
+	nop
+	nop
+
+	sbis PIN_TECLADO, 5
+		rjmp TECLADO_0
+endsnippet
+
+# ==========================
+# ========== timers and interruptions ======
+# ==========================
+
+snippet interrupciones
+; command to set interruptions
+sei
+; cargamos al registro GICR para abilitar las interrupciones de forma individual
+; general interrupt control register
+; |int1|int0|int2|-|-|-|IVSEL|IVCE|
+; default 0, 1 to enable interruptions
+ldi r16, 0b${1:0}${2:0}${3:0}0_0000
+out GICR, r16
+
+; cargamos al registro GIFR
+; general interrupt flag register
+; |intf1|intf0|intf2|-|-|-|-|-|
+; limpiados por default, 0=interruption in use; 1=default
+ldi r16, 0b1110_0000
+out GICR, r16
+
+; cargamos al registro MCUCR
+; configuracion de int0 y int1
+; |sm2|se|sm1|isc11|isc10|isc01|isc00|
+; same table with int1=isc11-isc10|int0=isc01-isc00|
+; 0 0 -> low level 
+; 0 1 -> any logical change
+; 1 0 -> failing edge
+; 1 1 -> rising edge
+ldi r16, 0b_0000_${4:00}${5:00}
+out MCUCR, r16
+
+; cargamos el registro MCUCSR
+; para configurar int2
+; |JTD|ISC2|-|JTRF|WDRF|BORF|EXTRF|PORF|
+; ISC2 == 1 : flanco de subida
+; ISC2 == 0 : flanco de bajada
+ldi r16,0b0${6:0}00_0000
+out MCUCSR,r16
+
+endsnippet
+
+
+snippet timers
+; configure:
+; ocr0
+; TIFR
+; TIMSK
+; TCNT0
+; TCCR0
+endsnippet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
