@@ -1,3 +1,40 @@
+#pyint
+# ph -> ${placeholder}
+# sp ->
+# dn_ph -> for creating a snippet with dinamic place holders
+# dn_config -> configurations for dinamic place hoders
+snippet dn_config
+global !p
+def create_matrix_placeholders(snip):
+	# Create anonymous snippet body
+	anon_snippet_body = ""
+	# Get start and end line number of expanded snippet
+	start = snip.snippet_start[0]
+	end = snip.snippet_end[0]
+  # Append current line into anonymous snippet
+	for i in range(start, end + 1):
+		anon_snippet_body += snip.buffer[i]
+		anon_snippet_body += "" if i == end else "\n"
+	# Delete expanded snippet line till second to last line
+	for i in range(start, end):
+		del snip.buffer[start]
+	# Empty last expanded snippet line while preserving the line
+	snip.buffer[start] = ''
+	# Expand anonymous snippet
+	snip.expand_anon(anon_snippet_body)
+endglobal
+endsnippet
+
+snippet dn_ph
+post_jump "create_matrix_placeholders(snip)"
+$1
+post_jump "snip"
+endsnippet
+
+snippet ph
+f"\${${1:placeholder}}"
+endsnippet
+
 snippet info
 # Fecha: `date +%d/%B/%Y\ -\ %A`
 # Autor: Virgilio Murillo Ochoa
@@ -6,18 +43,49 @@ snippet info
 # contact: virgiliomurilloochoa1@gmail.com
 endsnippet
 
+snippet sk
+# Fecha: `date +%d/%B/%Y\ -\ %A`
+# Autor: Virgilio Murillo Ochoa
+# personal github: Virgilio-AI
+# linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+# contact: virgiliomurilloochoa1@gmail.com
+# ==========================
+# ========== configurations ======
+# ==========================
+global !p
+def create_matrix_placeholders(snip):
+	# Create anonymous snippet body
+	anon_snippet_body = ""
+	# Get start and end line number of expanded snippet
+	start = snip.snippet_start[0]
+	end = snip.snippet_end[0]
+  # Append current line into anonymous snippet
+	for i in range(start, end + 1):
+		anon_snippet_body += snip.buffer[i]
+		anon_snippet_body += "" if i == end else "\n"
+	# Delete expanded snippet line till second to last line
+	for i in range(start, end):
+		del snip.buffer[start]
+	# Empty last expanded snippet line while preserving the line
+	snip.buffer[start] = ''
+	# Expand anonymous snippet
+	snip.expand_anon(anon_snippet_body)
+endglobal
+post_jump "create_matrix_placeholders(snip)"
+endsnippet
+
 snippet sec
 # ==========================
 # ========== $1 ======
 # ==========================
 endsnippet
 
-snippet sp 
-snippet $1
-	$2
-\endsnippet
+snippet python
+# snip.rv for the return value
+\`!p
+$1
+\`
 endsnippet
-
 # zsh snippets
 snippet forFolder
 # :h for name only
@@ -53,12 +121,13 @@ snippet visual
 \${VISUAL}
 endsnippet
 
-snippet python
+snippet pythonScript
 \`#!/usr/bin/python
 $1\`
 endsnippet
 # python interpolation
 snippet pyint
-# check the tutorial on how to do it
+# for dinamic place holders just use
+#"${placeholder}"
 endsnippet
 

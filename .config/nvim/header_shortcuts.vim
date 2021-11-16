@@ -309,7 +309,7 @@ function! CompileAndRunAssemblyForAvr()
 		exe l:ExecuteCommands . '"'  . l:CreateHex  . '  read -n1 ; ' . '"'
 	endif
 	sleep 100m
-	:undo
+	:% s/\(0b\d\d\d\d\)\(\d\d\d\d\)/\1_\2/g
 	sleep 100m
 	:w!
 endfunction

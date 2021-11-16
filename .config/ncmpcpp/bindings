@@ -195,9 +195,7 @@ def_key "<"
 #def_key "y"
 #  start_searching
 #
-#def_key "y"
-#  toggle_single
-#
+
 #def_key "R"
 #  toggle_consume
 #
@@ -456,7 +454,11 @@ def_key "m"
   toggle_media_library_columns_mode
 def_key "t"
   show_tag_editor
+def_key "y"
+  show_visualizer
 def_key "v"
+  show_visualizer
+def_key "p"
   show_visualizer
 def_key "G"
   move_end

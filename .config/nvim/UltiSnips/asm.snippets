@@ -4,7 +4,11 @@
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203  #
 # contact: virgiliomurilloochoa1@gmail.com                                #
 # #########################################################################
+# ========== configurations ======
 
+
+# ========== global functions =
+# def create_matrix_placeholders
 # ========== vim related ======
 # sk -- for getting a skeleton
 # info -- for getting info of the author
@@ -28,10 +32,8 @@
 # traba - for retarding if the button is pressed
 
 # ========== bcd display ======
-# {#}d - for number in display
-# displayButBinary -- display button binary 
-# displayButproteus --- to display with buttons the way should it should
-# displayButtonRaw -- display numbers when connecting manually
+# s-dis -- for setting the display
+# m-dis -- for creating a menu for the display
 
 # ========== comparisons ======
 # if - similar to if
@@ -50,6 +52,61 @@
 # timers -- configurar los timers
 
 # ******************* snippets
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ==========================
+# ========== global functions ======
+# ==========================
+global !p
+def create_matrix_placeholders(snip):
+	# Create anonymous snippet body
+	anon_snippet_body = ""
+	# Get start and end line number of expanded snippet
+	start = snip.snippet_start[0]
+	end = snip.snippet_end[0]
+  # Append current line into anonymous snippet
+	for i in range(start, end + 1):
+		anon_snippet_body += snip.buffer[i]
+		anon_snippet_body += "" if i == end else "\n"
+	# Delete expanded snippet line till second to last line
+	for i in range(start, end):
+		del snip.buffer[start]
+	# Empty last expanded snippet line while preserving the line
+	snip.buffer[start] = ''
+	# Expand anonymous snippet
+	snip.expand_anon(anon_snippet_body)
+endglobal
+post_jump "snip"
+global !p
+def returnCommandSplitted(command):
+	cmd_arr = command.split('_')
+	return_command = ""
+	for a in cmd_arr:
+		return_command += a + " "
+	return_command = return_command[0:len(return_command)-1]
+	return return_command
+endglobal
+
+
 
 # ==========================
 # ========== vim related ======
@@ -195,18 +252,18 @@ endsnippet
 snippet inset
 ; input setting
 ; inmediate registers are bigger than 16
-ldi r16, 0b0000_0000
+ldi r16, 0b00000000
 out ddr${1:a-b-c-d}, r16
-ldi r16, 0b1111_1111
+ldi r16, 0b11111111
 out port$1, r16
 endsnippet
 
 snippet outset
 ; output setting
 ; name of register must be bigger than 16
-ldi r16, 0b1111_1111
+ldi r16, 0b11111111
 out ddr${1:a-b-c-d}, r16
-ldi r16,0b0000_0000
+ldi r16,0b00000000
 out port$1,r16
 endsnippet
 
@@ -289,7 +346,7 @@ traba$1:
 	rcall retButton
 	retenido$1:
 		; name of the register to load info
-		sbis ${3:pina-b-c-d}, ${2:number_of_pin} ; check if pin is set
+		sbis pin${3:a-b-c-d}, ${2:number_of_pin} ; check if pin is set
 			rjmp retenido$1
 	rcall retButton
 	${4:ret|jmp main}
@@ -297,541 +354,81 @@ endsnippet
 
 
 # ==========================
-# ========== bdc display ======
+# ========== bcd display ======
 # ==========================
 
-snippet displayButBinary
-; ============================
-; ====== definition of display
-; ============================
-saltar_0:
-rjmp sacar_0
-saltar_1:
-rjmp sacar_1
-saltar_2:
-rjmp sacar_2
-saltar_3:
-rjmp sacar_3
-saltar_4:
-rjmp sacar_4
-saltar_5:
-rjmp sacar_5
-saltar_6:
-rjmp sacar_6
-saltar_7:
-rjmp sacar_7
-saltar_8:
-rjmp sacar_8
-saltar_9:
-rjmp sacar_9
-sacar_0$2:
-	ldi t1, 0b0000_0000
-	out port${1:-b-c-d}, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba0:
-		; after the action of the button is done
-		rcall retButton
-		retenido0:
-			; name of the register to load info
-			sbis pin${3:a-b-c-d}, ${4:0} ; check if pin is set
-				rjmp retenido0
-		rcall retButton
-		${5:ret|jmp main}
-
-sacar_1$2:
-	ldi t1, 1
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba1:
-		; after the action of the button is done
-		rcall retButton
-		retenido1:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido1
-		rcall retButton
-		$5
-
-sacar_2$2:
-	ldi t1, 2
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba2:
-		; after the action of the button is done
-		rcall retButton
-		retenido2:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido2
-		rcall retButton
-		$5
-sacar_3$2:
-	ldi t1, 3
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba3:
-		; after the action of the button is done
-		rcall retButton
-		retenido3:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido3
-		rcall retButton
-		$5
-sacar_4$2:
-	ldi t1, 4
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba4:
-		; after the action of the button is done
-		rcall retButton
-		retenido4:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido4
-		rcall retButton
-		$5
-sacar_5$2:
-	ldi t1, 5
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba5:
-		; after the action of the button is done
-		rcall retButton
-		retenido5:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido5
-		rcall retButton
-		$5
-sacar_6$2:
-	ldi t1, 6
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba6:
-		; after the action of the button is done
-		rcall retButton
-		retenido6:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido6
-		rcall retButton
-		$5
-sacar_7$2:
-	ldi t1, 7
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba7:
-		; after the action of the button is done
-		rcall retButton
-		retenido7:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido7
-		rcall retButton
-		$5
-sacar_8$2:
-	ldi t1, 8
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba8:
-		; after the action of the button is done
-		rcall retButton
-		retenido8:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido8
-		rcall retButton
-		$5
-sacar_9$2:
-	ldi t1, 9
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba9:
-		; after the action of the button is done
-		rcall retButton
-		retenido9:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido9
-		rcall retButton
-		$5
+snippet s-dis
+display ${1:binary|proteus|raw} ${2:1=buttons|2=noButtons} ${3:rjmp main} ${4:pin} ${5:port}
 endsnippet
-
-snippet displayButproteus
-; ============================
-; ====== definition of display
-; ============================
-saltar_0:
-rjmp sacar_0
-saltar_1:
-rjmp sacar_1
-saltar_2:
-rjmp sacar_2
-saltar_3:
-rjmp sacar_3
-saltar_4:
-rjmp sacar_4
-saltar_5:
-rjmp sacar_5
-saltar_6:
-rjmp sacar_6
-saltar_7:
-rjmp sacar_7
-saltar_8:
-rjmp sacar_8
-saltar_9:
-rjmp sacar_9
-sacar_0$2:
-	ldi t1,0b0011_1111
-	out port${1:-b-c-d}, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba0:
-		; after the action of the button is done
-		rcall retButton
-		retenido0:
-			; name of the register to load info
-			sbis pin${3:a-b-c-d}, ${4:number_of_pin} ; check if pin is set
-				rjmp retenido0
-		rcall retButton
-		${5:ret|jmp main}
-
-sacar_1$2:
-	ldi t1,0b000_0110
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba1:
-		; after the action of the button is done
-		rcall retButton
-		retenido1:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido1
-		rcall retButton
-		$5
-
-sacar_2$2:
-	ldi t1,0b0101_1011
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba2:
-		; after the action of the button is done
-		rcall retButton
-		retenido2:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido2
-		rcall retButton
-		$5
-sacar_3$2:
-	ldi t1,0b0100_1111
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba3:
-		; after the action of the button is done
-		rcall retButton
-		retenido3:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido3
-		rcall retButton
-		$5
-sacar_4$2:
-	ldi t1,0b0110_0110
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba4:
-		; after the action of the button is done
-		rcall retButton
-		retenido4:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido4
-		rcall retButton
-		$5
-sacar_5$2:
-	ldi t1,0b0110_1101
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba5:
-		; after the action of the button is done
-		rcall retButton
-		retenido5:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido5
-		rcall retButton
-		$5
-sacar_6$2:
-	ldi t1,0b0111_1101
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba6:
-		; after the action of the button is done
-		rcall retButton
-		retenido6:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido6
-		rcall retButton
-		$5
-sacar_7$2:
-	ldi t1,0b0000_0111
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba7:
-		; after the action of the button is done
-		rcall retButton
-		retenido7:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido7
-		rcall retButton
-		$5
-sacar_8$2:
-	ldi t1,0b0111_1111
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba8:
-		; after the action of the button is done
-		rcall retButton
-		retenido8:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido8
-		rcall retButton
-		$5
-sacar_9$2:
-	ldi t1,0b0110_1111
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba9:
-		; after the action of the button is done
-		rcall retButton
-		retenido9:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido9
-		rcall retButton
-		$5
+snippet m-dis
+menu ${1:register} ${2:return_command}
 endsnippet
+snippet "menu (\w+) (\w+)" "menu para display" r
+`!p
+def menuFunct(register,return_command):
+	return_command = returnCommandSplitted(return_command)
+	ans = "menu:\n"
+	for a in range(0,10):
+		ans+="cpi " + register + ","+ str(a)+"\n"
+		ans+="\tbreq saltar_" + str(a) + "\n"
+	ans += return_command
+	return ans
+snip.rv = menuFunct(str(match.group(1)),str(match.group(2)))
+`
+endsnippet
+post_jump "create_matrix_placeholders(snip)"
+snippet "(display) (binary|proteus|raw) (0|1) (\w+) (\w) (\w)" "configure the display" r
+ `!p
 
-snippet displayButRaw
-; ============================
-; ====== definition of display
-; ============================
-saltar_0:
-rjmp sacar_0
-saltar_1:
-rjmp sacar_1
-saltar_2:
-rjmp sacar_2
-saltar_3:
-rjmp sacar_3
-saltar_4:
-rjmp sacar_4
-saltar_5:
-rjmp sacar_5
-saltar_6:
-rjmp sacar_6
-saltar_7:
-rjmp sacar_7
-saltar_8:
-rjmp sacar_8
-saltar_9:
-rjmp sacar_9
+def definitionOfDisplay(config,button,return_command,pin,port):
+	return_command = returnCommandSplitted(return_command)
+	# el arreglo de formas de hacer las cosas
+	binary_values = [
+	# raw values: for connecting manually
+	['0b0000_0000','0b0100_1000','0b0011_1101','0b0110_1101','0b0100_1011','0b0110_0111','0b0111_0011','0b0100_1100','0b0111_1111','0b0100_1111'],
+	# proteus values: the way is ment to be in documentation
+	['0b0011_1111','0b0000_0110','0b0101_1011','0b0100_1111','0b0110_0110','0b0110_1101','0b0111_1101','0b0000_0111','0b0111_1111','0b0110_1111'],
+	# binary values: the simplest way
+	['0','1','2','3','4','5','6','7','8','9']
+	]
+	configInt = 0
+	if config == "raw":
+		configInt = 0
+	elif config == "proteus":
+		configInt = 1
+	else:
+		configInt = 2
+	place1 = 1
+	place2 = 2
+	place3 = 3
+	# primero para saltar
+	ans = "" + str(t[1]) +  \
+	"; ========================\n" \
+	"; ======== definition of display ===\n" \
+	"; ===============================\n"
 
-sacar_0$2:
-	out port${1:-b-c-d}, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba0:
-		; after the action of the button is done
-		rcall retButton
-		retenido0:
-			; name of the register to load info
-			sbis pin${3:a-b-c-d}, ${4:number_of_pin} ; check if pin is set
-				rjmp retenido0
-		rcall retButton
-		${5:ret|jmp main}
+	for i in range(0,10):
+		ans +="saltar_" + str(i)+":\n"
+		ans += "\trjmp sacar_" + str(i) + "\n"
 
-sacar_1$2:
-	ldi t1,0b0100_1000
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba1:
-		; after the action of the button is done
-		rcall retButton
-		retenido1:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido1
-		rcall retButton
-		$5
+	for i in range(0,10):
+		ans += "sacar_" + str(i) + ":"  + "\n"
+		ans += "\tldi t1," + binary_values[configInt][i] +"\n"
+		ans += "\tout port"+port+"," + "t1" +"\n"
+		if button == "1":
+			ans += "\ttraba" + str(i)  + ":" + "\n"
+			ans += "\t\t; name of the register to load info" + "\n"
+			ans += "\t\trcall retButton" + "\n"
+			ans += "\t\tretenido" + str(i) + ":" + "\n"
+			ans += "\t\t\t; name of the register to load info" + "\n"
+			ans += "\t\t\tsbis pin"+pin+",0 ; check if the pin is set" + "\n"
+			ans += "\t\t\t\trjmp retenido" + str(i) + "\n"
+			ans += "\t\t\trcall retButton"  + "\n"
+		ans += "\n" +return_command + "\n"
 
-sacar_2$2:
-	ldi t1,0b0011_1101
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba2:
-		; after the action of the button is done
-		rcall retButton
-		retenido2:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido2
-		rcall retButton
-		$5
-sacar_3$2:
-	ldi t1,0b0110_1101
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba3:
-		; after the action of the button is done
-		rcall retButton
-		retenido3:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido3
-		rcall retButton
-		$5
-sacar_4$2:
-	ldi t1,0b0100_1011
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba4:
-		; after the action of the button is done
-		rcall retButton
-		retenido4:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido4
-		rcall retButton
-		$5
-sacar_5$2:
-	ldi t1,0b0110_0111
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba5:
-		; after the action of the button is done
-		rcall retButton
-		retenido5:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido5
-		rcall retButton
-		$5
-sacar_6$2:
-	ldi t1,0b0111_0011
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba6:
-		; after the action of the button is done
-		rcall retButton
-		retenido6:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido6
-		rcall retButton
-		$5
-sacar_7$2:
-	ldi t1,0b0100_1100
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba7:
-		; after the action of the button is done
-		rcall retButton
-		retenido7:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido7
-		rcall retButton
-		$5
-sacar_8$2:
-	ldi t1,0b0111_1111
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba8:
-		; after the action of the button is done
-		rcall retButton
-		retenido8:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido8
-		rcall retButton
-		$5
-sacar_9$2:
-	ldi t1,0b0100_1111
-	out port$1, t1
-	; action to do if button is pressed
-	
-	; traba
-	traba9:
-		; after the action of the button is done
-		rcall retButton
-		retenido9:
-			; name of the register to load info
-			sbis pin$3, $4 ; check if pin is set
-				rjmp retenido9
-		rcall retButton
-		$5
+	return ans
+snip.rv = definitionOfDisplay(str(match.group(2)),str(match.group(3)),str(match.group(4)),str(match.group(5)),str(match.group(6)))
+`
 endsnippet
 
 
@@ -849,7 +446,7 @@ endsnippet
 
 snippet var
 .def ${1:register_name} = ${2:register_number}
-ldi $1, ${3:0b0000_0000|#|0x#}
+ldi $1, ${3:0b00000000|#|0x#}
 endsnippet
 
 snippet =
@@ -869,7 +466,7 @@ endsnippet
 # ==========================
 
 snippet teclado_menu
-	ldi sendSignal, 0b1111_1111
+	ldi sendSignal, 0b11111111
 	out PORT_TECLADO, sendSignal
 
 	cbi PORT_TECLADO, 0
@@ -927,14 +524,14 @@ sei
 ; general interrupt control register
 ; |int1|int0|int2|-|-|-|IVSEL|IVCE|
 ; default 0, 1 to enable interruptions
-ldi r16, 0b${1:0}${2:0}${3:0}0_0000
+ldi r16, 0b${1:0}${2:0}${3:0}00000
 out GICR, r16
 
 ; cargamos al registro GIFR
 ; general interrupt flag register
 ; |intf1|intf0|intf2|-|-|-|-|-|
 ; limpiados por default, 0=interruption in use; 1=default
-ldi r16, 0b1110_0000
+ldi r16, 0b11100000
 out GICR, r16
 
 ; cargamos al registro MCUCR
@@ -953,7 +550,7 @@ out MCUCR, r16
 ; |JTD|ISC2|-|JTRF|WDRF|BORF|EXTRF|PORF|
 ; ISC2 == 1 : flanco de subida
 ; ISC2 == 0 : flanco de bajada
-ldi r16,0b0${6:0}00_0000
+ldi r16,0b0${6:0}000000
 out MCUCSR,r16
 
 endsnippet
