@@ -16,6 +16,7 @@
 # ========== basic input output ======
 # inset - define in port
 # outset - define out port
+# ioset -- define the port in input and output mode
 # inp - for reading the whole port
 # in - for reading a single pin
 # out - for getting out a single pin
@@ -34,6 +35,8 @@
 # ========== bcd display ======
 # s-dis -- for setting the display
 # m-dis -- for creating a menu for the display
+# s-key -- for setting the display
+
 
 # ========== comparisons ======
 # if - similar to if
@@ -45,6 +48,7 @@
 # def - for definition of port pin or ddr
 
 # ========== keybaord ======
+# m-key
 # teclado_menu - a menu template for keyboard
 
 # ========== timers and interruptions ======
@@ -172,7 +176,7 @@ out SPL, r16
 ;******************************************************
 
 
-; ******* setting input output ******************  inset, outset
+; ******* setting input output ******************  inset, outset, ioset
 $3
 
 ; ************** definition of variables ********* var
@@ -249,6 +253,57 @@ endsnippet
 # ==========================
 # ========== basic input output ======
 # ==========================
+snippet ioset
+; input = 0; output = 1; 76543210
+ioset ${1:a-b-c-d} ${2:00000000}
+endsnippet
+snippet "ioset (\w) (\w+)" "set a port in a generic way" r
+`!p
+# match.group(#) for the current match
+# snip.rv for the return value
+def getDdrStrin(strin):
+	ans = ""
+	cont = 0
+	for a in strin:
+		if a == "0":
+			ans+="0"
+			cont+=1
+			if cont == 4:
+				ans+="_"
+		else:
+			ans+="1"
+			cont+=1
+			if cont == 4:
+				ans+="_"
+	return ans
+def getPortStrin(strin):
+	ans = ""
+	cont = 0
+	for a in strin:
+		if a == "1":
+			ans+="0"
+			cont+=1
+			if cont == 4:
+				ans+="_"
+		else:
+			ans+="1"
+			cont+=1
+			if cont == 4:
+				ans+="_"
+	return ans
+
+def setPort(letter,strin):
+	ans=""
+	strin1 = getDdrStrin(strin)
+	strin2 = getPortStrin(strin)
+	ans+= "ldi r16, 0b" + strin1 + "\n"
+	ans+="out ddr" + str(letter) + ", r16\n"
+	ans+="ldi r16, 0b" + str(strin2) + "\n"
+	ans+="out port" + str(letter) + ",r16"
+	return ans
+snip.rv = setPort(str(match.group(1)),str(match.group(2)))
+`
+endsnippet
 snippet inset
 ; input setting
 ; inmediate registers are bigger than 16
@@ -465,52 +520,97 @@ endsnippet
 # ========== keyboard ======
 # ==========================
 
-snippet teclado_menu
-	ldi sendSignal, 0b11111111
-	out PORT_TECLADO, sendSignal
+snippet s-key
+teclado_set ${1:a-b-c-d} ${2:firstSection_secondSection} ${3:start_end} ${4:return_statement}
+endsnippet
 
-	cbi PORT_TECLADO, 0
-	nop
-	nop
+post_jump "create_matrix_placeholders(snip)"
+snippet "teclado_set (\w) (\w+) (\w+) (\w+)" "set the keyboardButtons" r
+`!p
+# match.group(#) for the current match
+# snip.rv for the return value
+def setKeyboard(letter,rows_cols,start_end,return_statement):
+	ans = ""
+	firstHalf = int(rows_cols.split('_')[0])
+	secondHalf = int(rows_cols.split('_')[1])
+	start = int(start_end.split('_')[0])
+	end = int(start_end.split('_')[1])
+	return_statement = returnCommandSplitted(return_statement)
+	counter=1
+	tempCont=0
 
-	sbis PIN_TECLADO, 4
-		rjmp TECLADO_1
-	sbis PIN_TECLADO, 5
-		rjmp TECLADO_2
-	sbis PIN_TECLADO, 6
-		rjmp TECLADO_3
+	for i in range(1,int(firstHalf)*int(secondHalf)+1):
+		ans+="saltar_teclado_"+ str(i) + ":\n"
+		ans+="\trjmp teclado_" + str(i) + "\n"
+	ans+="\n\n"
+	for i in range(1,int(firstHalf)*int(secondHalf)+1):
+		ans+="teclado_"+ str(i) + ":\n"
+		ans+=";personaliced code\n"
+		ans+="traba_teclado" + str(i)+ ":\n"
+		ans+="\trcall retButton" + "\n"
+		ans+="\tretenido_teclado"+ str(i) + ":\n"
+		ans+="\t\tsbis pin" + letter + ", " + str((i-1)%secondHalf + firstHalf) + "\n"
+		ans+="\t\trjmp retenido_teclado" + str(i) + "\n"
+		ans+="\trcall retButton"  + "\n"
+		ans+=return_statement+"\n"
+	return ans
 
-	sbi PORT_TECLADO, 0
-	cbi PORT_TECLADO, 1
-	nop
-	nop
+snip.rv = setKeyboard(str(match.group(1)),str(match.group(2)),str(match.group(3)),str(match.group(4)))
+`
+endsnippet
+post_jump "snip"
+snippet m-key
+teclado_menu ${1:a-b-c-d} ${2:firstSection_secondSection[both can be rows or cols]} ${3:start_end}
+endsnippet
+snippet "teclado_menu (\w) (\w+) (\w+)" "menu para el teclado" r
+`!p
+# snip.rv for the return value
+def keyBoardFunction(letter,rows_cols,start_end):
+	ans = ""
+	firstHalf = int(rows_cols.split('_')[0])
+	secondHalf = int(rows_cols.split('_')[1])
+	start = int(start_end.split('_')[0])
+	end = int(start_end.split('_')[1])
+	counter=1
+	tempCont=0
 
-	sbis PIN_TECLADO, 4
-		rjmp TECLADO_4
-	sbis PIN_TECLADO, 5
-		rjmp TECLADO_5
-	sbis PIN_TECLADO, 6
-		rjmp TECLADO_6
+	#first load the port with ones
+	ans+="ldi t1,0b"
+	for a in range(0,start):
+		ans+="0"
+		tempCont+=1
+		if tempCont == 4:
+			ans+="_"
+	for a in range(start,end+1):
+		ans+="1"
+		tempCont+=1
+		if tempCont == 4:
+			ans+="_"
+	for a in range(end+1,8):
+		ans+="0"
+		tempCont+=1
+		if tempCont == 4:
+			ans+="_"
 
-	sbi PORT_TECLADO, 1
-	cbi PORT_TECLADO, 2
-	nop
-	nop
+	ans+="\n"
+	ans+="out port" + letter + ", t1\n\n"
 
-	sbis PIN_TECLADO, 4
-		rjmp TECLADO_7
-	sbis PIN_TECLADO, 5
-		rjmp TECLADO_8
-	sbis PIN_TECLADO, 6
-		rjmp TECLADO_9
+	for i in range(start,start+firstHalf):
+		if i != start:
+			ans+="sbi port"+letter+"," + str(i-1) + "\n"
+		ans+="cbi port" + letter + ", "+str(i)+"\n"
+		ans+="nop\nnop\n"
+		ans+="\n"
+		for j in range(start+firstHalf,end+1):
+			ans+="sbis pin" +letter+ "," + str(j) + "\n"
+			ans+="\trjmp saltar_teclado_"+str(counter) + "\n"
+			counter+=1
+		ans+="\n"
 
-	sbi PORT_TECLADO, 2
-	cbi PORT_TECLADO, 3
-	nop
-	nop
+	return ans
 
-	sbis PIN_TECLADO, 5
-		rjmp TECLADO_0
+snip.rv = keyBoardFunction(str(match.group(1)),str(match.group(2)),str(match.group(3)))
+`
 endsnippet
 
 # ==========================

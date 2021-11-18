@@ -288,6 +288,8 @@ function! CompileAndRunAssemblyForLinux()
 endfunction
 
 function! CompileAndRunAssemblyForAvr()
+	let l:Line = line(".")
+	let l:Column = col(".")
 	sleep 100m
 	:% s/\(\d\)_\(\d\)/\1\2/g
 	sleep 100m
@@ -311,6 +313,7 @@ function! CompileAndRunAssemblyForAvr()
 	sleep 100m
 	:% s/\(0b\d\d\d\d\)\(\d\d\d\d\)/\1_\2/g
 	sleep 100m
+	exe "call cursor(" . l:Line . "," . l:Column . ")"
 	:w!
 endfunction
 
