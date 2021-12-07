@@ -1,8 +1,135 @@
+#  ========== global snippets
+# snippets for snippets
+# rsni -> regular expression snippet
+# sni -> normal snippet
+
+# rsni -> regex snippet
 #pyint
 # ph -> ${placeholder}
 # sp ->
 # dn_ph -> for creating a snippet with dinamic place holders
 # dn_config -> configurations for dinamic place hoders
+# ins -> for inserting variables into text 
+# surPar -> for surrounding text under parentesis
+
+
+# python
+# pythonr
+
+# ========== for python snippets ======
+
+# ---------------   python
+# forString - for iterate string c style
+# list - for creating a python list
+# set - unordered collection of data type, no duplicate
+# tuple - same to list but inmutable
+# ========== systemInteraction ======
+
+# ========== global snippets ======
+# ----------------    system interaction
+
+# shOutput
+# shCommand
+# notify-send
+# execute sound
+# newFolder-recursive
+snippet sni
+# options im-> inword
+snippet ${1:wordToTrigger} "${2:information of the snippet}" ${3:types}
+$4
+`echo "endsnippet"`
+endsnippet
+snippet rsni
+snippet "${1:regex}" "${2:information of the snippet}" r
+$3
+`echo "endsnippet"`
+endsnippet
+global !p
+def create_matrix_placeholders(snip):
+	# Create anonymous snippet body
+	anon_snippet_body = ""
+	# Get start and end line number of expanded snippet
+	start = snip.snippet_start[0]
+	end = snip.snippet_end[0]
+  # Append current line into anonymous snippet
+	for i in range(start, end + 1):
+		anon_snippet_body += snip.buffer[i]
+		anon_snippet_body += "" if i == end else "\n"
+	# Delete expanded snippet line till second to last line
+	for i in range(start, end):
+		del snip.buffer[start]
+	# Empty last expanded snippet line while preserving the line
+	snip.buffer[start] = ''
+	# Expand anonymous snippet
+	snip.expand_anon(anon_snippet_body)
+endglobal
+
+global !p
+def returnCommandSplitted(command):
+	cmd_arr = command.split('_')
+	return_command = ""
+	for a in cmd_arr:
+		return_command += a + " "
+	return_command = return_command[0:len(return_command)-1]
+	return return_command
+endglobal
+
+global !p
+def parseStatement(i,j,k,stri):
+	prev = ''
+	twoBehind=''
+	ans = ""
+	for ch in stri:
+		if ( ch == 'k' or ch == 'i' or ch == 'j' )  and prev == '$' and twoBehind == '\\':
+			ans = ans[:-2]
+			ans+=ch
+		elif ch == 'i' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(i)
+		elif ch == 'j' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(j)
+		elif ch == 'k' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(k)
+		elif ch == 'n' and prev == '\\':
+			ans = ans[:-1]
+			ans+="\n"
+		else :
+			ans+=ch
+		twoBehind = prev
+		prev = ch
+	return ans
+endglobal
+
+
+snippet ins "" im
+"+str($1)+"
+endsnippet
+
+snippet surPar
+`!p
+# match.group(#) for the current match
+# snip.rv for the return value
+# snip.v.text -> the text
+# snip.v.mode 'v' | 'V' | '^V'
+def temp(text):
+	ans = ""
+	for i in range(0,len(text)):
+		if i == 0 :
+			ans+="\""
+			ans+=text[i]
+		elif i == len(text)-1:
+			ans+="\\n\""
+		elif text[i] == '\n' :
+			ans+="\\n\"\n\""
+		else :
+			ans+=text[i]
+	return ans
+snip.rv = temp(snip.v.text)
+`
+endsnippet
+
 snippet dn_config
 global !p
 def create_matrix_placeholders(snip):
@@ -25,7 +152,7 @@ def create_matrix_placeholders(snip):
 endglobal
 endsnippet
 
-snippet dn_ph
+snippet dn_ph "place holder" im
 post_jump "create_matrix_placeholders(snip)"
 $1
 post_jump "snip"
@@ -82,9 +209,32 @@ endsnippet
 
 snippet python
 \`!p
+# snip.rv for the return value
+# snip.v.text -> the text
+# snip.v.mode 'v' | 'V' | '^V'
+def temp(vtext):
+	ans=""
+	$2
+	return ans
+
+text = snip.v.text
+snip.rv = temp(text)
+\`
+endsnippet
+snippet pythonr
+\`!p
 # match.group(#) for the current match
 # snip.rv for the return value
-snip.rv = ""
+# snip.v.text -> the text
+# snip.v.mode 'v' | 'V' | '^V'
+def temp(arr,text):
+	arrLen = len(arr)
+	ans=""
+	$2
+	return ans
+text = snip.v.text
+matchArr = getMatchArr()
+snip.rv = temp(matchArr,text)
 \`
 endsnippet
 # zsh snippets
@@ -131,4 +281,45 @@ snippet pyint
 # for dinamic place holders just use
 #"${placeholder}"
 endsnippet
+
+# ==========================
+# ========== for python snippets ======
+# ==========================
+
+snippet forString
+for element in range(0, len(${1:string_name})):
+	print($1[element])
+endsnippet
+
+
+snippet list
+${1:temp} = [$2]
+endsnippet
+
+snippet set
+${1:temp} = {$2}
+endsnippet
+
+
+snippet tuple
+${1:temp} = ($2)
+endsnippet
+
+# ==========================
+# ========== system configuration ======
+# ==========================
+
+snippet shOutput
+${1:strinName}=str(subprocess.check_output([${2:list_commands}]).decode('utf-8'))
+endsnippet
+
+snippet shCommand
+os.system('$1')
+endsnippet
+
+
+snippet notify-send
+os.system("notify-send \"$1\"")
+endsnippet
+
 
