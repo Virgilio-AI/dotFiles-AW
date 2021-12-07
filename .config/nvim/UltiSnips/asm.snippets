@@ -4,11 +4,16 @@
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203  #
 # contact: virgiliomurilloochoa1@gmail.com                                #
 # #########################################################################
+
 # ========== configurations ======
-
-
 # ========== global functions =
-# def create_matrix_placeholders
+# def create_matrix_placeholders(snip)
+# def returnCommandSplitted(command)
+# def presetStatement
+# def getMatchArr
+
+# ========== !!! tempFunctions !!! ======
+
 # ========== vim related ======
 # sk -- for getting a skeleton
 # info -- for getting info of the author
@@ -26,6 +31,8 @@
 # goto -- to jump to an other part of the code
 # +   - to add
 # -   - to substract
+# mod -- to use the modulo operation
+# mul -- to multipli
 
 # ========== buttons ======
 # retButton - ratard for button
@@ -36,6 +43,7 @@
 # s-dis -- for setting the display
 # m-dis -- for creating a menu for the display
 # s-key -- for setting the display
+# doubleNum -- for double numbers in the dispplay
 
 
 # ========== comparisons ======
@@ -52,8 +60,12 @@
 # teclado_menu - a menu template for keyboard
 
 # ========== timers and interruptions ======
-# interrupciones -- configuration for interruptions
-# timers -- configurar los timers
+# setint -- configuration for interruptions
+# settim -- configurar los timers
+# c-tim -- clean timers
+# tim -- start timer
+# pwm -- fast pwm for servomotors and lights
+# s-pwm -- for help
 
 # ******************* snippets
 
@@ -63,23 +75,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ==========================
-# ========== global functions ======
-# ==========================
 global !p
 def create_matrix_placeholders(snip):
 	# Create anonymous snippet body
@@ -110,7 +105,57 @@ def returnCommandSplitted(command):
 	return return_command
 endglobal
 
+post_jump "snip"
+global !p
 
+def parseStatement(i,j,k,stri):
+	prev = ''
+	twoBehind=''
+	ans = ""
+	for ch in stri:
+
+		if ( ch == 'k' or ch == 'i' or ch == 'j' )  and prev == '$' and twoBehind == '\\':
+			ans = ans[:-2]
+			ans+=ch
+
+		elif ch == 'i' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(i)
+		elif ch == 'j' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(j)
+		elif ch == 'k' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(k)
+		elif ch == 'n' and prev == '\\':
+			ans = ans[:-1]
+			ans+="\n"
+
+		else :
+			ans+=ch
+
+		twoBehind = prev
+		prev = ch
+	return ans
+
+endglobal
+
+global !p
+def getMatchArr():
+	cont=1
+	arr = []
+	while 1 :
+		try :
+			arr.append(match.group(cont))
+			cont+=1
+		except :
+			break
+	return arr
+
+endglobal
+# ==========================
+# ========== temp Functions ======
+# ==========================
 
 # ==========================
 # ========== vim related ======
@@ -179,16 +224,27 @@ out SPL, r16
 ; ******* setting input output ******************  inset, outset, ioset
 $3
 
+; ================= setint ===============
+
+; ================= settim ======================
+
+
 ; ************** definition of variables ********* var
+
+.def mull = R0            ;To hold lower part of the answer
+.def mulr = R1            ;To hold biggest part of the answer
 .def t1 = r16
 ldi t1,0
 .def t2 = r17
 ldi t2,0
+.def t3 = r18
+ldi t3, 0
+
 ; ************** actions to do at the beggining ***
 
 ; ************* main program **********************
 
-
+$0
 
 
 
@@ -199,46 +255,52 @@ ldi t2,0
 ;******************************************************
 ;Aquí están las rutinas para el manejo de las interrupciones concretas
 ;******************************************************
+; guarda las banderas de comparacion
 
+; GIFR
+
+; timer
+; TIFR -- para poner al inicio
+; SREG -- for the timer in the interruptions 
 EXT_INT0: ; IRQ0 Handler
 reti
-EXT_INT1: 
+EXT_INT1:
 reti ; IRQ1 Handler
-TIM2_COMP: 
+TIM2_COMP:
 reti ; Timer2 Compare Handler
-TIM2_OVF: 
+TIM2_OVF:
 reti ; Timer2 Overflow Handler
-TIM1_CAPT: 
+TIM1_CAPT:
 reti ; Timer1 Capture Handler
-TIM1_COMPA: 
+TIM1_COMPA:
 reti ; Timer1 CompareA Handler
-TIM1_COMPB: 
+TIM1_COMPB:
 reti ; Timer1 CompareB Handler
-TIM1_OVF: 
+TIM1_OVF:
 reti ; Timer1 Overflow Handler
-TIM0_OVF: 
+TIM0_OVF:
 reti ; Timer0 Overflow Handler
-SPI_STC: 
+SPI_STC:
 reti ; SPI Transfer Complete Handler
-USART_RXC: 
+USART_RXC:
 reti ; USART RX Complete Handler
-USART_UDRE: 
+USART_UDRE:
 reti ; UDR Empty Handler
-USART_TXC: 
+USART_TXC:
 reti ; USART TX Complete Handler
-ADC_COMP: 
+ADC_COMP:
 reti ; ADC Conversion Complete Handler
-EE_RDY: 
+EE_RDY:
 reti ; EEPROM Ready Handler
-ANA_COMP: 
+ANA_COMP:
 reti ; Analog Comparator Handler
-TWSI: 
+TWSI:
 reti ; Two-wire Serial Interface Handler
-EXT_INT2: 
+EXT_INT2:
 reti ; IRQ2 Handler
-TIM0_COMP: 
+TIM0_COMP:
 reti
-SPM_RDY: 
+SPM_RDY:
 reti ; Store Program Memory Ready Handler
 endsnippet
 
@@ -253,6 +315,7 @@ endsnippet
 # ==========================
 # ========== basic input output ======
 # ==========================
+
 snippet ioset
 ; input = 0; output = 1; 76543210
 ioset ${1:a-b-c-d} ${2:00000000}
@@ -307,18 +370,18 @@ endsnippet
 snippet inset
 ; input setting
 ; inmediate registers are bigger than 16
-ldi r16, 0b00000000
+ldi r16, 0b0000_0000
 out ddr${1:a-b-c-d}, r16
-ldi r16, 0b11111111
+ldi r16, 0b1111_1111
 out port$1, r16
 endsnippet
 
 snippet outset
 ; output setting
 ; name of register must be bigger than 16
-ldi r16, 0b11111111
+ldi r16, 0b1111_1111
 out ddr${1:a-b-c-d}, r16
-ldi r16,0b00000000
+ldi r16,0b0000_0000
 out port$1,r16
 endsnippet
 
@@ -350,6 +413,18 @@ endsnippet
 # ========== basic operations ======
 # ==========================
 
+snippet mod
+mod${1:number}$2:
+ldi t2,1
+modlock$1$2:
+	subi t1,$1 ;number in t1
+	inc t2
+	cpi  t1,$1
+		brsh modlock$1$2
+	dec t2
+	rjmp mod$1$2end
+endsnippet
+
 snippet goto
 rjmp ${1:name}
 ; name:
@@ -363,12 +438,20 @@ snippet -
 	subi ${1:register},${2:number}
 endsnippet
 
+snippet mul
+ldi ${1:temp_register},${2:number}
+mul ${3:number_to_multiply},$1
+mov $3,mull ; answer if the number is less that 256
+;$4 mov, $1 mulr ; if the answer is bigger
+endsnippet
+
 # ==========================
 # ========== buttons ======
 # ==========================
 
 snippet retButton
 retButton:
+	; 5000 for 1mhz
 	; ============================= 
 	;    delay loop generator 
 	;     5000 cycles:
@@ -486,7 +569,16 @@ snip.rv = definitionOfDisplay(str(match.group(2)),str(match.group(3)),str(match.
 `
 endsnippet
 
-
+snippet doubleNum
+mov t1,${1:number}
+ldi t2,0
+cpi t1, 10
+	brsh mod$3$4
+mod$3$4end:
+rcall shiftLeft
+or t1,t2
+out port${2:a-b-c-d}, t1
+endsnippet
 # ==========================
 # ========== comparisons ======
 # ==========================
@@ -501,7 +593,7 @@ endsnippet
 
 snippet var
 .def ${1:register_name} = ${2:register_number}
-ldi $1, ${3:0b00000000|#|0x#}
+ldi $1, ${3:0b0000_0000|#|0x#}
 endsnippet
 
 snippet =
@@ -521,11 +613,11 @@ endsnippet
 # ==========================
 
 snippet s-key
-teclado_set ${1:a-b-c-d} ${2:firstSection_secondSection} ${3:start_end} ${4:return_statement}
+teclado_set ${1:a-b-c-d} ${2:firstSection}_${3:secondSection} ${4:start}_${5:end} "${6:return statement}"
 endsnippet
 
 post_jump "create_matrix_placeholders(snip)"
-snippet "teclado_set (\w) (\w+) (\w+) (\w+)" "set the keyboardButtons" r
+snippet "teclado_set (\w) (\w+) (\w+) \"(.+)\"" "set the keyboardButtons" r
 `!p
 # match.group(#) for the current match
 # snip.rv for the return value
@@ -535,24 +627,37 @@ def setKeyboard(letter,rows_cols,start_end,return_statement):
 	secondHalf = int(rows_cols.split('_')[1])
 	start = int(start_end.split('_')[0])
 	end = int(start_end.split('_')[1])
-	return_statement = returnCommandSplitted(return_statement)
+	# return_statement = returnCommandSplitted(return_statement)
 	counter=1
 	tempCont=0
 
+
 	for i in range(1,int(firstHalf)*int(secondHalf)+1):
-		ans+="saltar_teclado_"+ str(i) + ":\n"
-		ans+="\trjmp teclado_" + str(i) + "\n"
-	ans+="\n\n"
-	for i in range(1,int(firstHalf)*int(secondHalf)+1):
+		# the pin is j
+		j = (i-1)%secondHalf + firstHalf +start
+		counter+=1
 		ans+="teclado_"+ str(i) + ":\n"
-		ans+=";personaliced code\n"
-		ans+="traba_teclado" + str(i)+ ":\n"
+		ans+="ldi t1,"+str(i)+"\n"
+		ans+="ldi t2,"+str(j)+"\n"
+		ans+="rjmp options\n"
+	ph = 1
+	ans+=";codigo personalizado\n"
+	ans+="options:\n"
+	ans+= f"${ph}"
+	ans+="\n"
+
+	for r in range(start+firstHalf,start+firstHalf+secondHalf):
+		ans+="cpi t2,"+str(r)+"\n"
+		ans+="	breq traba_teclado"+str(r)+"\n"
+
+	for r in range(start+firstHalf,start+firstHalf+secondHalf):
+		ans+="traba_teclado" + str(r)+ ":\n"
 		ans+="\trcall retButton" + "\n"
-		ans+="\tretenido_teclado"+ str(i) + ":\n"
-		ans+="\t\tsbis pin" + letter + ", " + str((i-1)%secondHalf + firstHalf) + "\n"
-		ans+="\t\trjmp retenido_teclado" + str(i) + "\n"
+		ans+="\tretenido_teclado"+ str(r) + ":\n"
+		ans+="\t\tsbis pin" + letter + ", " + str(r) + "\n"
+		ans+="\t\trjmp retenido_teclado" + str(r) + "\n"
 		ans+="\trcall retButton"  + "\n"
-		ans+=return_statement+"\n"
+		ans+=str(return_statement) + "\n"
 	return ans
 
 snip.rv = setKeyboard(str(match.group(1)),str(match.group(2)),str(match.group(3)),str(match.group(4)))
@@ -560,7 +665,7 @@ snip.rv = setKeyboard(str(match.group(1)),str(match.group(2)),str(match.group(3)
 endsnippet
 post_jump "snip"
 snippet m-key
-teclado_menu ${1:a-b-c-d} ${2:firstSection_secondSection[both can be rows or cols]} ${3:start_end}
+teclado_menu ${1:a-b-c-d} ${2:firstSection}_${3:secondSection[both can be rows or cols]} ${4:start}_${5:end}
 endsnippet
 snippet "teclado_menu (\w) (\w+) (\w+)" "menu para el teclado" r
 `!p
@@ -575,8 +680,9 @@ def keyBoardFunction(letter,rows_cols,start_end):
 	tempCont=0
 
 	#first load the port with ones
+	ans+="; cbi = clear bit in register\n"
 	ans+="ldi t1,0b"
-	for a in range(0,start):
+	for a in range(end+1,8):
 		ans+="0"
 		tempCont+=1
 		if tempCont == 4:
@@ -586,11 +692,12 @@ def keyBoardFunction(letter,rows_cols,start_end):
 		tempCont+=1
 		if tempCont == 4:
 			ans+="_"
-	for a in range(end+1,8):
+	for a in range(0,start):
 		ans+="0"
 		tempCont+=1
 		if tempCont == 4:
 			ans+="_"
+	
 
 	ans+="\n"
 	ans+="out port" + letter + ", t1\n\n"
@@ -603,7 +710,7 @@ def keyBoardFunction(letter,rows_cols,start_end):
 		ans+="\n"
 		for j in range(start+firstHalf,end+1):
 			ans+="sbis pin" +letter+ "," + str(j) + "\n"
-			ans+="\trjmp saltar_teclado_"+str(counter) + "\n"
+			ans+="\trjmp teclado_"+str(counter) + "\n"
 			counter+=1
 		ans+="\n"
 
@@ -617,7 +724,27 @@ endsnippet
 # ========== timers and interruptions ======
 # ==========================
 
-snippet interrupciones
+snippet tim
+	ldi t1,0b0000_0011 ; limpiar las banderas
+	out TIFR,t1
+
+	; -> ||||||||bit1|bit0
+	; bit1 habilita las interrupciones por comparacion
+	; bit2 habilita las interrupciones por overflow
+	ldi t1,0b000000${1:00}
+	out TIMSK,t1
+endsnippet
+
+snippet c-tim
+	ldi t1, 0b0000_0011					;Limpiar banderas
+	out TIFR, t1
+
+	ldi t1, 0b0000_0000						;Deshabilita la interrupcion por comparacion
+	out TIMSK, t1
+endsnippet
+
+snippet setint
+
 ; command to set interruptions
 sei
 ; cargamos al registro GICR para abilitar las interrupciones de forma individual
@@ -631,8 +758,8 @@ out GICR, r16
 ; general interrupt flag register
 ; |intf1|intf0|intf2|-|-|-|-|-|
 ; limpiados por default, 0=interruption in use; 1=default
-ldi r16, 0b11100000
-out GICR, r16
+ldi r16, 0b1110_0000
+out GIFR, r16
 
 ; cargamos al registro MCUCR
 ; configuracion de int0 y int1
@@ -642,7 +769,7 @@ out GICR, r16
 ; 0 1 -> any logical change
 ; 1 0 -> failing edge
 ; 1 1 -> rising edge
-ldi r16, 0b_0000_${4:00}${5:00}
+ldi r16, 0b0000_${4:00}${5:00}
 out MCUCR, r16
 
 ; cargamos el registro MCUCSR
@@ -656,20 +783,109 @@ out MCUCSR,r16
 endsnippet
 
 
-snippet timers
-; configure:
-; ocr0
-; TIFR
-; TIMSK
-; TCNT0
-; TCCR0
+snippet settim
+; functions
+; c-tim -- clean timer, tim -- start timers
+sei
+; output compare register
+ldi r16, ${1:0b1111_1001}	;Es un 249 a 4mHz para contar 0.004 segundos, hay que contar 250 interrupciones para un segundo
+out OCR0, r16
+; timer/counter flag register
+
+; ||||||||ocf0|tov0|
+; tov0 indica que se activo interrupcion debido al overflow
+; ocf0 -> indica que se activo una interrupcion por comparacion
+; 0 -> activa, 1-> desactivada
+ldi r16, 0b0000_0011					;Limpiar banderas
+out TIFR, r16
+
+; -> ||||||||bit1|bit0
+; bit1 habilita las interrupciones por comparacion
+; bit2 habilita las interrupciones por overflow
+
+ldi r16, 0b000000${2:00}						;Empieza deshabilitada para que no empiece a contar solo	
+out TIMSK, r16
+
+; este es el contador principal y puede empezar en 0
+ldi r16, 0								;Ponemos en cero el contador
+out TCNT0, r16
+; the frequency is:
+;	f = (microcontroller hertz)/(ocrVal*preescaler)
+
+; modo y preescaler
+; |foc0|wgm00|com01|com00|wgm01|cs02|cs01|cs00|
+;  mode                wgm00  wgm01
+;  normal              0      0
+;  pwm(phase_correct)  0      1 ; contador
+;  ctc                 1      0
+;  fastPWM             1      1 ; mandar ondas
+
+;  cs02  cs01  cs00  description
+;  0     0     0     (counter_stopped)
+;  0     0     1     (no_preescaling)
+;  0     1     0     8
+;  0     1     1     64
+;  1     0     0     256
+;  1     0     1     1024
+;  1     1     0     external_clock_source_on_to_pin(clock_on_failing_edge)
+;  1     1     1     external_clock_source_on_to_pin(clock_on_rising_edge)
+
+ldi r16, 0b0${3:0}00_${4:0}${5:011}	;Modo y preescaler
+out TCCR0, r16
 endsnippet
 
 
 
+snippet s-pwm
+; configura el puerto OC0 como de salida
+; b3
+endsnippet
 
+snippet pwm
+sei
+ldi r16, 23	;Es un 249 a 4mHz para contar 0.004 segundos, hay que contar 250 interrupciones para un segundo
+out OCR0, r16
+ldi r16, 0b0000_0011					;Limpiar banderas
+out TIFR, r16
+ldi r16, 0b0000_0010						;Empieza deshabilitada para que no empiece a contar solo	
+out TIMSK, r16
+ldi r16, 0								;Ponemos en cero el contador
+out TCNT0, r16
 
+; the frequency is:
+;	f = (microcontroller hertz)/(ocrVal*preescaler)
 
+; modo y preescaler
+; |foc0|wgm00|com01|com00|wgm01|cs02|cs01|cs00|
+;  mode                wgm00  wgm01
+;  normal              0      0
+;  pwm(phase_correct)  0      1 ; contador
+;  ctc                 1      0
+;  fastPWM             1      1 ; mandar ondas
+
+;  cs02  cs01  cs00  description
+;  0     0     0     (counter_stopped)
+;  0     0     1     (no_preescaling)
+;  0     1     0     8
+;  0     1     1     64
+;  1     0     0     256
+;  1     0     1     1024
+;  1     1     0     external_clock_source_on_to_pin(clock_on_failing_edge)
+
+;  com01  com00  Descripcion
+;  0      0      normal_port_operations
+;  0      1      reserved
+;  1      0      clear_oc0_compare_on_match(not_inverting)
+;  1      1      set_oc0_on-compare_match,clear_oc0_at_top(inverting)
+
+ldi r16, 0b0${1:11}0_1${2:010}	;Modo y preescaler
+out TCCR0, r16
+
+; for songs
+; ldi r16, 0b0001_1010	;Modo y preescaler
+; out TCCR0, r16
+
+endsnippet
 
 
 
