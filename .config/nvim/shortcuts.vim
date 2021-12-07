@@ -5,11 +5,16 @@
 " contact: virgiliomurilloochoa1@gmail.com
 
 
+" =================================
+" ========== print file 
+" =================================
+nnoremap <leader>pp :call PrintFile()
 
 " =================================
 " ========== markdown auto commands
 " =================================
-"
+
+
 augroup markdown
 	autocmd!
 	autocmd! FileType markdown nnoremap <F11> :w<CR>:call CompileAndRunMarkDown()
@@ -21,17 +26,18 @@ autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownCli
 " =================================
 " ========== Shortcuts file
 " =================================
-
+function! CreateRangerBindings()
+	exec 'nnoremap <F6>3 :AsyncRun st -T "floating" -g "=150x50+250+100" -e sh -c "ranger" '
+	exec 'nnoremap <C-b> :FloatermNew ranger ' . expand('%:p:h') . '<cr>'
+	exec 'inoremap <C-b> :FloatermNew ranger ' . expand('%:p:h') . '<cr>'
+endfunction
 " open file manager
-exec 'nnoremap <F6>3 :AsyncRun st -T "floating" -g "=150x50+250+100" -e sh -c "ranger" '
-" toggle side file manager nerdtree
-" nnoremap <C-b> :NERDTreeToggle<CR>
-" inoremap <C-b> <Esc>:NERDTreeToggle<CR>
-exec 'nnoremap <C-b> :FloatermNew ranger ' . g:CUR_PATH . '<cr>'
-exec 'inoremap <C-b> :FloatermNew ranger ' . g:CUR_PATH . '<cr>'
-" open terminal
-exe 'nnoremap <F6>0 :AsyncRun sh -c "cd %:p:h ; st -T "floating" -g "=80x45+600+80"" '
-
+augroup openRanger
+	autocmd!
+	autocmd BufEnter * call CreateRangerBindings()
+	" open terminal
+	exe 'nnoremap <F6>0 :AsyncRun sh -c "cd %:p:h ; st -T "floating" -g "=80x45+600+80"" '
+augroup END
 " ==================================================
 " =========== vimrc ===================
 " ==================================================
@@ -65,7 +71,7 @@ nnoremap -Y ggVG"+y
 " vnoremap -p "+p
 nnoremap -p "_dhp
 vnoremap -p "_dhp
-
+vnoremap <c-r> y<ESC>/<c-r>"<CR> 
 " vnoremap <leader>p "_dP
 
 
@@ -442,4 +448,19 @@ augroup zsh_scripting
 	autocmd!
 	autocmd FileType zsh nnoremap <F11> :w<CR>:call RunZshScript()
 augroup END
+
+
+
+
+
+
+" =================================
+" ========== mariadb scripting 
+" =================================
+
+augroup zsh_scripting
+	autocmd!
+	autocmd FileType sql nnoremap <F11> :w<CR>:call RunMariaDb()
+augroup END
+
 
