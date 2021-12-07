@@ -1,0 +1,188 @@
+# -------- sql basic syntax
+# ======== queries ========
+# showUsers -- to show all users available in the server
+# showAll -- for showing everything in a table
+# describe -- for showing the rows of a table
+
+# ========== table modifications ========
+# createTable -- for creating a table interactively
+# deltable -- for deleting a table
+# ========== data modifications =========
+# insert -- for inserting a new value into the table
+# insertIfne -- for inserting a value if it doesn't exist
+# update -- for updating the database
+
+
+
+snippet insertIfne
+-- insert query
+insert into ${1:tableName}(${2:name,actionDescription}) values(${3:"alert","gives a personalized voice alert for the system"})
+SELECT ${4:row_to_compare}
+FROM $1
+WHERE NOT($4 IN (SELECT $4 FROM $1));
+endsnippet
+
+
+
+
+
+
+
+snippet describe
+describe $1 ;
+endsnippet
+
+
+
+
+
+
+
+# ==========================
+# ========== sql basic syntax ======
+# ==========================
+snippet compHelp
+-- <,>,<=,>=,=,
+-- != equal <>
+-- and,or
+endsnippet
+
+snippet wildCards
+-- % -> A substitude for 0 or more characters
+-- _ -> a substitude for a single character
+-- [charlist] -> sets and ranges for characters to match
+endsnippet
+snippet join
+select ${1:table.col,table.col}
+from table
+join ${2:second_table}
+on employee.id == branch.id;
+-- left join if you want to see all
+endsnippet
+# ==========================
+# ========== queries ======
+# ==========================
+
+snippet showTables
+show tables ;
+endsnippet
+snippet showUsers
+SELECT User FROM mysql.user
+endsnippet
+
+snippet showAll
+select * from $1 ;
+endsnippet
+# options im-> inword
+snippet showColumn "for showing the specified column"
+select ${1:list,of,columns}
+from student
+${2:[ order by (list of columns)]}
+;
+endsnippet
+
+snippet columnConditions
+-- select * 
+-- from ${column}
+-- where name in ('name1','name2')
+-- limit 5;
+endsnippet
+
+snippet countVal
+select count(${1:column})
+from ${2:table}
+-- [where conditions]
+;
+endsnippet
+
+snippet average
+select avg(${1:column})
+from ${2:table}
+-- [ where conditions]
+-- [ group by column ]
+endsnippet
+
+
+# options im-> inword
+snippet union "merge two queries into one"
+-- select column
+-- from employee
+-- union
+-- select branch_name
+-- from branch
+endsnippet
+
+# ==========================
+# ========== table modifications ======
+# ==========================
+
+snippet foreign
+foreign key (${1:name_of_key_in_this_table}) references ${2:foreign_table}(${3:value_in_foreing_table})
+endsnippet
+
+snippet createTable
+
+-- data types -> varchar(n),Int,DECIMAL(M,N),BLOB,DATE,TIMESTAMP
+-- constrains -> not null,unique,auto_increment
+-- on delete -> on delete set null, on delete cascade
+-- snippets -> foreign,
+
+-- EXAMPLE
+-- student_id INT,
+-- name VARCHAR(20) not null,
+-- major VARCHAR(20) unique,
+-- primary key(student_id)
+-- foreign key(student_id) references branch(branch_id) on delete cascade
+
+create table if not exists ${1:table_name}(
+
+);
+endsnippet
+
+snippet deltable
+drop table ${1:table_name}
+endsnippet
+
+snippet addRow
+alter table ${1:name_of_table} add ${2:name varchar(100)}
+endsnippet
+
+snippet modTable
+-- alter table name_of_table
+-- add foreign key(branch_id)
+-- references branch(branch_id)
+-- on delete set null;
+endsnippet
+# ==========================
+# ========== data modification ======
+# ==========================
+
+snippet insert
+insert into ${1:table_name}(${2:info,action,name,weeks,action_time,hour,minute}) values(${3:"test info","test action","test name",1,10,12,30}) ;
+endsnippet
+
+# options im-> inword
+snippet update "update the data" 
+-- see compHelp
+update ${1:table_name}
+set ${2:column_name} = ${3:value}
+-- you can separate this by commas
+-- ex: name='tom',name='jon'
+where ${4:condition} ;
+endsnippet
+
+snippet deleteRow
+-- to delete a row from the table
+delete from ${1:name_of_table} where ${2:condition} ;
+endsnippet
+# ==========================
+# ========== triggers ======
+# ==========================
+
+snippet trigger
+create table ${1:trigger test} (
+	message varchar(100)
+	);
+endsnippet
+
+
