@@ -1,0 +1,35 @@
+# options im-> inword
+snippet map "map a folder" 
+`!p
+import subprocess
+# snip.rv for the return value
+# snip.v.text -> the text
+# snip.v.mode 'v' | 'V' | '^V'
+def getLines(stri):
+	ans=""
+	arr=[]
+	tempi=""
+	for ele in stri:
+		if ele == '\n':
+			tempi+="end\n"
+			arr.append(tempi)
+		else :
+			tempi+=ele
+
+	return tempi
+
+def temp(vtext):
+	chars=[]
+	ans=""
+	ans+=str(subprocess.check_output(['ls',str(vtext)]).decode('utf-8'))
+	arr = getLines(ans)
+	ans=""
+	for var in arr:
+		ans+=var
+
+	return ans
+
+text = snip.v.text
+snip.rv = temp(text)
+`
+endsnippet
