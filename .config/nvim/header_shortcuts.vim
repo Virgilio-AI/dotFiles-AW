@@ -4,7 +4,18 @@
 " linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 " contact: virgiliomurilloochoa1@gmail.com
 
+" =================================
+" ========== print file 
+" =================================
+function! PrintFile()
+	" % - relative path
+	" %:p -absolute path
+	let l:terminalExe = ':AsyncRun st -T "floating" -e sh -c "'
+	let l:endTerminalExe = ' ; rean -n1 "'
+	let l:command = 'lp ' . expand('%:p')
 
+	exe l:terminalExe . l:command . l:endTerminalExe
+endfunction
 
 " =================================
 " ========== helper variables 
@@ -268,6 +279,7 @@ function! BurnAtmel16()
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:FileName = expand("%")
 	let l:Name = expand("%<")
+	# 	let Mhz = input("megahertz(1,2,4,8)")
 	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
 	exe l:ExecuteCommands . '"' . l:BurnMicro . ' ;  read -n1 ' . '"'
 endfunction
@@ -395,4 +407,28 @@ function! g:PythonPasteImage(relpath)
 "        call setpos('.', ipos)
 "        execute "normal! vt]\<C-g>"
 endfunction
+
+
+
+
+" =================================
+" ========== maria db scripting 
+" =================================
+function! RunMariaDb()
+	let l:ExecuteCommands = ':AsyncRun st -g "170x30+0+0" -T "floating" -e sh -c '
+	let l:FileName = expand("%")
+	let l:FileName_NoExtension = expand("%<")
+	let l:runScript = 'mariadb --execute=\"source ' . l:FileName . ' ;\" '
+	let l:final  = l:ExecuteCommands . '"' . l:runScript . ' ; read -n1 '. '"'
+	echom l:final
+	let outFile = input("write output to termnal?(y/n): ")
+	if outFile == 'n'
+		exe l:ExecuteCommands . '"' . l:runScript .  ' > mariadb.txt ; read -n1  ' . '"  '
+	else
+		exe l:ExecuteCommands . '"' . l:runScript .  '  ; read -n1 ' . '" '
+	endif
+" ' ; tee mariadb.txt ; ' .
+endfunction
+
+
 
