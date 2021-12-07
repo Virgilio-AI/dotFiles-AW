@@ -1,4 +1,15 @@
 " creando un comentario de prueba
+
+
+
+" =================================
+" ========== save folding 
+" =================================
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
 " =================================
 " ========== when cursor moved 
 " =================================
