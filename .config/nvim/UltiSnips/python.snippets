@@ -1,3 +1,89 @@
+# ------------- global functions ------
+# create matrix placeholders
+# create matrix
+# info
+# --------------- gui's with tkiner ---- 
+# s-gui
+# gbut -- for a button
+# glab -- for a label
+# gtext -- for a text box with a description
+
+# ---------------   python
+# forString - for iterate string c style
+# list - for creating a python list
+# set - unordered collection of data type, no duplicate
+# tuple - same to list but inmutable
+# ins - insert variable into a string
+
+
+# 
+# ---------------   matplotlib
+# plotcsv
+# plot2dsk
+# varrange
+# xyaxis
+# label
+# title
+# legend
+# fill_between
+# varlim
+# 2dgrid
+# closestPointInLineToPoint
+# 3din2d
+# plotPoint
+# plotFunction
+
+# ----------------    pandas
+# plotcsv
+# pcombinecsv
+# dataDrop
+# ----------------    system interaction
+
+# shOutput
+# shCommand
+# notify-send
+# execute sound
+# newFolder-recursive
+
+# ---------------- organization
+# sec
+# subsec
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ==========================
+# ========== global functions ======
+# ==========================
 global !p
 def create_matrix_placeholders(snip):
 	# Create anonymous snippet body
@@ -38,47 +124,46 @@ snip.rv = create_matrix(int(match.group(1)))
 `
 endsnippet
 
-#info
-# temp templates
 
-# ---------------   python
-# forString - for iterate string c style
-# list - for creating a python list
-# set - unordered collection of data type, no duplicate
-# tuple - same to list but inmutable
 
-# dictionary - ordered collection of data values key:val
 
-# 
-# ---------------   matplotlib
-# plot2dsk
-# varrange
-# xyaxis
-# label
-# title
-# legend
-# fill_between
-# varlim
-# 2dgrid
-# closestPointInLineToPoint
-# 3din2d
-# plotPoint
-# plotFunction
-# ----------------    pandas
-# ploadcsv
-# pcombinecsv
-# dataDrop
-# ----------------    system interaction
 
-# shOutput
-# shCommand
-# notify-send
-# execute sound
-# newFolder-recursive
 
-# ---------------- organization
-# sec
-# subsec
+# ==========================
+# ========== guis with tkinker ======
+# ==========================
+
+snippet s-gui
+# pack is for piling elements and grid is like a spread sheet
+root = Tk()
+${1:frame} = Frame(root)
+$1.${2:pack|grid}()
+$3
+root.mainloop()
+endsnippet
+
+snippet gbut
+# opt parameters = fg="color",bg="color",command=lambda: function(params)
+${1:name_of_button} = Button(${2:frame},text="$3").pack(side=${4:BUTTON|TOP|LEFT|RIGHT})
+endsnippet
+
+snippet glab
+# opt parameters = fg="color",bg="color"
+${1:name_of_label} = Label(${2:frame},text="$3").pack(side=${4:BUTTON|TOP|LEFT|RIGHT})
+endsnippet
+
+snippet gtext
+$1Label = Label(level_add_task,text="$1:")
+$1Label.pack(side=TOP)
+# start entering information
+$1 = tk.StringVar()
+$1TextBox = tk.Entry(level_add_task, width = 50, textvariable = $1)
+$1TextBox.pack(side=TOP)
+endsnippet
+
+
+
+
 
 snippet notify-send
 os.system("notify-send \"$1\"")
@@ -107,23 +192,17 @@ inplace=False # alter the dataFrame
 )
 endsnippet
 
+# ==========================
+# ========== python ======
+# ==========================
+
+snippet list
+${1:temp} = [$2]
+endsnippet
 
 snippet forString
 for element in range(0, len(${1:string_name})):
 	print($1[element])
-endsnippet
-
-snippet infoj
-# %% [markdown]
-- Fecha: 20/October/2021 - Wednesday
-- Autor: Virgilio Murillo Ochoa
-- personal github: Virgilio-AI
-- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
-- contact: virgiliomurilloochoa1@gmail.com
-endsnippet
-
-snippet list
-${1:temp} = [$2]
 endsnippet
 
 snippet set
@@ -134,16 +213,85 @@ snippet tuple
 ${1:temp} = ($2)
 endsnippet
 
+snippet ins "" im
+"+str($1)+"
+endsnippet
+# ==========================
+# ========== pandas ======
+# ==========================
+
+snippet plotcsv
+${1:nombre} = "${2:path}"
+$1_dt = pd.read_csv($1)
+endsnippet
+
+snippet plot2dsk
+import matplotlib.pyplot as plt
+import numpy as np
+
+# varrange - for range and step
+# varlim - for limit the min and max
+# legend - for creating the legend of the different functions
+# fill_between - to fill in between two functions
+# closestPointInLineToPoint - creates a function for a point to be the closest
+# 3din2d - to plot a 3d function into a 2d plane
+# plotPoint - to plot a simple point
+# plotFunction - to plot a simple function
+
+# main parameters
+x_lower_bound = $1
+x_upper_bound = $2
+
+y_lower_bound = $3
+y_upper_bound = $4
+
+#plot settings
+plt.grid(True)
+
+plt.xlim(x_lower_bound,x_upper_bound)
+plt.ylim(y_lower_bound,y_upper_bound)
+plt.hlines(0,x_lower_bound,x_upper_bound,color='k')
+plt.vlines(0,y_lower_bound,y_upper_bound,color='k')
+plt.xlabel('x1')
+plt.xlabel('y1')
+plt.title('Clase3Actividad4')
+plt.xlabel('${5:x_label}')
+plt.xlabel('${6:y_label}')
+plt.title('$7')
+
+endsnippet
+
+snippet varrange
+x = np.arange(${1:lower_bound},${2:upper_bound},${3:jump})
+y = np.arange($4,$5,$6)
+endsnippet
+
+
+snippet xyaxis
+plt.xlim(${1:lower_bound},${2:upper_bound})
+plt.ylim(${3:lower_bound},${4:upper_bound})
+endsnippet
+
+
+
+snippet infoj
+# %% [markdown]
+- Fecha: 20/October/2021 - Wednesday
+- Autor: Virgilio Murillo Ochoa
+- personal github: Virgilio-AI
+- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+- contact: virgiliomurilloochoa1@gmail.com
+endsnippet
+
+
+
+
 snippet pcombinecsv
 ${1:name_of_files} = glob.glob("${2:PATH/TO/FILES/file*_.csv}")
 ${1}_dt = pd.concat)[pd.read_csv(f) for f in ${1} ])
 endsnippet
 
 
-snippet ploadcsv
-${1:nombre} = "${2:path}"
-$1_dt = pd.read_csv($1)
-endsnippet
 
 
 
@@ -214,52 +362,9 @@ plt.xlabel('${1:x_description}')
 plt.xlabel('${2:y_description}')
 endsnippet
 
-snippet varrange
-x = np.arange(${1:lower_bound},${2:upper_bound},${3:jump})
-y = np.arange($4,$5,$6)
-endsnippet
-
-snippet xyaxis
-plt.xlim(${1:lower_bound},${2:upper_bound})
-plt.ylim(${3:lower_bound},${4:upper_bound})
-endsnippet
 
 
-snippet plot2dsk
-import matplotlib.pyplot as plt
-import numpy as np
 
-# varrange - for range and step
-# varlim - for limit the min and max
-# legend - for creating the legend of the different functions
-# fill_between - to fill in between two functions
-# closestPointInLineToPoint - creates a function for a point to be the closest
-# 3din2d - to plot a 3d function into a 2d plane
-# plotPoint - to plot a simple point
-# plotFunction - to plot a simple function
-
-# main parameters
-x_lower_bound = $1
-x_upper_bound = $2
-
-y_lower_bound = $3
-y_upper_bound = $4
-
-#plot settings
-plt.grid(True)
-
-plt.xlim(x_lower_bound,x_upper_bound)
-plt.ylim(y_lower_bound,y_upper_bound)
-plt.hlines(0,x_lower_bound,x_upper_bound,color='k')
-plt.vlines(0,y_lower_bound,y_upper_bound,color='k')
-plt.xlabel('x1')
-plt.xlabel('y1')
-plt.title('Clase3Actividad4')
-plt.xlabel('${5:x_label}')
-plt.xlabel('${6:y_label}')
-plt.title('$7')
-
-endsnippet
 
 snippet sk
 
