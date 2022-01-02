@@ -40,6 +40,7 @@ exec 'source ' . g:CONFIG_PATH . '/IconsAndThemes.vim'
 exec 'source ' . g:CONFIG_PATH . '/colors.vim'
 exec 'source ' . g:CONFIG_PATH . '/autocmds.vim'
 exec 'source ' . g:CONFIG_PATH . '/skeletons.vim'
+exec 'source ' . g:CONFIG_PATH . '/customCommands.vim'
 
 " =================================
 " ========== PlugIn Variables 
@@ -96,6 +97,7 @@ let g:minimap_width = 10
 " ========== Set variables 
 " =================================
 exec 'set viminfo+=n' . g:CONFIG_PATH . '/.vimdata/viminfo '
+set foldmethod=manual
 set encoding=utf-8
 set fileencoding=utf-8
 set clipboard=unnamedplus

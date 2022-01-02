@@ -5,6 +5,17 @@
 " contact: virgiliomurilloochoa1@gmail.com
 
 " =================================
+" ========== paste a clean text 
+" =================================
+function! PasteCleanVisual()
+normal gv"_dh
+normal p
+endfunction
+function! PasteCleanNormal()
+normal V"_dkp
+endfunction
+
+" =================================
 " ========== print file 
 " =================================
 function! PrintFile()
@@ -404,6 +415,7 @@ function! g:PythonPasteImage(relpath)
         execute "normal! i" . g:mdip_tmpname[0:0]
         let ipos = getcurpos()
         execute "normal! a" . g:mdip_tmpname[1:] . "='" . a:relpath . "'"
+		  :normal 0xx
 "        call setpos('.', ipos)
 "        execute "normal! vt]\<C-g>"
 endfunction
@@ -431,4 +443,22 @@ function! RunMariaDb()
 endfunction
 
 
+" =================================
+" ========== compile and run html 
+" =================================
+
+function! RunHtml()
+	let l:ExecuteCommands = ':AsyncRun st -g "170x30+0+0" -T "floating" -e sh -c '
+	let l:runScript = 'brave ' . expand("%")
+
+	exe l:ExecuteCommands . '"' . l:runScript .  '  ; read -n1 ' . '" '
+endfunction
+
+function! g:HtmlPasteImage(relpath)
+        execute "normal! i" . g:mdip_tmpname[0:0]
+        let ipos = getcurpos()
+        execute "normal! a"."<img src=\"" . a:relpath . "\" width=\"\" height=\"\" border=\"0\">"
+"        call setpos('.', ipos)
+"        execute "normal! vt]\<C-g>"
+endfunction
 

@@ -35,6 +35,11 @@ augroup saveChanges
 	autocmd!
 	exec 'autocmd BufWritePre ' . g:CONFIG_PATH . '/* :so $MYVIMRC'
 augroup END
+
+augroup changeModifiable
+	autocmd!
+	autocmd BufReadPost * call UpdateModifiable()
+augroup END
 " =================================
 " ========== dwm 
 " =================================
@@ -134,9 +139,21 @@ augroup end
 " =================================
 " ========== Mark Down 
 " =================================
+augroup markdown_autocmd
 autocmd FileType markdown let g:PasteImageFunction = 'g:MarkdownPasteImage'
+augroup END
+
 " =================================
 " ========== latex 
 " =======================
+augroup tex_autocmds
 autocmd FileType tex let g:PasteImageFunction = 'g:LatexPasteImage'
+augroup END
+
+" =================================
+" ========== html 
+" =================================
+augroup htmlAutoCommands
+	autocmd FileType html let g:PasteImageFunction = 'g:HtmlPasteImage'
+augroup END
 

@@ -18,7 +18,7 @@ nnoremap <leader>pp :call PrintFile()
 augroup markdown
 	autocmd!
 	autocmd! FileType markdown nnoremap <F11> :w<CR>:call CompileAndRunMarkDown()
-autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+	autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup END
 
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
@@ -69,8 +69,10 @@ nnoremap -Y ggVG"+y
 
 " nnoremap -p "+p
 " vnoremap -p "+p
-nnoremap -p "_dhp
-vnoremap -p "_dhp
+"
+nnoremap -p :call PasteCleanNormal()<CR>
+vnoremap -p :call PasteCleanVisual()<CR>
+
 vnoremap <c-r> y<ESC>/<c-r>"<CR> 
 " vnoremap <leader>p "_dP
 
@@ -446,7 +448,7 @@ augroup end
 " =================================
 augroup zsh_scripting
 	autocmd!
-	autocmd FileType zsh nnoremap <F11> :w<CR>:call RunZshScript()
+	autocmd BufEnter *.zsh nnoremap <F11> :w<CR>:call RunZshScript()
 augroup END
 
 
@@ -458,9 +460,20 @@ augroup END
 " ========== mariadb scripting 
 " =================================
 
-augroup zsh_scripting
+augroup mariadb
 	autocmd!
 	autocmd FileType sql nnoremap <F11> :w<CR>:call RunMariaDb()
 augroup END
 
 
+
+
+" =================================
+" ========== compile and run html 
+" =================================
+
+augroup html_compile
+	autocmd!
+	autocmd FileType html nnoremap <F11> :w<CR>:call RunHtml()
+	autocmd FileType html nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+augroup END

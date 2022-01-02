@@ -1,4 +1,24 @@
 " =================================
+" ========== change modifiable 
+" =================================
+
+function UpdateModifiable()
+  if !exists("b:setmodifiable")
+    let b:setmodifiable = 0
+  endif
+  if &readonly
+    if &modifiable
+      setlocal nomodifiable
+      let b:setmodifiable = 1
+    endif
+  else
+    if b:setmodifiable
+      setlocal modifiable
+    endif
+  endif
+endfunction
+
+" =================================
 " ========== patches for plugIns
 " =================================
 function! s:RandomNamePatch()

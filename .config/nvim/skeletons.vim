@@ -88,3 +88,23 @@ augroup pythonSkeleton
 	autocmd!
 	autocmd BufEnter *.py\(.sync.py\|.sync.sync.py\)\@<! call ExpandSkeleton('sk')
 augroup END
+
+
+
+" =================================
+" ========== for databases 
+" =================================
+augroup mariadb_skeleton
+	autocmd!
+	autocmd BufEnter *.sql call ExpandSkeleton('info')
+augroup END
+
+
+
+" =================================
+" ========== for json files 
+" =================================
+augroup json_skeleton
+	autocmd!
+	autocmd BufEnter *.json call ExpandSkeleton('sk')
+augroup END
