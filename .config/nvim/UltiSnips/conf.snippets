@@ -1,35 +1,192 @@
-# options im-> inword
-snippet map "map a folder" 
+
+
+
+global !p
+def create_matrix_placeholders(snip):
+	# Create anonymous snippet body
+	anon_snippet_body = ""
+	# Get start and end line number of expanded snippet
+	start = snip.snippet_start[0]
+	end = snip.snippet_end[0]
+  # Append current line into anonymous snippet
+	for i in range(start, end + 1):
+		anon_snippet_body += snip.buffer[i]
+		anon_snippet_body += "" if i == end else "\n"
+	# Delete expanded snippet line till second to last line
+	for i in range(start, end):
+		del snip.buffer[start]
+	# Empty last expanded snippet line while preserving the line
+	snip.buffer[start] = ''
+	# Expand anonymous snippet
+	snip.expand_anon(anon_snippet_body)
+endglobal
+post_jump "snip"
+global !p
+def returnCommandSplitted(command):
+	cmd_arr = command.split('_')
+	return_command = ""
+	for a in cmd_arr:
+		return_command += a + " "
+	return_command = return_command[0:len(return_command)-1]
+	return return_command
+endglobal
+
+post_jump "snip"
+global !p
+
+def parseStatement(i,j,k,stri):
+	prev = ''
+	twoBehind=''
+	ans = ""
+	for ch in stri:
+
+		if ( ch == 'k' or ch == 'i' or ch == 'j' )  and prev == '$' and twoBehind == '\\':
+			ans = ans[:-2]
+			ans+=ch
+
+		elif ch == 'i' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(i)
+		elif ch == 'j' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(j)
+		elif ch == 'k' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(k)
+		elif ch == 'n' and prev == '\\':
+			ans = ans[:-1]
+			ans+="\n"
+
+		else :
+			ans+=ch
+
+		twoBehind = prev
+		prev = ch
+	return ans
+
+endglobal
+
+global !p
+def getMatchArr():
+	cont=1
+	arr = []
+	while 1 :
+		try :
+			arr.append(match.group(cont))
+			cont+=1
+		except :
+			break
+	return arr
+endglobal
+
+# folder,levels,skip
+snippet "map \"(.+)\" (\d) (\d)" "information of the snippet" r
 `!p
-import subprocess
+import os
+# match.group(#) for the current match
 # snip.rv for the return value
 # snip.v.text -> the text
 # snip.v.mode 'v' | 'V' | '^V'
-def getLines(stri):
-	ans=""
-	arr=[]
-	tempi=""
-	for ele in stri:
-		if ele == '\n':
-			tempi+="end\n"
-			arr.append(tempi)
-		else :
-			tempi+=ele
+def getBinding(name,dic):
+	for element in range(0, len(name)):
+		curchar = str(name[element])
+		if curchar not in dic.keys():
+			dic[curchar]=1
+			return curchar
+		elif curchar.isalpha() and ( curchar.upper() not in dic.keys() ):
+			dic[curchar.upper()]=1
+			return curchar.upper()
 
-	return tempi
+	for i in range(0,10):
+		if str(i) not in dic.keys():
+			dic[str(i)] = 1
+			return str(i)
 
-def temp(vtext):
-	chars=[]
-	ans=""
-	ans+=str(subprocess.check_output(['ls',str(vtext)]).decode('utf-8'))
-	arr = getLines(ans)
-	ans=""
-	for var in arr:
-		ans+=var
+def getFolderDepht(path,depth,levels):
+	# iterate over files in
+	# that directory
+	ans=0
+	if os.path.isdir(path):
+		for filename in os.listdir(path):
+		# checking if it is a file
+			f = os.path.join(path, filename)
+			if os.path.isdir(f):
+				ans=max(getFolderDepht(str(f),depth+1,levels),ans)
+				if ans >= levels:
+					return levels
 
+	return ans+depth
+
+def recurseFolder(path,levels,binding,maptype):
+	ans=""
+	levels = int(levels)
+	if levels == 0:
+		return ans
+#	ans+=path+"\n"
+	dic={}
+	# iterate over files in
+	# that directory
+	# binding of the main directory
+	bind = getBinding(path.split('/')[len(path.split('/'))-1][0],dic)
+	if maptype == "cd":
+		ans+="map " +str(binding) + str(bind)+" "+ maptype + " " +str(path)+"\n"
+	else:
+		ans+="map " +str(binding) + str(bind)+" shell "+ maptype + " %s " +str(path)+"\n"
+
+	dic.clear()
+	for filename in os.listdir(path):
+		f = os.path.join(path, filename)
+		if os.path.isdir(f):
+			bind = getBinding(filename,dic)
+			if maptype == "cd" :
+					if min(int(levels),getFolderDepht(str(str(path)+"/"+str(filename)),0,levels)) <= 1 :
+						#ans+="1\n"
+						ans+="map " +str(binding) + str(bind)+" "+ maptype + " " +str(f)+"\n"
+					else :
+						#ans+="2\n"
+						ans+=recurseFolder(path + "/" + filename,levels-1,str(binding)  +str(bind) ,maptype)
+			else :
+					if min(int(levels),getFolderDepht(str(str(path)+"/"+str(filename)),0,levels))<= 1 :
+						#ans+="1\n"
+						ans+="map " +str(binding) + str(bind)+" shell "+ maptype + " %s " +str(f)+"\n"
+					else :
+						#ans+="1\n"
+						ans+=recurseFolder(path+"/" + filename,levels-1,str(binding) + str(bind),maptype)
+
+	# checking if it is a file
+#		if os.path.isfile(f):
+#			print(f)
 	return ans
 
-text = snip.v.text
-snip.rv = temp(text)
+def getCurBinding(path,skip):
+	ans=""
+	tempArr = path.split('/')
+	dic={}
+	for element in range(int(skip)+1,len(tempArr)):
+		dic.clear()
+		ans+=getBinding(tempArr[element],dic)
+	return ans
+
+
+
+
+def temp(arr):
+	arrLen = len(arr)
+	ans=""
+	ubind = getCurBinding(str(arr[0]),str(arr[2]))
+	# bindings for the go command
+	ans+= "# ===============================================\n"
+	ans+= "#map \""+str(arr[0])+"\" "+str(arr[1])+" "+str(arr[2])+"# folder,levels,skip\n"
+	ans+= "# ===============================================\n\n"
+	ans+= "# cd mappings\n"
+	ans+=recurseFolder(str(arr[0]),str(arr[1]),"g"+ ubind,"cd")
+	ans+= "# mv mappings\n"
+	ans+=recurseFolder(str(arr[0]),str(arr[1]),"m"+ ubind,"mv")
+	ans+= "# cp mappings\n"
+	ans+=recurseFolder(str(arr[0]),str(arr[1]),"c"+ ubind,"cp")
+
+	return ans
+matchArr = getMatchArr()
+snip.rv = temp(matchArr)
 `
 endsnippet

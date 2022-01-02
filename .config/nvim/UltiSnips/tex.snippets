@@ -13,6 +13,101 @@
 #color - changes text color
 # cover - template for cover english
 # portada - template para portada
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ==========================
+# ========== global snippets ======
+# ==========================
+
+global !p
+def create_matrix_placeholders(snip):
+	# Create anonymous snippet body
+	anon_snippet_body = ""
+	# Get start and end line number of expanded snippet
+	start = snip.snippet_start[0]
+	end = snip.snippet_end[0]
+  # Append current line into anonymous snippet
+	for i in range(start, end + 1):
+		anon_snippet_body += snip.buffer[i]
+		anon_snippet_body += "" if i == end else "\n"
+	# Delete expanded snippet line till second to last line
+	for i in range(start, end):
+		del snip.buffer[start]
+	# Empty last expanded snippet line while preserving the line
+	snip.buffer[start] = ''
+	# Expand anonymous snippet
+	snip.expand_anon(anon_snippet_body)
+endglobal
+post_jump "snip"
+global !p
+def returnCommandSplitted(command):
+	cmd_arr = command.split('_')
+	return_command = ""
+	for a in cmd_arr:
+		return_command += a + " "
+	return_command = return_command[0:len(return_command)-1]
+	return return_command
+endglobal
+
+post_jump "snip"
+global !p
+
+def parseStatement(i,j,k,stri):
+	prev = ''
+	twoBehind=''
+	ans = ""
+	for ch in stri:
+
+		if ( ch == 'k' or ch == 'i' or ch == 'j' )  and prev == '$' and twoBehind == '\\':
+			ans = ans[:-2]
+			ans+=ch
+
+		elif ch == 'i' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(i)
+		elif ch == 'j' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(j)
+		elif ch == 'k' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(k)
+		elif ch == 'n' and prev == '\\':
+			ans = ans[:-1]
+			ans+="\n"
+
+		else :
+			ans+=ch
+
+		twoBehind = prev
+		prev = ch
+	return ans
+
+endglobal
+
+global !p
+def getMatchArr():
+	cont=1
+	arr = []
+	while 1 :
+		try :
+			arr.append(match.group(cont))
+			cont+=1
+		except :
+			break
+	return arr
+endglobal
 snippet portada
 \begin{center}
 
@@ -54,6 +149,11 @@ snippet portada
 \end{center}
 \newpage
 endsnippet
+
+
+
+
+
 
 snippet color
 \textcolor{$1}{}

@@ -15,15 +15,18 @@
 
 # python
 # pythonr
+# puthonrv
+# pythonv
 
 # ========== for python snippets ======
 
 # ---------------   python
-# forString - for iterate string c style
-# list - for creating a python list
-# set - unordered collection of data type, no duplicate
-# tuple - same to list but inmutable
+# pforString - for iterate string c style
+# plist - for creating a python list
+# pset - unordered collection of datastype, no duplicate
+# ptuple - same to list but inmutable
 # ========== systemInteraction ======
+
 
 # ========== global snippets ======
 # ----------------    system interaction
@@ -33,17 +36,30 @@
 # notify-send
 # execute sound
 # newFolder-recursive
+
+# for matching text \"(.+)\"
+# for matching digits (\d+)
+# for matching word (\w+)
+
 snippet sni
 # options im-> inword
 snippet ${1:wordToTrigger} "${2:information of the snippet}" ${3:types}
 $4
 `echo "endsnippet"`
 endsnippet
+
 snippet rsni
+# for matching text \"(.+)\"
+# for matching digits (\d+)
+# for matching word (\w+)
 snippet "${1:regex}" "${2:information of the snippet}" r
 $3
 `echo "endsnippet"`
 endsnippet
+
+
+
+
 global !p
 def create_matrix_placeholders(snip):
 	# Create anonymous snippet body
@@ -63,7 +79,7 @@ def create_matrix_placeholders(snip):
 	# Expand anonymous snippet
 	snip.expand_anon(anon_snippet_body)
 endglobal
-
+post_jump "snip"
 global !p
 def returnCommandSplitted(command):
 	cmd_arr = command.split('_')
@@ -74,15 +90,19 @@ def returnCommandSplitted(command):
 	return return_command
 endglobal
 
+post_jump "snip"
 global !p
+
 def parseStatement(i,j,k,stri):
 	prev = ''
 	twoBehind=''
 	ans = ""
 	for ch in stri:
+
 		if ( ch == 'k' or ch == 'i' or ch == 'j' )  and prev == '$' and twoBehind == '\\':
 			ans = ans[:-2]
 			ans+=ch
+
 		elif ch == 'i' and prev == '$' and twoBehind != '\\':
 			ans = ans[:-1]
 			ans+=str(i)
@@ -95,12 +115,35 @@ def parseStatement(i,j,k,stri):
 		elif ch == 'n' and prev == '\\':
 			ans = ans[:-1]
 			ans+="\n"
+
 		else :
 			ans+=ch
+
 		twoBehind = prev
 		prev = ch
 	return ans
+
 endglobal
+
+global !p
+def getMatchArr():
+	cont=1
+	arr = []
+	while 1 :
+		try :
+			arr.append(match.group(cont))
+			cont+=1
+		except :
+			break
+	return arr
+endglobal
+
+
+
+
+
+
+
 
 
 snippet ins "" im
@@ -158,8 +201,8 @@ $1
 post_jump "snip"
 endsnippet
 
-snippet ph
-f"\${${1:placeholder}}"
+snippet ph "single place holder for python" im
+"+f"\${${1:placeholder}}"+"
 endsnippet
 
 snippet info
@@ -212,6 +255,20 @@ snippet python
 # snip.rv for the return value
 # snip.v.text -> the text
 # snip.v.mode 'v' | 'V' | '^V'
+def temp():
+	ans=""
+	$2
+	return ans
+
+snip.rv = temp()
+\`
+endsnippet
+
+snippet pythonv
+\`!p
+# snip.rv for the return value
+# snip.v.text -> the text
+# snip.v.mode 'v' | 'V' | '^V'
 def temp(vtext):
 	ans=""
 	$2
@@ -221,7 +278,23 @@ text = snip.v.text
 snip.rv = temp(text)
 \`
 endsnippet
+
 snippet pythonr
+\`!p
+# match.group(#) for the current match
+# snip.rv for the return value
+# snip.v.text -> the text
+# snip.v.mode 'v' | 'V' | '^V'
+def temp(arr):
+	arrLen = len(arr)
+	ans=""
+	$2
+	return ans
+matchArr = getMatchArr()
+snip.rv = temp(matchArr)
+\`
+endsnippet
+snippet pythonrv
 \`!p
 # match.group(#) for the current match
 # snip.rv for the return value
@@ -238,7 +311,7 @@ snip.rv = temp(matchArr,text)
 \`
 endsnippet
 # zsh snippets
-snippet forFolder
+snippet zforFolder
 # :h for name only
 # :t for name with extension
 for ${1:file} in ${2:\$1/*} ; do
@@ -246,38 +319,38 @@ for ${1:file} in ${2:\$1/*} ; do
 done
 endsnippet
 
-snippet forstring
+snippet zforstring
 for ${1:char_it} in \$( echo \$${2:str} )
 do
 	$3
 done
 endsnippet
-snippet if
+snippet zif
 if [[ $1 ]]
 then
 	$2
 fi
 endsnippet
 
-snippet zsh
+snippet zzsh
 \`#!/usr/bin/zsh
 $1\`
 endsnippet
 
-snippet vims
+snippet zvims
 \`!v
 \`
 endsnippet
-snippet visual
+snippet zvisual
 \${VISUAL}
 endsnippet
 
-snippet pythonScript
+snippet zpythonScript
 \`#!/usr/bin/python
 $1\`
 endsnippet
 # python interpolation
-snippet pyint
+snippet zpyint
 # for dinamic place holders just use
 #"${placeholder}"
 endsnippet
@@ -286,23 +359,33 @@ endsnippet
 # ========== for python snippets ======
 # ==========================
 
-snippet forString
+snippet pforString
 for element in range(0, len(${1:string_name})):
 	print($1[element])
 endsnippet
 
 
-snippet list
+snippet plist
 ${1:temp} = [$2]
 endsnippet
 
-snippet set
+snippet pset
 ${1:temp} = {$2}
 endsnippet
 
 
-snippet tuple
+snippet ptuple
 ${1:temp} = ($2)
+endsnippet
+
+snippet pforFolder "iteration of files over folder"
+# iterate over files in
+# that directory
+for ${1:filename} in os.listdir(${2:directory}):
+	f = os.path.join($2, $1)
+# checking if it is a file
+	if os.path.isfile(f):
+		print(f)
 endsnippet
 
 # ==========================
@@ -322,4 +405,24 @@ snippet notify-send
 os.system("notify-send \"$1\"")
 endsnippet
 
+# for matching text \"(.+)\"
+# for matching digits (\d+)
+# for matching word (\w+)
+snippet "ts (\w+)" "snippet for tags" r
+`!p
+# match.group(#) for the current match
+# snip.rv for the return value
+# snip.v.text -> the text
+# snip.v.mode 'v' | 'V' | '^V'
+def temp(arr):
+	arrLen = len(arr)
+	ans=""
+	ans+="snippet "+str(arr[0])+"\n"
+	ans+="<"+str(arr[0])+">$1</"+str(arr[0])+">\n"
+	ans+="endsnippet\n"
+	return ans
+matchArr = getMatchArr()
+snip.rv = temp(matchArr)
+`
+endsnippet
 

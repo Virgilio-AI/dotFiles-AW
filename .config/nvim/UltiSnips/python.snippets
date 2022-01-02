@@ -7,16 +7,25 @@
 # gbut -- for a button
 # glab -- for a label
 # gtext -- for a text box with a description
+# dropMenu -- for a drop menu
 
 # ---------------   python
+# == strings
 # forString - for iterate string c style
+# ins - insert variable into a string
+
+# == data structures
 # list - for creating a python list
 # set - unordered collection of data type, no duplicate
 # tuple - same to list but inmutable
-# ins - insert variable into a string
+
+# == files
+# file_open - open a file and read it line by line
+# file_write - write a file
+# forFolder -- traverse all files in folder
+# recurseFolder -- traverse all files and subdirectories in a folder
 
 
-# 
 # ---------------   matplotlib
 # plotcsv
 # plot2dsk
@@ -103,26 +112,65 @@ def create_matrix_placeholders(snip):
 	# Expand anonymous snippet
 	snip.expand_anon(anon_snippet_body)
 endglobal
+post_jump "snip"
+global !p
+def returnCommandSplitted(command):
+	cmd_arr = command.split('_')
+	return_command = ""
+	for a in cmd_arr:
+		return_command += a + " "
+	return_command = return_command[0:len(return_command)-1]
+	return return_command
+endglobal
 
-post_jump "create_matrix_placeholders(snip)"
+post_jump "snip"
+global !p
 
-# snip.rv for the return value
-# match.group(0) == the whole match
-# match.group(1) == the second match
-snippet "for (\d+)" "for loop with tabstops" r
-`!p
-def create_matrix(number):
-	ans=""
-	placeholder = 1
-	for it in range(0,int(number)):
-		ans+="primero de todos:" + str(it) + "\n"
-		ans+="hola " + f"${placeholder}" + "\n"
-		placeholder+=1
+def parseStatement(i,j,k,stri):
+	prev = ''
+	twoBehind=''
+	ans = ""
+	for ch in stri:
+
+		if ( ch == 'k' or ch == 'i' or ch == 'j' )  and prev == '$' and twoBehind == '\\':
+			ans = ans[:-2]
+			ans+=ch
+
+		elif ch == 'i' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(i)
+		elif ch == 'j' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(j)
+		elif ch == 'k' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(k)
+		elif ch == 'n' and prev == '\\':
+			ans = ans[:-1]
+			ans+="\n"
+
+		else :
+			ans+=ch
+
+		twoBehind = prev
+		prev = ch
 	return ans
 
-snip.rv = create_matrix(int(match.group(1)))
-`
-endsnippet
+endglobal
+
+global !p
+def getMatchArr():
+	cont=1
+	arr = []
+	while 1 :
+		try :
+			arr.append(match.group(cont))
+			cont+=1
+		except :
+			break
+	return arr
+endglobal
+
 
 
 
@@ -132,7 +180,27 @@ endsnippet
 # ==========================
 # ========== guis with tkinker ======
 # ==========================
+# options im-> inword
+snippet dropMenu "for creating a basic drop dow mwnu"
+$3TypeLabel = Label(${4:frame},text="$3:")
+$3TypeLabel.pack(side=TOP)
 
+${1:name of list} = [
+${2:"alarm",
+"alert",
+"zoom",
+"circadian-alert",
+"circadian-zoom",
+"circadian-alarm"}
+]
+
+${3:name} = tk.StringVar()
+$3.set($1[0]) # default value
+
+$3DropMenu = OptionMenu($4, $3, *$1)
+$3DropMenu.pack()
+
+endsnippet
 snippet s-gui
 # pack is for piling elements and grid is like a spread sheet
 root = Tk()
@@ -215,6 +283,40 @@ endsnippet
 
 snippet ins "" im
 "+str($1)+"
+endsnippet
+# ==========================
+# ========== files ======
+# ==========================
+snippet file_open
+with open('${1:file_name}') as ${2:file_var}:
+	for line in $2:
+		print(line.rstrip())
+endsnippet
+
+snippet file_write
+${1:name} = open("${2:file}","w")
+$1.write(${2:string})
+$1.close()
+endsnippet
+# options im-> inword
+snippet forFolder "iteration of files over folder"
+# iterate over files in
+# that directory
+for filename in os.listdir(directory):
+	f = os.path.join(directory, filename)
+# checking if it is a file
+	if os.path.isfile(f):
+		print(f)
+endsnippet
+# options im-> inword
+snippet recurseFolder "to recurse a folder iteractively"
+def recurseFolder(path):
+	for filename in os.listdir(directory):
+		f = os.path.join(path,filename)
+	if os.path.isfile(f):
+		print(f)
+	else:
+		recurseFolder(minusOne
 endsnippet
 # ==========================
 # ========== pandas ======

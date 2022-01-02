@@ -72,9 +72,6 @@
 
 
 
-
-
-
 global !p
 def create_matrix_placeholders(snip):
 	# Create anonymous snippet body
@@ -151,7 +148,6 @@ def getMatchArr():
 		except :
 			break
 	return arr
-
 endglobal
 # ==========================
 # ========== temp Functions ======
@@ -257,11 +253,19 @@ $0
 ;******************************************************
 ; guarda las banderas de comparacion
 
-; GIFR
 
-; timer
-; TIFR -- para poner al inicio
+; for external interruptions backup TIFR
+; in t1,TIFR
+; push t1
+; --- code
+; pop t1
+; out TIFR,t1
+
+
+; also test the backup for this kind of interruptions
+; GIFR
 ; SREG -- for the timer in the interruptions 
+
 EXT_INT0: ; IRQ0 Handler
 reti
 EXT_INT1:
@@ -747,6 +751,8 @@ snippet setint
 
 ; command to set interruptions
 sei
+
+
 ; cargamos al registro GICR para abilitar las interrupciones de forma individual
 ; general interrupt control register
 ; |int1|int0|int2|-|-|-|IVSEL|IVCE|
@@ -787,6 +793,7 @@ snippet settim
 ; functions
 ; c-tim -- clean timer, tim -- start timers
 sei
+; cli -- for clear interruptions
 ; output compare register
 ldi r16, ${1:0b1111_1001}	;Es un 249 a 4mHz para contar 0.004 segundos, hay que contar 250 interrupciones para un segundo
 out OCR0, r16
