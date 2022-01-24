@@ -1,0 +1,39 @@
+#!/usr/bin/zsh
+if [[ "$1" == *.sync.py  || "$1" == *.py ]] ; then
+	echo "error: you choosed the python file"
+	exit
+fi
+
+if [[ "$1" == *.sync.ipynb ]] ; then
+	echo "primero"
+	name=$(basename $1 .sync.ipynb)
+	if [ ! -f "$1" ] ; then
+		python $HOME/.local/bin/utilities/create-notebook.py $name ;
+	fi
+	jupytext $1 --to py:percent ;
+	jupyter-notebook $1 &
+	st -e sh -c "nvim $1:r.py" &
+
+elif [[ "$1" == *.ipynb ]] ; then
+	echo "segundo"
+	name=$(basename $1 .ipynb)
+	if [ ! -f "$1" ] ; then
+		python $HOME/.local/bin/utilities/create-notebook.py $name
+	else
+		mv $1 $name.sync.ipynb 
+	fi
+	jupytext $name.sync.ipynb --to py:percent ;
+	jupyter-notebook $name.sync.ipynb &
+	st -e sh -c "nvim $name.sync.py" &
+else
+	echo "cuarto"
+	ne=.sync.ipynb
+	nm=$1
+	notebook_name=$nm$ne
+	if [ ! -f "$notebook_name" ] ; then
+		python $HOME/.local/bin/utilities/create-notebook.py $1 ;
+	fi
+	jupytext $notebook_name --to py:percent ;
+	jupyter-notebook $notebook_name &
+	st -e sh -c "nvim $1.sync.py" &
+fi

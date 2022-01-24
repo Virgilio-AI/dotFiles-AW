@@ -1,0 +1,6 @@
+#!/bin/sh
+#the first one is the source and the second the destiny sandbox
+# $1 = origin
+# $2 = target
+# $3 = sandbox
+sudo rsync -aAXv --delete $1 $2

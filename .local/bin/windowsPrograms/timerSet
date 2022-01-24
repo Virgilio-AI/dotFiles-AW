@@ -1,0 +1,2 @@
+#!/usr/bin/zsh
+st -T "floating" -e sh -c "libreoffice /home/rockhight/.local/bin/windowsPrograms/schoolRelated/Timer0ATmega16A.ods"

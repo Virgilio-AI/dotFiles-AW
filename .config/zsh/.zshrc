@@ -117,20 +117,22 @@ set -o GLOB_SUBST
 # rm ~/.fzf.zsh ;
 # rm ~/.wget-hsts ;
 # install brew
-test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+# test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+# test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+# echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
 
 # load into the terminal pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
 
 # neofetch --gtk-shorthand off --gtk2 off --gtk3 off --color_blocks off
  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ## change sudo default editor
 SUDO_EDITOR=/usr/bin/nvim
+export EDITOR=nvim
+export VISUAL=nvim
 export SUDO_EDITOR
 export MANPAGER='nvim +Man!'
 PROMPT='%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%f%b '

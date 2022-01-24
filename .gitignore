@@ -11,91 +11,89 @@
 #not ignore .config
 !/.config
 #ignore .config/*
-# /.config/*
-# 
-#  
-# !/.config/mpv
-# /.config/mpv/*
-# !/.config/mpv/input.conf
-# !/.config/mpv/mpv.conf
-# 
-# 
-# !/.config/qutebrowser
-# /.config/qutebrowser/*
-# !/.config/qutebrowser/autoconfig.yml
-# 
-# !/.config/lazygit
-# !/.config/lazygit/*
-# /.config/lazygit/state.yml
-# 
-# !/.config/gtk-3.0
-# !/.config/gtk-3.0/*
-#  
-#  
-# 
-#  
-# !/.config/ncmpcpp
-# !/.config/ncmpcpp/*
-# 
-# 
-# !/.config/mpd
-# !/.config/mpd/*
-#  
-# !/.config/neofetch
-# !/.config/neofetch/*
-#  
-#  
-# !/.config/nvim
-# !/.config/nvim/*
-# !/.config/nvim/PlugIns
-# !/.config/nvim/PlugIns/*
-# !/.config/nvim/UltiSnips
-# !/.config/nvim/UltiSnips/*
-# !/.config/nvim/runFileConfigurations
-# !/.config/nvim/runFileConfigurations/*
-# 
-#  
-#  
-# !/.config/wget
-# !/.config/wget/*
-#  
-# !/.config/X11
-# !/.config/X11/*
-#  
-#  
-# !/.config/zathura
-# !/.config/zathura/*
-#  
-# !/.config/zsh
-# !/.config/zsh/*
-#  
-# !/.config/mimeapps.list
-# !/.config/pavucontrol.ini
+/.config/*
+
+ 
+!/.config/mpv
+/.config/mpv/*
+!/.config/mpv/input.conf
+!/.config/mpv/mpv.conf
+
+
+!/.config/qutebrowser
+/.config/qutebrowser/*
+!/.config/qutebrowser/autoconfig.yml
+
+!/.config/lazygit
+!/.config/lazygit/*
+/.config/lazygit/state.yml
+
+!/.config/gtk-3.0
+!/.config/gtk-3.0/*
+ 
+ 
+
+ 
+!/.config/ncmpcpp
+!/.config/ncmpcpp/*
+
+
+!/.config/mpd
+!/.config/mpd/*
+ 
+!/.config/neofetch
+!/.config/neofetch/*
+ 
+ 
+!/.config/nvim
+!/.config/nvim/*
+!/.config/nvim/PlugIns
+!/.config/nvim/PlugIns/*
+!/.config/nvim/UltiSnips
+!/.config/nvim/UltiSnips/*
+!/.config/nvim/runFileConfigurations
+!/.config/nvim/runFileConfigurations/*
+
+ 
+ 
+!/.config/wget
+!/.config/wget/*
+ 
+!/.config/X11
+!/.config/X11/*
+ 
+ 
+!/.config/zathura
+!/.config/zathura/*
+ 
+!/.config/zsh
+!/.config/zsh/*
+ 
+!/.config/mimeapps.list
+!/.config/pavucontrol.ini
 
  
 #not ignore .local
 !/.local
 #ignore .local/*
+/.local/*
 
-# /.local/*
-# 
-# !/.local/bin
-# !/.local/bin/*
-# !/.local/bin/statusbar
-# !/.local/bin/statusbar/*
-# /.local/bin/
-#  
-# !/.local/src
-# !/.local/src/cfiles
-# !/.local/src/cfiles/*
-# !/.local/src/dwm
-# !/.local/src/dwm/*
-# !/.local/src/dmenu
-# !/.local/src/dmenu/*
-# !/.local/src/dwmblocks
-# !/.local/src/dwmblocks/*
-# !/.local/src/st
-# !/.local/src/st/*
+!/.local/bin
+!/.local/bin/*
+!/.local/bin/*/*
+
+
+!/.local/src
+!/.local/src/cfiles
+!/.local/src/cfiles/*
+!/.local/src/dwm
+!/.local/src/dwm/*
+!/.local/src/dmenu
+!/.local/src/dmenu/*
+!/.local/src/dwmblocks
+!/.local/src/dwmblocks/*
+!/.local/src/st
+!/.local/src/st/*
 
  
 !/images

@@ -1,0 +1,3 @@
+#!/usr/bin/zsh
+
+wine /home/rockhight/.local/bin/windowsPrograms/SimpleExePrograms/AVRdelayloop.exe &

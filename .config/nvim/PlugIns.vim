@@ -50,6 +50,10 @@ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } " for nvim in 
 " for minimap 
 Plug 'wfxr/minimap.vim' " requires code-minimap from the AUR
 
+" plugisn for c# and unity
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'dense-analysis/ale' " for errors
+
 call plug#end() 
 
 

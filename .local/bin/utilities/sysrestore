@@ -1,0 +1,13 @@
+#!/bin/sh
+#the first one is the source and the second the destiny
+# make sure that they are properly mounted by mounting and chenking the content
+# Example:
+# mkdir /mnt/system
+# mkdir /mnt/usb
+# mount /dev/sda3 /mnt/system
+# mount /dev/sdb1 /mnt/usb
+# sh sysrestore /mnt/usb/ /mnt/system/
+sudo rsync -aAXv --delete $3 --exclude="lost+found" $1 $2
+
+
+
