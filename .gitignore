@@ -60,7 +60,7 @@
 !/.config/wget/*
  
 !/.config/X11
-!/.config/X11/*
+!/.config/X11/.Xmodmap
  
  
 !/.config/zathura
