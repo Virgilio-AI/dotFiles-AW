@@ -28,8 +28,8 @@ autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownCli
 " =================================
 function! CreateRangerBindings()
 	exec 'nnoremap <F6>3 :AsyncRun st -T "floating" -g "=150x50+250+100" -e sh -c "ranger" '
-	exec 'nnoremap <C-b> :FloatermNew ranger ' . expand('%:p:h') . '<cr>'
-	exec 'inoremap <C-b> :FloatermNew ranger ' . expand('%:p:h') . '<cr>'
+	exec 'nnoremap <C-b> :FloatermNew ranger "' . expand('%:p:h') . '"<cr>'
+	exec 'inoremap <C-b> :FloatermNew ranger "' . expand('%:p:h') . '"<cr>'
 endfunction
 " open file manager
 augroup openRanger
@@ -76,7 +76,10 @@ vnoremap -p :call PasteCleanVisual()<CR>
 vnoremap <c-r> y<ESC>/<c-r>"<CR> 
 " vnoremap <leader>p "_dP
 
-
+" for changing folding methods
+nnoremap <leader>fi :set foldmethod=indent<CR>
+nnoremap <leader>fm :set foldmethod=manual<CR>
+nnoremap <leader>fs :set foldmethod=syntax<CR>
 " change surroundings
 noremap <leader>[ a[<Esc>h%xi]<Esc>%hx
 noremap <leader>] a]<Esc>h%xi[<Esc>%hx
@@ -403,7 +406,7 @@ nnoremap gx :AsyncRun st -e sh -c "brave <c-r><c-a>"
 " ========== Run python code and jupyter bindings 
 " =================================
 augroup pythonFiles
-	autocmd BufEnter *.py nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "python %:p ; read -n1 "
+	autocmd BufEnter *.py nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -g "200x50" -e sh -c "python %:p ; read -n1 "
 augroup end
 
 autocmd FileType python nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>

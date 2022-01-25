@@ -1,9 +1,13 @@
+snippet tp
+echo "===== $1" |& tee -a Log.txt
+endsnippet
 # ===== comparisons =====
 #
 # ifFolder -- check if argument is a folder
 # ifFile -- check if argument is a file
 # compareFile -- compare file names
 # if -- simple if
+# ifOut -- check the output of a command in the if
 #
 # ===== loops =====
 #
@@ -20,6 +24,8 @@
 # function -- for creating a function
 # stringArr -- a string as an array
 # lineArr -- for an array of lines
+# noOut -- for not output in command
+# passStdin -- for passing sdin to command
 #
 # ===== external =====
 #
@@ -30,7 +36,6 @@
 #
 # ====== dialog =====
 # din -- for read string
-# dyes -- for information input
 # dout -- for information output
 # dyesno -- for yes no window dialog
 
@@ -134,6 +139,16 @@ endglobal
 # ==========================
 # ========== comparisons ======
 # ==========================
+
+snippet ifOut
+${1:command} | grep -q "${2:the string to look for}"
+if [ $? -eq 0 ]
+then
+	${3:command}
+fi
+endsnippet
+
+
 snippet ifFolder
 if [[ -d $file ]]
 then
@@ -264,9 +279,18 @@ snippet lineArr
 array=(${(ps:\n:)"\$(${1:command})"})
 endsnippet
 
+snippet noOut
+>/dev/null 2>&1
+endsnippet
 
-
-
+snippet passStdin
+(
+${1:
+echo "hola"
+echo "hola2"
+}
+) | ${2:command}
+endsnippet
 
 
 
@@ -414,9 +438,13 @@ endsnippet
 snippet dyesno
 dialog --title "$1" --yesno "$2" ${3:17} ${4:70}
 
-if [[ $? == 1 ]] 
+if [[ $? == 0 ]] 
 then
 echo "yes"
 fi
+endsnippet
+
+snippet dok
+dialog --title "$1" --msgbox "$2" 0 0
 endsnippet
 

@@ -1,14 +1,16 @@
 {
-"languageserver": {
-  "ccls": {
-    "command": "ccls",
-    "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp","cs"],
-    "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
-    "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
-        }
-      }
-  }
-}
+	"languageserver": {
+		"ccls": {
+			"command": "ccls",
+			"filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp","cs"],
+			"rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/","ProjectSettings/"],
+			"initializationOptions": {
+				"cache": {
+					"directory": "/tmp/ccls"
+				}
+			},
+		}
+	},
+	"coc.source.OmniSharp.enable" : true,
+	"coc.source.OmniSharp.triggerCharacters": "."
 }

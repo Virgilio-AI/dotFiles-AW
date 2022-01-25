@@ -157,3 +157,11 @@ augroup htmlAutoCommands
 	autocmd FileType html let g:PasteImageFunction = 'g:HtmlPasteImage'
 augroup END
 
+" =================================
+" ========== c# 
+" =================================
+augroup csharpAutoCommands
+	autocmd!
+  autocmd BufWinEnter *.cs silent! call FormatTheFile()
+augroup END
+

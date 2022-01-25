@@ -1,0 +1,87 @@
+# ====== snippets for c#
+
+# ===== Unity snippets
+# controlMesh -- help for controlling a mesh
+# delegate -- to deleagte functionality to other script
+
+# ===== built int functions
+# onCollision -- gets called when a collision
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ==========================
+# ========== unity snippets ======
+# ==========================
+snippet controlMesh "a way to control a mesh"
+
+
+// first regenerate project files
+// edit, preferences, External Tools, Regenerate project files
+
+
+
+// create a script for the mesh
+// grab and drop as a component
+// inside the main class create the rigid body
+
+// private Rigidbody meshRigidBody;
+
+// then inside the Start function initialize it
+
+// meshRigidBody = gameObject.GetComponent<Rigidbody> ();
+
+// get the name of the input from edit,projectSettings,Input Manager
+
+// then read the input
+// float horizontalMovement = Input.GetAxis("nameOFInput");
+// float horizontalMovement = Input.GetAxis("nameOFInput");
+// meshRigidBody.velocity = new Vector3(horizontalMovement,0,verticalMovement);
+
+
+endsnippet
+
+# options im-> inword
+snippet delegate "delegate functions to other script"
+// in the mesh scirpt use
+// public delegate FuncType EventName(parameters);
+// publi event EventName FuncName;
+
+// in the game script use inside the main function
+// public NameOFMeshFile VarName;
+
+// inside start use 
+// VarName.FuncName += FuncName;
+
+// and create the FuncType FuncName(parameters) function
+
+// note = drag and drop the mesh script into the game component when compiled
+endsnippet
+
+
+# ==========================
+# ========== builtInFunctions ======
+# ==========================
+
+# options im-> inword
+snippet OnCollision "information of the snippet"
+void OnCollisionEnter(Collision collision)
+{
+}
+endsnippet

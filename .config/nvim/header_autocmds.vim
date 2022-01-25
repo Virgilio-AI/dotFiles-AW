@@ -113,3 +113,7 @@ function! g:LatexPasteImage(relpath)
     execute "normal! ve\<C-g>"
 endfunction
 
+
+function! FormatTheFile()
+	execute "normal! ggVG="
+endfunction

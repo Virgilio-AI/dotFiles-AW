@@ -107,13 +107,16 @@ def getFolderDepht(path,depth,levels):
 	# that directory
 	ans=0
 	if os.path.isdir(path):
-		for filename in os.listdir(path):
-		# checking if it is a file
-			f = os.path.join(path, filename)
-			if os.path.isdir(f):
-				ans=max(getFolderDepht(str(f),depth+1,levels),ans)
-				if ans >= levels:
-					return levels
+		try :
+			for filename in os.listdir(path):
+			# checking if it is a file
+				f = os.path.join(path, filename)
+				if os.path.isdir(f):
+					ans=max(getFolderDepht(str(f),depth+1,levels),ans)
+					if ans >= levels:
+						return levels
+		except :
+			print("exception")
 
 	return ans+depth
 
@@ -129,9 +132,9 @@ def recurseFolder(path,levels,binding,maptype):
 	# binding of the main directory
 	bind = getBinding(path.split('/')[len(path.split('/'))-1][0],dic)
 	if maptype == "cd":
-		ans+="map " +str(binding) + str(bind)+" "+ maptype + " " +str(path)+"\n"
+		ans+="map " +str(binding) + str(binding[len(binding)-1])+" "+ maptype + " " +str(path)+"\n"
 	else:
-		ans+="map " +str(binding) + str(bind)+" shell "+ maptype + " %s " +str(path)+"\n"
+		ans+="map " +str(binding) + str(binding[len(binding)-1])+" shell "+ maptype + " %s " +str(path)+"\n"
 
 	dic.clear()
 	for filename in os.listdir(path):

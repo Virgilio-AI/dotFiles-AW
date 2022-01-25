@@ -66,7 +66,7 @@ shutdown()
 # if number of parameters equal cero
 	if [ $# -eq 0 ]  ; then 
 		shutdown -c
-		sh gitAutoCommit.sh
+		sh gitAutoCommit.zsh
 		command shutdown
 	else
 		command shutdown $@
@@ -78,7 +78,7 @@ reboot()
 {
 # if number of parameters equal cero
 	if [ $# -eq 0 ]  ; then 
-		sh gitAutoCommit.sh
+		sh gitAutoCommit.zsh
 		command reboot
 	else
 		command reboot $@
@@ -108,25 +108,6 @@ parse_git_branch() {
 setopt PROMPT_SUBST
 set -o GLOB_SUBST
 
-# rm ~/.lesshst ;
-# [[ -d ~/.pki ]] && rm ~/.pki ; 
-# [[ -d ~/.cargo ]] && rm ~/.cargo ; 
-# 
-# rm ~/.fehbg ;
-# rm ~/.fzf.bash ; 
-# rm ~/.fzf.zsh ;
-# rm ~/.wget-hsts ;
-# install brew
-# test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-# test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-# test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-# echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-
-# load into the terminal pyenv
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
-
-
 # neofetch --gtk-shorthand off --gtk2 off --gtk3 off --color_blocks off
  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ## change sudo default editor
@@ -136,3 +117,9 @@ export VISUAL=nvim
 export SUDO_EDITOR
 export MANPAGER='nvim +Man!'
 PROMPT='%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%f%b '
+
+# setting the pyenv 
+export PATH="/home/rockhight/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+
