@@ -69,9 +69,16 @@ recurseFolder(){
 			then
 				st -T "floating" -g "=150x49" -e zsh -c "lazygit " ;
 			else
-				recurseFolder $file $((level+1))
-				level=$((level - 1))
-				# echo "end recurse"
+				git status 2>&1 | grep -q "nothing to commit"  ;
+				# use () instead of [[]] for some examples
+				if [[ $? -eq 0 ]]
+				then
+					continue
+				else
+					recurseFolder $file $((level+1))
+					level=$((level - 1))
+					# echo "end recurse"
+				fi
 			fi
 		fi
 	done
