@@ -1,0 +1,4 @@
+[submodule "vim/bundle/nerdtree"]
+	path = .local/src/dmenu
+	url = https://github.com/Virgilio-AI/Arch_Water-dmenu.git
+	ignore = dirty
