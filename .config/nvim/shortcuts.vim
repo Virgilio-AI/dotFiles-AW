@@ -451,7 +451,7 @@ augroup end
 " =================================
 augroup zsh_scripting
 	autocmd!
-	autocmd BufEnter *.zsh nnoremap <F11> :w<CR>:call RunZshScript()
+	autocmd FileType zsh nnoremap <F11> :w<CR>:call RunZshScript()
 augroup END
 
 

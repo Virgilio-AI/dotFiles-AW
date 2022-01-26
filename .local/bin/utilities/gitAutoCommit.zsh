@@ -23,8 +23,8 @@ sudo rsync -aAXv --delete --exclude=.git ~/.local/src/st/ ~/Documents/GitRepos/A
 # ========== dot files is better ======
 # ==========================
 
-sudo rsync -aAXv --delete --exclude={'.git','BraveSoftware','cfiles','Electron','google-chrome','libreoffice','qutebrowser','Udeler','GeoGebra','GIMP','inkscape'} ~/.config/ ~/Documents/GitRepos/dotFiles-AW/.config/ ;
-sudo rsync -aAXv --delete --exclude=.git ~/.local/ ~/Documents/GitRepos/dotFiles-AW/.local/ ;
+sudo rsync -aAXv --delete --exclude={'.git','BraveSoftware','cfiles','Electron','google-chrome','libreoffice','qutebrowser','Udeler','GeoGebra','GIMP','inkscape','unity3d','unityhub','UnityHub','FreeCAD'} ~/.config/ ~/Documents/GitRepos/dotFiles-AW/.config/ ;
+sudo rsync -aAXv --delete --exclude={'.git','Proteus 7 Professional'} ~/.local/ ~/Documents/GitRepos/dotFiles-AW/.local/ ;
 sudo rsync -aAXv --delete --exclude=.git ~/images/ ~/Documents/GitRepos/dotFiles-AW/images/ ;
 sudo rsync -aAXv --exclude=.git ~/Documents/GitRepos/installationGuide-AW/main.pdf ~/Documents/GitRepos/archiso-AW/airootfs/root/InstallationGuide.pdf ;
 

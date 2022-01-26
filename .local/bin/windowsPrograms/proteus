@@ -1,4 +1,10 @@
-#!/bin/sh
-# open proteus electronic desing simulation
-wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Labcenter\ Electronics/Proteus\ 7\ Professional/BIN/ISIS.EXE
-
+#!/usr/bin/zsh
+# #############################
+# Fecha: 25/January/2022 - Tuesday
+# Autor: Virgilio Murillo Ochoa
+# personal github: Virgilio-AI
+# linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+# contact: virgiliomurilloochoa1@gmail.com
+# ############################
+#
+wine 'Proteus 7 Professional/BIN/ISIS.EXE'
