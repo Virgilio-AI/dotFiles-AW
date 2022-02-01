@@ -160,10 +160,18 @@ execute 'autocmd FileType cpp inoremap <F11><F11> <Esc>:call GenerateCompileAndR
 augroup end
 
 augroup Run_gcc
-execute 'autocmd FileType c nnoremap <F11> :call CompileAndRunCpp("gcc")<CR>' 
-execute 'autocmd FileType c inoremap <F11> <Esc>:call CompileAndRunCpp("gcc")<CR>'
-execute 'autocmd FileType cpp nnoremap <F11><F11> :call GenerateCompileAndRunFile("gcc")<CR>' 
-execute 'autocmd FileType cpp inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("gcc")<CR>'
+execute 'autocmd BufEnter *.c nnoremap <F11> :call CompileAndRunCpp("gcc")<CR>' 
+execute 'autocmd BufEnter *.c inoremap <F11> <Esc>:call CompileAndRunCpp("gcc")<CR>'
+execute 'autocmd BufEnter *.c nnoremap <F11><F11> :call GenerateCompileAndRunFile("gcc")<CR>' 
+execute 'autocmd BufEnter *.c inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("gcc")<CR>'
+
+
+execute 'autocmd BufEnter *.avr.c nnoremap <F11> :call CompileAVR()<CR>' 
+execute 'autocmd BufEnter *.avr.c inoremap <F11> <Esc>:call CompileAVR()<CR>'
+execute 'autocmd BufEnter *.avr.c nnoremap <F11><F11> :echo "not a command"'
+execute 'autocmd BufEnter *.avr.c inoremap <F11><F11> <Esc>:echo "not a command"'
+
+
 augroup end
 
 " =================================
