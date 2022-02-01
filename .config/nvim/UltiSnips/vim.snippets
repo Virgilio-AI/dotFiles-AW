@@ -117,8 +117,9 @@ sleep ${1:time}
 endsnippet
 snippet modifiers
 	" % - relative path
-	" %:p -absolute path
-
+	" %:p - absolute path
+	" %< - for filename without extension
+	" use expand('')
 endsnippet
 snippet forString
 let l:${1:chars} = split(l:${2:Temp},'\zs')
