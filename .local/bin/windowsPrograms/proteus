@@ -6,5 +6,7 @@
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
 # ############################
-#
-wine 'Proteus 7 Professional/BIN/ISIS.EXE'
+
+
+wine "/home/rockhight/.wine/drive_c/Program Files (x86)/Labcenter Electronics/Proteus 7 Professional/BIN/ISIS.EXE"
+
