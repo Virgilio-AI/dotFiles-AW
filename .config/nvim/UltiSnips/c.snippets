@@ -1,0 +1,43 @@
+
+# ======= c ========
+# iar -- for init array
+# imat -- for init mat
+# resizestr - to resize a c string
+# random - to input the random function
+# copenFile - to open a file in c style format
+
+
+snippet iar
+for(int i=0;i<$1;i++) $2[i] = $3;
+endsnippet
+snippet imat
+for(int i=0;i<$2;i++)
+{
+	for(int j=0;j<$2;j++)
+	{
+		$3[i][j] = $4;
+	}
+}
+endsnippet
+
+snippet copenFile
+// r reading,w write, a append
+// r+ open for reading and writing
+// w+ open for both reading and writing
+// a+ open for both appending and reading
+// append b for binary mode
+ptr = fopen("${1:path}","${2:mode}");
+endsnippet
+
+
+snippet resizestr
+${1:nombre} = realloc(p_nombre,30*sizeof(char));
+endsnippet
+
+snippet info
+// Fecha: `date +%d/%B/%Y\ -\ %A`
+// Autor: Virgilio Murillo Ochoa
+// personal github: Virgilio-AI
+// linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+// contact: virgiliomurilloochoa1@gmail.com
+endsnippet
