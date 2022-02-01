@@ -13,6 +13,8 @@
 #color - changes text color
 # cover - template for cover english
 # portada - template para portada
+# reference - a clickabel link in text
+# url - a url link
 
 
 
@@ -270,4 +272,13 @@ snippet info
 % Autor: Virgilio Murillo Ochoa
 % personal github: Virgilio-AI
 % linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+endsnippet
+
+snippet reference
+\href{${1:url}}{${2:text}}
+endsnippet
+
+
+snippet url
+\url{${1:link}}
 endsnippet
