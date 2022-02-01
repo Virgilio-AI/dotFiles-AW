@@ -462,3 +462,32 @@ function! g:HtmlPasteImage(relpath)
 "        execute "normal! vt]\<C-g>"
 endfunction
 
+
+" =================================
+" ========== compile avr 
+" =================================
+	" % - relative path
+	" %:p -absolute path
+	" %< - no extension
+
+function! CompileAVR()
+	let l:filename = expand('%<')
+	let l:device = "atmega16"
+	let l:compile = "avr-gcc -Wall -Os -mmcu=" . l:device
+
+	let l:createOFile = l:compile . " -c " . l:filename . ".c -o " . l:filename . ".o ; "
+	let l:createElfFile = l:compile . " -o " . l:filename . ".elf " . l:filename . ".o ; "
+	let l:createHexFile = "avr-objcopy -j .text -j .data -O ihex " . l:filename . ".elf " . l:filename . ".hex ; "
+	let l:formatForTheMicro = "avr-size --format=avr --mcu=" . l:device . " " . l:filename . ".elf "
+
+	let l:ExecuteCommands = ':AsyncRun st -g "170x30+0+0" -T "floating" -e sh -c '
+	let l:runScript = l:createOFile . l:createElfFile . l:createHexFile . l:formatForTheMicro
+
+	" exe l:ExecuteCommands . '"' . l:runScript .  '  ; read -n1 ' . '" '
+	let l:finalScript = l:ExecuteCommands . '"' . l:runScript .  '  ; read -n1 ' . '" '
+	" echo l:finalScript
+	exe l:finalScript
+
+endfunction
+
+
