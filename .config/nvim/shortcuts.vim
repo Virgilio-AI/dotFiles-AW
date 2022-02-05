@@ -488,3 +488,11 @@ augroup html_compile
 	autocmd FileType html nnoremap <F11> :w<CR>:call RunHtml()
 	autocmd FileType html nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup END
+
+" =================================
+" ========== python bindings 
+" =================================
+augroup PYTHON
+	autocmd BufEnter *.py nnoremap ff ggVG=:% s/	 /	/g<CR>:% s/	 /	/g<CR>:% s/	 /	/g<CR>
+augroup END
+
