@@ -56,6 +56,7 @@ exec 'source ' . g:CONFIG_PATH . '/customCommands.vim'
 
 " install coc omnisharp by default
 let g:coc_global_extensions=['coc-omnisharp']
+let g:coc_global_extensions=['coc-pyright']
 
 "let g:OmniSharp_highlighting = 0
 let g:OmniSharp_server_stdio = 1
@@ -63,10 +64,13 @@ let g:OmniSharp_server_use_mono = 1
 
 " use for correcting issues
 let g:ale_linters = {
-\ 'cs': ['OmniSharp']
+\ 'cs': ['OmniSharp'],
+\ 'python':['pyright','mypy','pylint'],
+\ 'c':[],
 \}
 
-" let g:OmniSharp_server_use_mono = 1
+
+ let g:OmniSharp_server_use_mono = 1
 let g:livepreview_previewer = 'zathura'    " For Latex
 let NERDTreeIgnore = ['\.aux$','\.idx','\.out$','\.log']   " PlugIn NerdTree
 let g:NERDTreeHijackNetrw=1    " PlugIn NerdTree
