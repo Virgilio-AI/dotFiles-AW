@@ -1,6 +1,3 @@
-snippet tp
-echo "===== $1" |& tee -a Log.txt
-endsnippet
 # ===== comparisons =====
 #
 # ifFolder -- check if argument is a folder
@@ -26,6 +23,7 @@ endsnippet
 # lineArr -- for an array of lines
 # noOut -- for not output in command
 # passStdin -- for passing sdin to command
+# readString -- for reading a string
 #
 # ===== external =====
 #
@@ -240,6 +238,10 @@ function ${1:name} (){
 	fi
 	$4
 }
+endsnippet
+
+snippet readString
+read ${1:string}
 endsnippet
 
 # ==========================
