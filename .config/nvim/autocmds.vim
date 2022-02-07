@@ -106,6 +106,8 @@ augroup python
 	" Add shiftwidth and/or softtabstop if you want to override those too.
 	autocmd FileType python setlocal noexpandtab shiftwidth=3 tabstop=3
 	autocmd FileType python let g:PasteImageFunction = 'g:PythonPasteImage'
+
+	autocmd FileType python let g:ale_set_hightlihgts = 0
 augroup end
 
 
