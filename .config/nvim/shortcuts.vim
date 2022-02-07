@@ -137,8 +137,8 @@ nnoremap <leader>gl  :call GitLog()
 " ==================================================
 
 augroup file_operations
-execute 'autocmd FileType * nnoremap -fp :call GivePermissions()' 
-execute 'autocmd FileType * inoremap -fp :call GivePermissions()'
+	execute 'autocmd FileType * nnoremap -fp :call GivePermissions()' 
+	execute 'autocmd FileType * inoremap -fp :call GivePermissions()'
 augroup end
 
 " ----------- end file operations -------------------
@@ -153,23 +153,23 @@ augroup end
 
 "compile and run code in nvim
 augroup Run_cpp
-execute 'autocmd FileType cpp nnoremap <F11> :call CompileAndRunCpp("g++")<CR>' 
-execute 'autocmd FileType cpp inoremap <F11> <Esc>:call CompileAndRunCpp("g++")<CR>'
-execute 'autocmd FileType cpp nnoremap <F11><F11> :call GenerateCompileAndRunFile("g++")<CR>' 
-execute 'autocmd FileType cpp inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("g++")<CR>'
+	execute 'autocmd FileType cpp nnoremap <F11> :call CompileAndRunCpp("g++")<CR>' 
+	execute 'autocmd FileType cpp inoremap <F11> <Esc>:call CompileAndRunCpp("g++")<CR>'
+	execute 'autocmd FileType cpp nnoremap <F11><F11> :call GenerateCompileAndRunFile("g++")<CR>' 
+	execute 'autocmd FileType cpp inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("g++")<CR>'
 augroup end
 
 augroup Run_gcc
-execute 'autocmd BufEnter *.c nnoremap <F11> :call CompileAndRunCpp("gcc")<CR>' 
-execute 'autocmd BufEnter *.c inoremap <F11> <Esc>:call CompileAndRunCpp("gcc")<CR>'
-execute 'autocmd BufEnter *.c nnoremap <F11><F11> :call GenerateCompileAndRunFile("gcc")<CR>' 
-execute 'autocmd BufEnter *.c inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("gcc")<CR>'
+	execute 'autocmd BufEnter *.c nnoremap <F11> :call CompileAndRunCpp("gcc")<CR>' 
+	execute 'autocmd BufEnter *.c inoremap <F11> <Esc>:call CompileAndRunCpp("gcc")<CR>'
+	execute 'autocmd BufEnter *.c nnoremap <F11><F11> :call GenerateCompileAndRunFile("gcc")<CR>' 
+	execute 'autocmd BufEnter *.c inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("gcc")<CR>'
 
 
-execute 'autocmd BufEnter *.avr.c nnoremap <F11> :call CompileAVR()<CR>' 
-execute 'autocmd BufEnter *.avr.c inoremap <F11> <Esc>:call CompileAVR()<CR>'
-execute 'autocmd BufEnter *.avr.c nnoremap <F11><F11> :echo "not a command"'
-execute 'autocmd BufEnter *.avr.c inoremap <F11><F11> <Esc>:echo "not a command"'
+	execute 'autocmd BufEnter *.avr.c nnoremap <F11> :call CompileAVR()<CR>' 
+	execute 'autocmd BufEnter *.avr.c inoremap <F11> <Esc>:call CompileAVR()<CR>'
+	execute 'autocmd BufEnter *.avr.c nnoremap <F11><F11> :echo "not a command"'
+	execute 'autocmd BufEnter *.avr.c inoremap <F11><F11> <Esc>:echo "not a command"'
 
 
 augroup end
@@ -179,17 +179,17 @@ augroup end
 " =================================
 
 augroup Tex_Shortcuts
-autocmd FileType tex nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
-" compile and open single proyect
-execute 'autocmd FileType tex nnoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
-" compile and open single file
-execute 'autocmd FileType tex inoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
-" compile and open proyect
-execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProject()' 
-execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProject()' 
-"preview proyect
-execute 'autocmd FileType tex nnoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
-execute 'autocmd FileType tex inoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
+	autocmd FileType tex nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+	" compile and open single proyect
+	execute 'autocmd FileType tex nnoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
+	" compile and open single file
+	execute 'autocmd FileType tex inoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
+	" compile and open proyect
+	execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProject()' 
+	execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProject()' 
+	"preview proyect
+	execute 'autocmd FileType tex nnoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
+	execute 'autocmd FileType tex inoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
 
 augroup end
 
@@ -256,20 +256,20 @@ nmap ga <Plug>(EasyAlign)
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <C-n>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<C-n>" :
-      \ coc#refresh()
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<C-n>" :
+			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
+	inoremap <silent><expr> <c-space> coc#refresh()
 else
-  inoremap <silent><expr> <c-@> coc#refresh()
+	inoremap <silent><expr> <c-@> coc#refresh()
 endif
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <C-e> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -286,13 +286,13 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	elseif (coc#rpc#ready())
+		call CocActionAsync('doHover')
+	else
+		execute '!' . &keywordprg . " " . expand('<cword>')
+	endif
 endfunction
 
 " Symbol renaming.
@@ -382,10 +382,10 @@ nmap <leader>gt :GTestRunUnderCursor<cr>
 " =================================
 augroup CompileAndRunBashFiles
 	autocmd!
-exe 'autocmd BufEnter *.sh nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
-exe 'autocmd BufEnter *.sh inoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
-exe 'autocmd BufEnter *.sh nnoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
-exe 'autocmd BufEnter *.sh inoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
+	exe 'autocmd BufEnter *.sh nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
+	exe 'autocmd BufEnter *.sh inoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
+	exe 'autocmd BufEnter *.sh nnoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
+	exe 'autocmd BufEnter *.sh inoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
 augroup end
 " =================================
 " ========== Run elm projects and files 
@@ -414,7 +414,8 @@ nnoremap gx :AsyncRun st -e sh -c "brave <c-r><c-a>"
 " ========== Run python code and jupyter bindings 
 " =================================
 augroup pythonFiles
-	autocmd BufEnter *.py nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -g "200x50" -e sh -c "python %:p ; read -n1 "
+	autocmd BufEnter *.py nnoremap <F11> :w<CR>:call RunCompetitivePython()<CR>
+	autocmd BufEnter *.py nnoremap <F11><F11> :w<CR>:call RunCompetitivePythonIn()<CR>
 augroup end
 
 autocmd FileType python nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
@@ -493,6 +494,7 @@ augroup END
 " ========== python bindings 
 " =================================
 augroup PYTHON
-	autocmd BufEnter *.py nnoremap ff ggVG=:% s/	 /	/g<CR>:% s/	 /	/g<CR>:% s/	 /	/g<CR>
+	autocmd BufEnter *.py nnoremap ff :call FormatPythonCode()<CR>
+	exe 'autocmd BufEnter *.py nnoremap <leader>df :w<CR>:AsyncRun st -T "floating" -g "=150x50" -e sh -c "python -m pudb %:p"'
 augroup END
 

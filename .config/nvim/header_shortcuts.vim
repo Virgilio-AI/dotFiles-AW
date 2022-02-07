@@ -8,11 +8,11 @@
 " ========== paste a clean text 
 " =================================
 function! PasteCleanVisual()
-normal gv"_dh
-normal p
+	normal gv"_dh
+	normal p
 endfunction
 function! PasteCleanNormal()
-normal V"_dkp
+	normal V"_dkp
 endfunction
 
 " =================================
@@ -150,24 +150,25 @@ function! CompileAndRunCppDefault(RunCommand)
 endfunction
 
 function! CompileAndRunCppForCompetition(RunCommand)
-if filereadable("runcpp.sh")
-	exe ':AsyncRun sh runcpp.sh '
-else
-	if filereadable("In.txt")
-		exe ':AsyncRun st -T "floating" -e sh -c "' . a:RunCommand . ' %:p -o %< && ./%< < In.txt ; read -n1 "'
+	if filereadable("runcpp.sh")
+		exe ':AsyncRun sh runcpp.sh '
 	else
-		exe ':AsyncRun st -T "floating" -e sh -c " nvim In.txt ; ' . a:RunCommand . ' %:p -o %< && ./%< < In.txt ; read -n1"'
+		if filereadable("In.txt")
+			exe ':AsyncRun st -T "floating" -e sh -c "' . a:RunCommand . ' %:p -o %< && ./%< < In.txt ; read -n1 "'
+		else
+			exe ':AsyncRun st -T "floating" -e sh -c " nvim In.txt ; ' . a:RunCommand . ' %:p -o %< && ./%< < In.txt ; read -n1"'
+		endif
 	endif
-endif
 endfunction
 
 
 function! CompileAndRunCppForNcurses(RunCommand)
 	exe ':AsyncRun st -T "floating" -e sh -c " ' . a:RunCommand . ' -lncurses %:p -o %<_nc && ./%<_nc ; read -n1"'
 endfunction
+
 function! CompileAndRunCpp(RunCommand)
-:w!
-if filereadable("In.txt") || filereadable("runcpp.sh")
+	:w!
+	if filereadable("In.txt") || filereadable("runcpp.sh")
 		:call CompileAndRunCppForCompetition(a:RunCommand)
 	else
 		if filereadable("%<_nc")
@@ -203,9 +204,9 @@ function! CompileAndRunLatexProject()
 	let l:RunCommand = 'pdflatex --shell-escape ' . b:FileName . ' ; '
 	let l:OpenPdf = 'zathura ' . l:PdfFile
 	exe l:TerminalCall . '"' . l:cdIntoDir . l:RunCommand  . l:RunCommand . l:OpenPdf . '"'
-"	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && pdflatex --shell-escape ' . b:FileName .  '"'
-"	sleep 4
-"	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && zathura ' . l:PdfFile . '"'
+	"	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && pdflatex --shell-escape ' . b:FileName .  '"'
+	"	sleep 4
+	"	exe 'AsyncRun st -T "floating" -g "=80x45+600+80" -e sh -c "cd %:p:h && zathura ' . l:PdfFile . '"'
 endfunction
 
 " compile and run single file
@@ -242,8 +243,8 @@ endfunction
 " ========== coc functions 
 " =================================
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 " =================================
 " ========== Mark Down 
@@ -350,9 +351,9 @@ function! CompileAndRunAssemblyCode()
 endfunction
 
 function! CleanHackerRankFile()
-  execute "% " . 'g/ofstream/d'
-  execute "% " . 's/cout/cout/g'
-  execute "% " . 'g/.close()/d'
+	execute "% " . 'g/ofstream/d'
+	execute "% " . 's/cout/cout/g'
+	execute "% " . 'g/.close()/d'
 endfunction
 
 function! CompileAndRunMarkDown()
@@ -410,18 +411,53 @@ endfunction
 " ========== python 
 " =================================
 
-
-function! g:PythonPasteImage(relpath)
-        execute "normal! i" . g:mdip_tmpname[0:0]
-        let ipos = getcurpos()
-        execute "normal! a" . g:mdip_tmpname[1:] . "='" . a:relpath . "'"
-		  :normal 0xx
-"        call setpos('.', ipos)
-"        execute "normal! vt]\<C-g>"
+function! RunCompetitivePython()
+	let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+	let l:StTerminalCLose = ' read -n1 "'
+	let l:filename = expand('%<')
+	if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
+		exe l:StTerminal . ' zsh .RunPython.zsh -1 ' . l:filename. ' ; ' . StTerminalCLose
+	else
+		exe l:StTerminal . ' python ' . l:filename . '.py ; ' . l:StTerminalCLose
+	endif
 endfunction
 
+function! RunCompetitivePythonIn()
+	let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+	let l:StTerminalCLose = ' read -n1 "'
+	let l:filename = expand('%<')
+	let l:RunFileFolder = ' ~/.config/nvim/runFileConfigurations'
+	let l:copyFilesToHome =' cp '. l:RunFileFolder.'/.RunPython.zsh . ; cp '.l:RunFileFolder.'/.ReadInputsPython.zsh . ; '
+	let l:filenameNoEx = expand('%:p<')
+	if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
+		exe l:StTerminal . ' zsh .RunPython.zsh -1 ' . l:filename. ' ; ' . StTerminalCLose
+	else
+		let l:InputFiles = input("enter the number of input files: ")
+		let l:enableDiff = input("enable diff with a correct out sample? (y/n): ")
+		let l:readI = ' zsh .ReadInputsPython.zsh '.l:InputFiles.' "' . l:filename . '" '.l:enableDiff.' ; '
+		let l:RunP = ' zsh .RunPython.zsh '.l:InputFiles.' "' . l:filename . '" '.l:enableDiff.'; '
+		:echom l:RunP
+		:echom l:readI
+		exe l:StTerminal . l:copyFilesToHome . l:readI . l:RunP . l:StTerminalCLose
+	endif
+endfunction
 
+function! g:PythonPasteImage(relpath)
+	execute "normal! i" . g:mdip_tmpname[0:0]
+	let ipos = getcurpos()
+	execute "normal! a" . g:mdip_tmpname[1:] . "='" . a:relpath . "'"
+	:normal 0xx
+	"        call setpos('.', ipos)
+	"        execute "normal! vt]\<C-g>"
+endfunction
 
+function! FormatPythonCode()
+
+	let l:Line = line(".")
+	let l:Column = col(".")
+	:normal! ggVG=:% s/	 /	/g<CR>:% s/	 /	/g<CR>:% s/	 /	/g<CR>
+	exe "call cursor(" . l:Line . "," . l:Column . ")"
+endfunction
 
 " =================================
 " ========== maria db scripting 
@@ -439,7 +475,7 @@ function! RunMariaDb()
 	else
 		exe l:ExecuteCommands . '"' . l:runScript .  '  ; read -n1 ' . '" '
 	endif
-" ' ; tee mariadb.txt ; ' .
+	" ' ; tee mariadb.txt ; ' .
 endfunction
 
 
@@ -455,22 +491,35 @@ function! RunHtml()
 endfunction
 
 function! g:HtmlPasteImage(relpath)
-        execute "normal! i" . g:mdip_tmpname[0:0]
-        let ipos = getcurpos()
-        execute "normal! a"."<img src=\"" . a:relpath . "\" width=\"\" height=\"\" border=\"0\">"
-"        call setpos('.', ipos)
-"        execute "normal! vt]\<C-g>"
+	execute "normal! i" . g:mdip_tmpname[0:0]
+	let ipos = getcurpos()
+	execute "normal! a"."<img src=\"" . a:relpath . "\" width=\"\" height=\"\" border=\"0\">"
+	"        call setpos('.', ipos)
+	"        execute "normal! vt]\<C-g>"
 endfunction
 
 
 " =================================
 " ========== compile avr 
 " =================================
-	" % - relative path
-	" %:p -absolute path
-	" %< - no extension
+" % - relative path
+" %:p -absolute path
+" %< - no extension
 
 function! CompileAVR()
+	:w
+	" delete _
+	let l:Line = line(".")
+	let l:Column = col(".")
+	sleep 100m
+	:% s/\(\d\)_\(\d\)/\1\2/g
+	sleep 100m
+	:w!
+	sleep 100m
+
+
+
+
 	let l:filename = expand('%<')
 	let l:device = "atmega16"
 	let l:compile = "avr-gcc -Wall -Os -mmcu=" . l:device
@@ -487,6 +536,15 @@ function! CompileAVR()
 	let l:finalScript = l:ExecuteCommands . '"' . l:runScript .  '  ; read -n1 ' . '" '
 	" echo l:finalScript
 	exe l:finalScript
+
+
+	let l:Line = line(".")
+	let l:Column = col(".")
+	sleep 100m
+	:% s/0b\(\d\d\d\d\)\(\d\d\d\d\)/0b\1_\2/g
+	sleep 100m
+	:w!
+	sleep 100m
 
 endfunction
 
