@@ -6,6 +6,13 @@
 # random - to input the random function
 # copenFile - to open a file in c style format
 
+# ====== avr ======
+# sk -- sk for avr
+# pOut -- puerto out
+# pIn -- puertoIn
+# outset -- to set the port for output
+# inset -- to set the port for input
+
 
 snippet iar
 for(int i=0;i<$1;i++) $2[i] = $3;
@@ -40,4 +47,99 @@ snippet info
 // personal github: Virgilio-AI
 // linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 // contact: virgiliomurilloochoa1@gmail.com
+endsnippet
+
+
+
+# ==========================
+# ========== avr ======
+# ==========================
+# options im-> inword
+snippet sk "skeleton for avr"
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdint.h>
+
+#define F_CPU 1000000
+int main(void)
+{
+	$1
+}
+
+endsnippet
+
+# options im-> inword
+snippet pOut "for output the port"
+$1 = PORT${2:A-B-C-D} ;
+endsnippet
+
+# options im-> inword
+snippet pIn "for input the port"
+PORT${1:A-B-C-D} = ${2} ;
+endsnippet
+
+# options im-> inword
+snippet outSet "set the port for output"
+DDR${1:A-B-C-D} = 255 ;
+PORT$1 = 0 ; 
+endsnippet
+
+# options im-> inword
+snippet inSet "set the input"
+DDR${1:A-B-C-D} = 0 ;
+PORT$1 = 255 ;
+endsnippet
+# options im-> inword
+
+snippet ioset
+// input = 0; output = 1; 76543210
+ioset ${1:A-B-C-D} ${2:00000000}
+endsnippet
+
+snippet "ioset (\w) (\w+)" "set a port in a generic way" r
+`!p
+# match.group(#) for the current match
+# snip.rv for the return value
+def getDdrStrin(strin):
+	ans = ""
+	cont = 0
+	for a in strin:
+		if a == "0":
+			ans+="0"
+			cont+=1
+			if cont == 4:
+				ans+="_"
+		else:
+			ans+="1"
+			cont+=1
+			if cont == 4:
+				ans+="_"
+	return ans
+def getPortStrin(strin):
+	ans = ""
+	cont = 0
+	for a in strin:
+		if a == "1":
+			ans+="0"
+			cont+=1
+			if cont == 4:
+				ans+="_"
+		else:
+			ans+="1"
+			cont+=1
+			if cont == 4:
+				ans+="_"
+	return ans
+
+def setPort(letter,strin):
+	ans=""
+	strin1 = getDdrStrin(strin)
+	strin2 = getPortStrin(strin)
+
+	ans+="DDR"+str(letter)+" = 0b"+str(strin1)+" ;\n"
+	ans+="PORT"+str(letter)+" = 0b"+str(strin2)+" ; \n "
+
+	return ans
+snip.rv = setPort(str(match.group(1)),str(match.group(2)))
+`
 endsnippet
