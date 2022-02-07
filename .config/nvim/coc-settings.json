@@ -2,7 +2,7 @@
 	"languageserver": {
 		"ccls": {
 			"command": "ccls",
-			"filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp","cs"],
+			"filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp","cs","py"],
 			"rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/","ProjectSettings/"],
 			"initializationOptions": {
 				"cache": {
