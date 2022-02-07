@@ -4,12 +4,16 @@
 # controlMesh -- help for controlling a mesh
 # controlMeshE -- control mesh the easy way
 # delegate -- to deleagte functionality to other script
+# cameraFollow -- to follo object relative and rotating
+# cameraFollowNonRotate -- to follow the player without following
+# text -- add text to the unity game
 
 # ===== built int functions
 # onCollision -- gets called when a collision
 
 
-
+# ===== object functions
+# disObj -- to make an object dissapear
 
 
 
@@ -28,7 +32,7 @@
 
 
 # ==========================
-# ========== unity snippets ======
+# ========== Unity snippets ======
 # ==========================
 snippet controlMesh "a way to control a mesh"
 
@@ -102,6 +106,29 @@ snippet controlMeshE "control mesh the easy way"
 // 	rb.AddForce(movement*speed);
 // }
 endsnippet
+# options im-> inword
+snippet cameraFollow "to follow"
+// just make the object parent of the camera so that they move together
+endsnippet
+# options im-> inword
+snippet cameraFollowNonRotate 
+// create the script
+//public GameObject player;
+//private Vector3 offset;
+
+// Start -> offset = transform.position - player.transform.position;
+// LateUpdate -> transform.position = player.transform.position + offset ;
+
+endsnippet
+# options im-> inword
+snippet text "create a 2d text in the screen"
+// right click on the hirarchy,UI, text mesh pro
+// make the object child to canvas
+
+// inside the script that you want to use
+// public TextMeshProUGUI countText;
+// modify by countText.text ;
+endsnippet
 # ==========================
 # ========== builtInFunctions ======
 # ==========================
@@ -111,4 +138,15 @@ snippet OnCollision "information of the snippet"
 void OnCollisionEnter(Collision collision)
 {
 }
+endsnippet
+
+
+
+# ==========================
+# ========== object functions ======
+# ==========================
+
+# options im-> inword
+snippet disObj "disappear the object"
+${1:object}.gameObject.SetActive(false);
 endsnippet
