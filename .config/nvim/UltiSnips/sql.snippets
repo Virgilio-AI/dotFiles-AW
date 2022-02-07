@@ -4,6 +4,11 @@
 # showUsers -- to show all users available in the server
 # showAll -- for showing everything in a table
 # describe -- for showing the rows of a table
+# showCurUser -- for showing the current user
+# createDatabase -- for creating a database
+# grantAll -- to grant all privileges to user over the database
+# showPrivileges -- to show the privileges
+# helpUsers -- to get help on the users
 
 # ========== table modifications ========
 # createTable -- for creating a table interactively
@@ -177,11 +182,30 @@ snippet showTables
 show tables ;
 endsnippet
 snippet showUsers
-SELECT User FROM mysql.user
+SELECT User FROM mysql.user ;
 endsnippet
 
 snippet showAll
 select * from $1 ;
+endsnippet
+
+# options im-> inword
+snippet showCurUser ""
+select user() ;
+endsnippet
+# options im-> inword
+snippet createDatabase "for creating a database"
+create database ${1:name_of_database} ;
+endsnippet
+# options im-> inword
+snippet grantAll "grant all privileges to user over database"
+-- use it on the terminal as sudo
+-- sudo mariadb
+grant all privileges on ${1:database_name} * to '${2:username}' ;
+endsnippet
+# options im-> inword
+snippet showPrivileges "to show the privileges"
+show grants for '${1:username}'@'${2:localhost} ;
 endsnippet
 # options im-> inword
 snippet showColumn "for showing the specified column"
@@ -221,7 +245,10 @@ snippet union "merge two queries into one"
 -- select branch_name
 -- from branch
 endsnippet
-
+# options im-> inword
+snippet helpUsers "for getting help on the users"
+# the user that is been used when login normally is the '' user
+endsnippet
 # ==========================
 # ========== table modifications ======
 # ==========================
