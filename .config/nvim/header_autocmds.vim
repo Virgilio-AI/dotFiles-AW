@@ -117,3 +117,23 @@ endfunction
 function! FormatTheFile()
 	execute "normal! ggVG="
 endfunction
+
+function! FormatCAvrExit()
+	let l:Line = line(".")
+	let l:Column = col(".")
+	sleep 100m
+	:% s/\(\d\)_\(\d\)/\1\2/g
+	sleep 100m
+	:w!
+	sleep 100m
+endfunction
+
+function! FormatCAvrEnter()
+	let l:Line = line(".")
+	let l:Column = col(".")
+	sleep 100m
+	:% s/0b\(\d\d\d\d\)\(\d\d\d\d\)/0b\1_\2/g
+	sleep 100m
+	:w!
+	sleep 100m
+endfunction

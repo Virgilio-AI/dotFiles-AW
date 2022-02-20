@@ -167,3 +167,13 @@ augroup csharpAutoCommands
   autocmd BufWinEnter *.cs silent! call FormatTheFile()
 augroup END
 
+
+" =================================
+" ========== c avr 
+" =================================
+
+augroup avr_autocommands
+	autocmd!
+	autocmd BufEnter *.avr.c silent! call FormatCAvrEnter()
+	autocmd BufWinLeave *.avr.c silent! call FormatCAvrExit()
+augroup END
