@@ -412,14 +412,30 @@ endfunction
 " =================================
 
 function! RunCompetitivePython()
-	let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
-	let l:StTerminalCLose = ' read -n1 "'
-	let l:filename = expand('%<')
-	if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
-		exe l:StTerminal . ' zsh .RunPython.zsh -1 ' . l:filename. ' ; ' . StTerminalCLose
+	if isdirectory('venv')
+		echom " using environment"
+		let l:source = 'source venv/bin/activate ;'
+		let l:deactivate = 'deactivate ; '
+		let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+		let l:StTerminalCLose = ' read -n1 "'
+		let l:filename = expand('%<')
+		if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
+			exe l:StTerminal . l:source . ' zsh .RunPython.zsh -1 ' . l:filename. ' ; ' . l:deactivate  . StTerminalCLose
+		else
+			exe l:StTerminal . ' python ' . l:filename . '.py ; ' . l:StTerminalCLose
+		endif
 	else
-		exe l:StTerminal . ' python ' . l:filename . '.py ; ' . l:StTerminalCLose
+		let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+		let l:StTerminalCLose = ' read -n1 "'
+		let l:filename = expand('%<')
+		if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
+			exe l:StTerminal . ' zsh .RunPython.zsh -1 ' . l:filename. ' ; ' . StTerminalCLose
+		else
+			exe l:StTerminal . ' python ' . l:filename . '.py ; ' . l:StTerminalCLose
+		endif
 	endif
+
+
 endfunction
 
 function! RunCompetitivePythonIn()
@@ -440,6 +456,14 @@ function! RunCompetitivePythonIn()
 		:echom l:readI
 		exe l:StTerminal . l:copyFilesToHome . l:readI . l:RunP . l:StTerminalCLose
 	endif
+endfunction
+
+function! CreatePythonEnvironment()
+	let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+	let l:StTerminalCLose = ' read -n1 "'
+	let l:pythonV = "python --version | grep -P \'\d\d+' -o > python_version.txt ;"
+	let l:createEnv = "python -m venv venv/ ; "
+	exe l:StTerminal .  .  l:StTerminalCLose
 endfunction
 
 function! g:PythonPasteImage(relpath)
@@ -467,6 +491,22 @@ function! RunMariaDb()
 	let l:FileName = expand("%")
 	let l:FileName_NoExtension = expand("%<")
 	let l:runScript = 'mariadb --execute=\"source ' . l:FileName . ' ;\" '
+	let l:final  = l:ExecuteCommands . '"' . l:runScript . ' ; read -n1 '. '"'
+	echom l:final
+	let outFile = input("write output to termnal?(y/n): ")
+	if outFile == 'n'
+		exe l:ExecuteCommands . '"' . l:runScript .  ' > mariadb.txt ; read -n1  ' . '"  '
+	else
+		exe l:ExecuteCommands . '"' . l:runScript .  '  ; read -n1 ' . '" '
+	endif
+	" ' ; tee mariadb.txt ; ' .
+endfunction
+
+function! RunMariaDbRoot()
+	let l:ExecuteCommands = ':AsyncRun st -g "170x30+0+0" -T "floating" -e sh -c '
+	let l:FileName = expand("%")
+	let l:FileName_NoExtension = expand("%<")
+	let l:runScript = 'sudo mariadb --execute=\"source ' . l:FileName . ' ;\" '
 	let l:final  = l:ExecuteCommands . '"' . l:runScript . ' ; read -n1 '. '"'
 	echom l:final
 	let outFile = input("write output to termnal?(y/n): ")

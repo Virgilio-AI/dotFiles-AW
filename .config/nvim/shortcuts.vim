@@ -168,8 +168,8 @@ augroup Run_gcc
 
 	execute 'autocmd BufEnter *.avr.c nnoremap <F11> :call CompileAVR()<CR>' 
 	execute 'autocmd BufEnter *.avr.c inoremap <F11> <Esc>:call CompileAVR()<CR>'
-	execute 'autocmd BufEnter *.avr.c nnoremap <F11><F11> :echo "not a command"'
-	execute 'autocmd BufEnter *.avr.c inoremap <F11><F11> <Esc>:echo "not a command"'
+	execute 'autocmd BufEnter *.avr.c nnoremap <F11><F11> :call  BurnAtmel16()<CR>'
+	execute 'autocmd BufEnter *.avr.c inoremap <F11><F11> <Esc>:call BurnAtmel16()<CR>'
 
 
 augroup end
@@ -416,6 +416,7 @@ nnoremap gx :AsyncRun st -e sh -c "brave <c-r><c-a>"
 augroup pythonFiles
 	autocmd BufEnter *.py nnoremap <F11> :w<CR>:call RunCompetitivePython()<CR>
 	autocmd BufEnter *.py nnoremap <F11><F11> :w<CR>:call RunCompetitivePythonIn()<CR>
+	autocmd BufEnter *.py nnoremap <F5> :call createPythonEnvironment()
 augroup end
 
 autocmd FileType python nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
@@ -475,6 +476,7 @@ augroup END
 augroup mariadb
 	autocmd!
 	autocmd FileType sql nnoremap <F11> :w<CR>:call RunMariaDb()
+	autocmd FileType sql nnoremap <F11><F11> :w<CR>:call RunMariaDbRoot()
 augroup END
 
 
