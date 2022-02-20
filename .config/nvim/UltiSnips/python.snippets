@@ -4,26 +4,54 @@
 # info
 # --------------- gui's with tkiner ---- 
 # s-gui
-# gbut -- for a button
-# glab -- for a label
-# gtext -- for a text box with a description
-# dropMenu -- for a drop menu
+# gBut -- for a button
+# gLab -- for a label
+# gText -- for a text box with a description
+# gDropMenu -- for a drop menu
+# gImage -- for an image
+# gGrid -- for help on grid
+# gPack -- for help on pack
+# gCheckButtons -- for adding check buttons
+# gRadioButtons -- for crating radio buttons
+# gOptionMenu -- for the menu in the top of the window
+# gMainMenu -- for the main top menu
+# gGridRemove -- for deleting an item grid
+# gPackRemove -- for deleting a pack item
+# gShow -- for showing all the packages
+# gExitTkinter -- for exiting the program main loop
+
+
 
 # ---------------   python
-# == strings
+# ==== strings
 # forString - for iterate string c style
 # ins - insert variable into a string
 
-# == data structures
+# ==== data structures
 # list - for creating a python list
 # set - unordered collection of data type, no duplicate
 # tuple - same to list but inmutable
 
-# == files
+# ==== files
 # file_open - open a file and read it line by line
 # file_write - write a file
+# file_append -- for appending information into the file
 # forFolder -- traverse all files in folder
 # recurseFolder -- traverse all files and subdirectories in a folder
+# fmkdir -- for creating a directory with parent directories
+#table_name table_namemove_file -- for moving a file into other location
+# relPath -- for getting the current relative path
+# copy_file -- for file copy
+
+
+
+# ==== POO
+# POOHelp -- for help in POO
+# inheritanceHelp -- for help in using inheritance
+
+# ==== exception handling
+# try -- to use generic try catch statement
+# raise -- to create custom exception on condition
 
 
 # ---------------   matplotlib
@@ -58,11 +86,57 @@
 # sec
 # subsec
 
+# ------------ python bases de datos
+
+
+# sqlite3 --- for creating a connection to sqlite3
+# sqlite3c -- for executing a command in sqlite3j
+
+
+# mysql -- for creating a connection with mysql or mariadb 
+# mysqlc -- for executing a command in the mysql connector
+# mysqlq -- for getting the information from a query
+# rowcount -- for getting the number of rows affected after  a commit
+# encryption -- for encripting a password
 
 
 
 
 
+
+
+
+# ==========================
+# ========== BasesDeDatos ======
+# ==========================
+
+# sec - for creatign a new section
+# -------- sql basic syntax
+# ======== queries ========
+# showUsers -- to show all users available in the server
+# showAll -- for showing everything in a table
+# describe -- for showing the rows of a table
+# showCurUser -- for showing the current user
+# bunion -- help for creating a union query
+# bjoin -- help for creating a join query
+
+# =========== databases ============
+# createDatabase -- for creating a database
+# deleteDatabase -- for deleting a database
+
+# grantAll -- to grant all privileges to user over the database
+# showPrivileges -- to show the privileges
+# helpUsers -- to get help on the users
+
+# ========== table modifications ========
+# foreign -- for  a foreign key
+# createTable -- for creating a table interactively
+# deltable -- for deleting a table
+# helpTable -- for help on the table creation and deletion
+# ========== data modifications =========
+# insert -- for inserting a new value into the table
+# insertIfne -- for inserting a value if it doesn't exist
+# update -- for updating the database
 
 
 
@@ -178,7 +252,7 @@ endglobal
 
 
 # ==========================
-# ========== guis with tkinker ======
+# ========== gui's with tkinter ======
 # ==========================
 # options im-> inword
 snippet dropMenu "for creating a basic drop dow mwnu"
@@ -210,17 +284,17 @@ $3
 root.mainloop()
 endsnippet
 
-snippet gbut
+snippet gBut
 # opt parameters = fg="color",bg="color",command=lambda: function(params)
 ${1:name_of_button} = Button(${2:frame},text="$3").pack(side=${4:BUTTON|TOP|LEFT|RIGHT})
 endsnippet
 
-snippet glab
+snippet gLab
 # opt parameters = fg="color",bg="color"
 ${1:name_of_label} = Label(${2:frame},text="$3").pack(side=${4:BUTTON|TOP|LEFT|RIGHT})
 endsnippet
 
-snippet gtext
+snippet gText
 $1Label = Label(level_add_task,text="$1:")
 $1Label.pack(side=TOP)
 # start entering information
@@ -229,13 +303,108 @@ $1TextBox = tk.Entry(level_add_task, width = 50, textvariable = $1)
 $1TextBox.pack(side=TOP)
 endsnippet
 
-
-
-
-
 snippet notify-send
 os.system("notify-send \"$1\"")
 endsnippet
+
+# options im-> inword
+snippet gImage "for loading image into a tkinter application"
+# the render and the image variable may be lost in a function or a class,
+# so make sure you save them somewhere otherwise you will lose them
+
+image = Image.open(${1:path})
+hsize = int((float(image.size[1])*float(wpercent)))
+# resize the image acording to the witdh
+image = image.resize(({1:basewidth},hsize), Image.ANTIALIAS)
+
+render = ImageTk.PhotoImage(image)
+self.img_arr.append((image,render))
+# create the tkinter label and resize
+img = Label(self.ventana,image=self.img_arr[-1][1])
+# now just pack or grid the image
+
+endsnippet
+
+
+# options im-> inword
+snippet gGrid "for grid in tkinter"
+# row -- for the row position
+# column -- for the column position
+# rowspan -- for the number of rows it takes
+# columnspan -- for the number of columns it takes
+# sticky=N,S,W,E,NE,NW,SE,SW -- if the widget is smaller than the frame is says where it is going to stick to
+endsnippet
+# options im-> inword
+snippet gPack "for the pack information"
+# fill=X,Y -- to fill the entire window in the desired position
+# expand=YES -- the widget fills the space in the parent widget
+# side=BOTTOM,LEFT,RIGHT,UP -- to specify the side to be placed
+endsnippet
+# options im-> inword
+snippet gRadioButtons "for creating radio buttons"
+# $4 = StringVar()
+${6:rbn} = Radiobutton(
+	${1:ventana},
+	text="${2:text}",
+	value="${3:value}",
+	variable=${4:variable},
+	command=lambda: ${5:function(params)},
+	)
+# grid or pack
+endsnippet # options im-> inword
+snippet gCheckButtons "for check buttons"
+# $3 = IntVar()
+${5:cbn} = Checkbutton(
+	${1:ventana},
+	text="${2:text}",
+	variable = ${3:variable},
+	onvalue=1,
+	offvalue=0,
+	command=lambda: ${4:function(params)}
+	)
+# grid or pack
+endsnippet
+
+# options im-> inword
+snippet gOptionMenu "for the option menu"
+# $3 = StringVar()
+${1:optionMenu_name} = OptionMenu(
+	${2:ventana},
+	${3:stringVar},
+	${4:"opciones","separadas"}
+	)
+# pack or grid
+endsnippet
+
+# options im-> inword
+snippet gDeleteItem "for deleting an item "
+${1:name}.grid_remove()
+endsnippet
+
+# options im-> inword
+snippet gPackRemove "for deleting a pack item"
+${2:name}.pack_forget()
+endsnippet
+
+# options im-> inword
+snippet gMainMenu "for adding the main menu"
+${1:name} = Menu(${2:window})
+# name.add_command(label="",command=lamda: command(params))
+$2.config(menu=$1)
+endsnippet
+# options im-> inword
+snippet gShow "for showing all the pacekd widgets in window"
+${1:window}.mainloop()
+endsnippet
+
+# options im-> inword
+snippet gExitTkinter "for exiting the main loop"
+${1:ventana}.exit
+endsnippet
+
+# ==========================
+# ========== Organization ======
+# ==========================
 
 snippet sec
 # =============
@@ -245,6 +414,7 @@ endsnippet
 snippet subsec
 # ======== $1
 endsnippet
+
 snippet shOutput
 ${1:strinName}=str(subprocess.check_output([${2:list_commands}]).decode('utf-8'))
 endsnippet
@@ -294,10 +464,19 @@ with open('${1:file_name}') as ${2:file_var}:
 endsnippet
 
 snippet file_write
+# from io import open
 ${1:name} = open("${2:file}","w")
 $1.write(${2:string})
 $1.close()
 endsnippet
+# options im-> inword
+snippet file_append "for appending text into a file"
+# from io import open
+${1:name} = open("${2:file}","a+")
+$1.write(${2:string})
+$1.close()
+endsnippet
+
 # options im-> inword
 snippet forFolder "iteration of files over folder"
 # iterate over files in
@@ -318,6 +497,78 @@ def recurseFolder(path):
 	else:
 		recurseFolder(minusOne
 endsnippet
+# options im-> inword
+snippet fmkdir "for creating a directory and it's parent directories"
+# import pathlib
+pathlib.Path(${1:abs_path}).mkdir(parents=True,exist_ok=True)
+endsnippet
+# options im-> inword
+snippet move_file "for moving a file into other location"
+# import shutil
+shutil.move(${1:path_original},${2:path_target})
+endsnippet
+# options im-> inword
+snippet copy_file "for copying a file into a new location"
+# import shutil
+shutil.copy(${1:path_original},${2:path_target})
+endsnippet
+
+# options im-> inword
+snippet relPath "create a relative path"
+
+# import pathlib
+
+
+# create the directory creating the parents
+relPath = str(pathlib.Path().absolute()) + "/"
+
+# pathlib.Path(relPath + "/holaa").mkdir(parents=True, exist_ok=True)
+
+# abrir
+ruta = relPath  +"${1:relarivePath}"
+endsnippet
+
+# ==========================
+# ========== POO ======
+# ==========================
+# options im-> inword
+snippet POOHelp "for help information on POO with python"
+# create files with a single class inside of them and import them into the main file
+# example:
+# create the class Car inside the car.py file
+# import into the main file using 
+# from car import Car
+#
+# and use it
+# car = Car()
+endsnippet
+
+# options im-> inword
+snippet inheritanceHelp "how to use inheritance in python"
+# class name(fatherName)
+# inside the __init__(self)
+# super().__init__()
+endsnippet
+
+# ==========================
+# ========== exception handling ======
+# ==========================
+# options im-> inword
+snippet try "try catch generic"
+try:
+	$1
+except Exception as e:
+	$2
+fianlly:
+	$3
+endsnippet
+# options im-> inword
+snippet raise "for raising custom exception"
+if $1:
+	raise $2("${3:text for exception}")
+endsnippet
+
+
 # ==========================
 # ========== pandas ======
 # ==========================
@@ -378,8 +629,8 @@ endsnippet
 
 snippet infoj
 # %% [markdown]
-- Fecha: 20/October/2021 - Wednesday
-- Autor: Virgilio Murillo Ochoa
+- Date: 20/October/2021 - Wednesday
+- Author: Virgilio Murillo Ochoa
 - personal github: Virgilio-AI
 - linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 - contact: virgiliomurilloochoa1@gmail.com
@@ -470,8 +721,8 @@ endsnippet
 
 snippet sk
 
-# Fecha: `date +%d/%B/%Y\ -\ %A`
-# Autor: Virgilio Murillo Ochoa
+# Date: `date +%d/%B/%Y\ -\ %A`
+# Author: Virgilio Murillo Ochoa
 # personal github: Virgilio-AI
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
@@ -480,9 +731,308 @@ from typing import *
 endsnippet
 
 snippet info
-# Fecha: `date +%d/%B/%Y\ -\ %A`
-# Autor: Virgilio Murillo Ochoa
+# Date: `date +%d/%B/%Y\ -\ %A`
+# Author: Virgilio Murillo Ochoa
 # personal github: Virgilio-AI
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
 endsnippet
+
+
+
+# ==========================
+# ========== python bases de datos======
+# ==========================
+# options im-> inword
+snippet sqlite3 "for connection into a sqlite3 database"
+conexion = sqlite3.connect('pruebas.db')
+endsnippet
+# options im-> inword
+snippet sqlite3c "for executing a command in sqlite3"
+
+cursor = conexion.cursor()
+command = """
+"""
+# execute command
+
+cursor.execute(command)
+# if query
+# rows = cursor.fetchall()
+# for row in rows():
+#	print(row)
+endsnippet
+
+
+# options im-> inword
+snippet mysql "for creating a connection to sql"
+import mysql.connector
+
+# conexion
+
+database =  mysql.connector.connect(
+		host="${1:localhost}",
+		user = "$2",
+		passwd="$3",
+		database="${4:automation_suite}",
+		)
+
+endsnippet
+# options im-> inword
+snippet mysqlc "for executing a command"
+cursor = database.cursor(buffered,True)
+
+cursor.execute(${1:command})
+# cursor.execute("string for formatted %s",tuple of values)
+endsnippet
+# options im-> inword
+snippet mysqlq "for a query in mysql"
+cursor.execute("${1:select * from Event ;}")
+${2:rows} = cursor.fetchall()
+endsnippet
+# options im-> inword
+snippet rowcount "for counting the affected rows by the commit"
+#database.commit()
+num = cursor.rowcount()
+endsnippet
+
+# options im-> inword
+snippet encryption "for encripting a password"
+# import hashlib
+cifrado = hashlib.sha256()
+cifrado.update(${1:string}.encode('utf8'))
+endsnippet
+
+
+
+# ==========================
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ========== BasesDeDatos ======
+# ==========================
+
+snippet insertIfne
+-- insert query
+insert into ${1:tableName}(${2:name,actionDescription}) values(${3:"alert","gives a personalized voice alert for the system"})
+SELECT ${4:row_to_compare}
+FROM $1
+WHERE NOT($4 IN (SELECT $4 FROM $1));
+endsnippet
+
+
+
+
+
+
+
+snippet describe
+describe $1 ;
+endsnippet
+
+
+
+
+
+
+
+# ==========================
+# ========== sql basic syntax ======
+# ==========================
+snippet compHelp
+-- <,>,<=,>=,=,
+-- != equal <>
+-- and,or
+endsnippet
+
+snippet wildCards
+-- % -> A substitude for 0 or more characters
+-- _ -> a substitude for a single character
+-- [charlist] -> sets and ranges for characters to match
+endsnippet
+
+snippet bjoin
+select ${1:table.col,table.col}
+from table
+join ${2:second_table}
+on employee.id == branch.id;
+-- left join if you want to see all
+endsnippet
+# ==========================
+# ========== queries ======
+# ==========================
+
+snippet showTables
+show tables ;
+endsnippet
+snippet showUsers
+SELECT User FROM mysql.user ;
+endsnippet
+
+snippet showAll
+select * from $1 ;
+endsnippet
+
+# options im-> inword
+snippet showCurUser ""
+select user() ;
+endsnippet
+# ==========================
+# ========== databases ======
+# ==========================
+
+# options im-> inword
+snippet createDatabase "for creating a database"
+create database ${1:name_of_database} ;
+endsnippet
+# options im-> inword
+snippet deleteDatabase "for deleting a database"
+drop database ${1:is exists} ${2:name_of_database}
+endsnippet
+# options im-> inword
+snippet grantAll "grant all privileges to user over database"
+-- use it on the terminal as sudo
+-- sudo mariadb
+grant all privileges on ${1:database_name}.* to '${2:username}'@${3:localhost} ;
+endsnippet
+# options im-> inword
+snippet showPrivileges "to show the privileges"
+show grants for '${1:username}'@'${2:localhost} ;
+endsnippet
+# options im-> inword
+snippet showColumn "for showing the specified column"
+select ${1:list,of,columns}
+from student
+${2:[ order by (list of columns)]}
+;
+endsnippet
+
+snippet columnConditions
+-- select * 
+-- from ${column}
+-- where name in ('name1','name2')
+-- limit 5;
+endsnippet
+
+snippet countVal
+select count(${1:column})
+from ${2:table}
+-- [where conditions]
+;
+endsnippet
+
+snippet average
+select avg(${1:column})
+from ${2:table}
+-- [ where conditions]
+-- [ group by column ]
+endsnippet
+
+
+# options im-> inword
+snippet bunion "merge two queries into one"
+-- select column
+-- from employee
+-- union
+-- select branch_name
+-- from branch
+endsnippet
+# options im-> inword
+snippet helpUsers "for getting help on the users"
+# the user that is been used when login normally is the '' user
+endsnippet
+# ==========================
+# ========== table modifications ======
+# ==========================
+
+snippet foreign
+foreign key (${1:name_of_key_in_this_table}) references ${2:foreign_table}(${3:value_in_foreing_table})
+endsnippet
+
+snippet createTable
+
+create table if not exists ${1:table_name}(
+	$2
+);
+endsnippet
+# options im-> inword
+snippet helpTable "for help on the table creating and deletion"
+
+-- data types -> varchar(n),Int,DECIMAL(M,N),BLOB,DATE,TIMESTAMP,float
+-- float is variable and decimal is fixed
+-- use float always
+-- constrains -> not null,unique,auto_increment,default 'val'
+-- on delete -> on delete set null, on delete cascade
+-- snippets -> foreign,
+
+-- EXAMPLE
+-- student_id INT,
+-- name VARCHAR(20) not null,
+-- major VARCHAR(20) unique,
+-- primary key(student_id)
+-- foreign key(student_id) references branch(branch_id) on delete cascade
+endsnippet
+
+snippet deltable
+drop table ${1:table_name}
+endsnippet
+
+snippet addRow
+alter table ${1:name_of_table} add ${2:name varchar(100)}
+endsnippet
+
+snippet modTable
+-- alter table name_of_table
+-- add foreign key(branch_id)
+-- references branch(branch_id)
+-- on delete set null;
+endsnippet
+# ==========================
+# ========== data modification ======
+# ==========================
+
+snippet insert
+insert into ${1:table_name}(${2:info,action,name,weeks,action_time,hour,minute}) values(${3:"test info","test action","test name",1,10,12,30}) ;
+endsnippet
+
+# options im-> inword
+snippet update "update the data" 
+-- see compHelp
+update ${1:table_name}
+set ${2:column_name} = ${3:value}
+-- you can separate this by commas
+-- ex: name='tom',name='jon'
+where ${4:condition} ;
+endsnippet
+
+snippet deleteRow
+-- to delete a row from the table
+delete from ${1:name_of_table} where ${2:condition} ;
+endsnippet
+# ==========================
+# ========== triggers ======
+# ==========================
+
+snippet trigger
+create table ${1:trigger test} (
+	message varchar(100)
+	);
+endsnippet
+
+

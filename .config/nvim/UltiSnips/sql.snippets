@@ -1,18 +1,29 @@
+
+
+# info -- for the information on the database
 # sec - for creatign a new section
 # -------- sql basic syntax
+
+# ======== sql basic syntax ====
+# join -- the basic syntax for a join
 # ======== queries ========
 # showUsers -- to show all users available in the server
 # showAll -- for showing everything in a table
 # describe -- for showing the rows of a table
 # showCurUser -- for showing the current user
+# =========== databases ============
 # createDatabase -- for creating a database
+# deleteDatabase -- for deleting a database
+
 # grantAll -- to grant all privileges to user over the database
 # showPrivileges -- to show the privileges
 # helpUsers -- to get help on the users
 
 # ========== table modifications ========
+# foreign -- for  a foreign key
 # createTable -- for creating a table interactively
 # deltable -- for deleting a table
+# helpTable -- for help on the table creation and deletion
 # ========== data modifications =========
 # insert -- for inserting a new value into the table
 # insertIfne -- for inserting a value if it doesn't exist
@@ -20,113 +31,25 @@
 
 
 
-# ==========================
-# ========== global snippets ======
-# ==========================
-
-global !p
-def create_matrix_placeholders(snip):
-	# Create anonymous snippet body
-	anon_snippet_body = ""
-	# Get start and end line number of expanded snippet
-	start = snip.snippet_start[0]
-	end = snip.snippet_end[0]
-  # Append current line into anonymous snippet
-	for i in range(start, end + 1):
-		anon_snippet_body += snip.buffer[i]
-		anon_snippet_body += "" if i == end else "\n"
-	# Delete expanded snippet line till second to last line
-	for i in range(start, end):
-		del snip.buffer[start]
-	# Empty last expanded snippet line while preserving the line
-	snip.buffer[start] = ''
-	# Expand anonymous snippet
-	snip.expand_anon(anon_snippet_body)
-endglobal
-post_jump "snip"
-global !p
-def returnCommandSplitted(command):
-	cmd_arr = command.split('_')
-	return_command = ""
-	for a in cmd_arr:
-		return_command += a + " "
-	return_command = return_command[0:len(return_command)-1]
-	return return_command
-endglobal
-
-post_jump "snip"
-global !p
-
-def parseStatement(i,j,k,stri):
-	prev = ''
-	twoBehind=''
-	ans = ""
-	for ch in stri:
-
-		if ( ch == 'k' or ch == 'i' or ch == 'j' )  and prev == '$' and twoBehind == '\\':
-			ans = ans[:-2]
-			ans+=ch
-
-		elif ch == 'i' and prev == '$' and twoBehind != '\\':
-			ans = ans[:-1]
-			ans+=str(i)
-		elif ch == 'j' and prev == '$' and twoBehind != '\\':
-			ans = ans[:-1]
-			ans+=str(j)
-		elif ch == 'k' and prev == '$' and twoBehind != '\\':
-			ans = ans[:-1]
-			ans+=str(k)
-		elif ch == 'n' and prev == '\\':
-			ans = ans[:-1]
-			ans+="\n"
-
-		else :
-			ans+=ch
-
-		twoBehind = prev
-		prev = ch
-	return ans
-
-endglobal
-
-global !p
-def getMatchArr():
-	cont=1
-	arr = []
-	while 1 :
-		try :
-			arr.append(match.group(cont))
-			cont+=1
-		except :
-			break
-	return arr
-endglobal
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-snippet info
---  Fecha: `date +%d/%B/%Y\ -\ %A`
---  Autor: Virgilio Murillo Ochoa
---  personal github: Virgilio-AI
---  linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
---  contact: virgiliomurilloochoa1@gmail.com
+# options im-> inword
+snippet info "personal information"
+-- Date: `date +%d/%B/%Y\ -\ %A`
+-- Author: Virgilio Murillo Ochoa
+-- personal github: Virgilio-AI
+-- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+-- contact: virgiliomurilloochoa1@gmail.com
+$1
 endsnippet
 
-snippet sec
--- ===================
--- ======= $1
--- ===================
+# options im-> inword
+snippet sec "for creating the section"
+-- ################################
+-- ########## $1
+-- ################################
+
 endsnippet
 
 snippet insertIfne
@@ -167,6 +90,7 @@ snippet wildCards
 -- _ -> a substitude for a single character
 -- [charlist] -> sets and ranges for characters to match
 endsnippet
+
 snippet join
 select ${1:table.col,table.col}
 from table
@@ -174,6 +98,7 @@ join ${2:second_table}
 on employee.id == branch.id;
 -- left join if you want to see all
 endsnippet
+
 # ==========================
 # ========== queries ======
 # ==========================
@@ -193,15 +118,23 @@ endsnippet
 snippet showCurUser ""
 select user() ;
 endsnippet
+# ==========================
+# ========== databases ======
+# ==========================
+
 # options im-> inword
 snippet createDatabase "for creating a database"
 create database ${1:name_of_database} ;
 endsnippet
 # options im-> inword
+snippet deleteDatabase "for deleting a database"
+drop database ${1:is exists} ${2:name_of_database}
+endsnippet
+# options im-> inword
 snippet grantAll "grant all privileges to user over database"
 -- use it on the terminal as sudo
 -- sudo mariadb
-grant all privileges on ${1:database_name} * to '${2:username}' ;
+grant all privileges on ${1:database_name}.* to '${2:username}'@${3:localhost} ;
 endsnippet
 # options im-> inword
 snippet showPrivileges "to show the privileges"
@@ -259,8 +192,17 @@ endsnippet
 
 snippet createTable
 
--- data types -> varchar(n),Int,DECIMAL(M,N),BLOB,DATE,TIMESTAMP
--- constrains -> not null,unique,auto_increment
+create table if not exists ${1:table_name}(
+	$2
+);
+endsnippet
+# options im-> inword
+snippet helpTable "for help on the table creating and deletion"
+
+-- data types -> varchar(n),Int,DECIMAL(M,N),BLOB,DATE,TIMESTAMP,float
+-- float is variable and decimal is fixed
+-- use float always
+-- constrains -> not null,unique,auto_increment,default 'val'
 -- on delete -> on delete set null, on delete cascade
 -- snippets -> foreign,
 
@@ -268,12 +210,10 @@ snippet createTable
 -- student_id INT,
 -- name VARCHAR(20) not null,
 -- major VARCHAR(20) unique,
+-- parragraph text,
+-- short_parragraph mediumtext,
 -- primary key(student_id)
 -- foreign key(student_id) references branch(branch_id) on delete cascade
-
-create table if not exists ${1:table_name}(
-
-);
 endsnippet
 
 snippet deltable

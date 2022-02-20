@@ -13,6 +13,19 @@
 # outset -- to set the port for output
 # inset -- to set the port for input
 
+# ======= keyboard ==== 
+# teclado_menu
+# m-key
+
+
+# ===== interrupciones ==== 
+# settim -- for setting the interruptions
+# setint -- for setting the interruptions
+
+
+# ==========================
+# ========== c ======
+# ==========================
 
 snippet iar
 for(int i=0;i<$1;i++) $2[i] = $3;
@@ -41,9 +54,14 @@ snippet resizestr
 ${1:nombre} = realloc(p_nombre,30*sizeof(char));
 endsnippet
 
+snippet random
+// float num = rand()%maxNUm;
+srand(time(NULL));
+endsnippet
+
 snippet info
-// Fecha: `date +%d/%B/%Y\ -\ %A`
-// Autor: Virgilio Murillo Ochoa
+// Date: `date +%d/%B/%Y\ -\ %A`
+// Author: Virgilio Murillo Ochoa
 // personal github: Virgilio-AI
 // linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 // contact: virgiliomurilloochoa1@gmail.com
@@ -55,12 +73,96 @@ endsnippet
 # ========== avr ======
 # ==========================
 # options im-> inword
-snippet sk "skeleton for avr"
+snippet outset "set for output"
+DDR${1:A-B-C-D} = 255 ;
+PORT$1 = 0 ;
+endsnippet
+
+snippet inset "set for input"
+DDR${1:A-B-C-D} =0 ;
+PORT$1 = 255 ;
+endsnippet
+# options im-> inword
+
+snippet sk "skeleton for c"
+// Date: 10/February/2022 - Thursday
+// Author: Virgilio Murillo Ochoa
+// personal github: Virgilio-AI
+// linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+// contact: virgiliomurilloochoa1@gmail.com
+
+#include<stdio.h>
+
+int main(void)
+{
+	$1
+}
+
+endsnippet
+snippet sk_avr "skeleton for avr"
+// Date: 10/February/2022 - Thursday
+// Author: Virgilio Murillo Ochoa
+// personal github: Virgilio-AI
+// linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+// contact: virgiliomurilloochoa1@gmail.com
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdint.h>
 
+/* Interrupt vectors */
+/* External Interrupt 0 */
+#define INT0_vect _VECTOR(1)
+/* External Interrupt 1 */
+#define INT1_vect _VECTOR(2)
+/* Timer/Counter2 Compare Match */
+#define TIMER2_COMP_vect _VECTOR(3)
+/* Timer/Counter2 Overflow */
+#define TIMER2_OVF_vect _VECTOR(4)
+/* Timer/Counter1 Capture Event */
+#define TIMER1_CAPT_vect _VECTOR(5)
+/* Timer/Counter1 Compare Match A */
+#define TIMER1_COMPA_vect _VECTOR(6)
+/* Timer/Counter1 Compare Match B */
+#define TIMER1_COMPB_vect _VECTOR(7)
+/* Timer/Counter1 Overflow */
+#define TIMER1_OVF_vect _VECTOR(8)
+/* Timer/Counter0 Overflow */
+#define TIMER0_OVF_vect _VECTOR(9)
+/* SPI Serial Transfer Complete */
+#define SPI_STC_vect _VECTOR(10)
+/* USART, RX Complete */
+#define USART_RX_vect _VECTOR(11)
+/* USART Data Register Empty */
+#define USART_UDRE_vect _VECTOR(12)
+/* USART, TX Complete */
+#define USART_TX_vect _VECTOR(13)
+/* ADC Conversion Complete */
+#define ADC_vect _VECTOR(14)
+/* EEPROM Ready */
+#define EE_RDY_vect _VECTOR(15)
+/* Analog Comparator */
+#define ANA_COMP_vect _VECTOR(16)
+/* Two-wire Serial Interface */
+#define TWI_vect _VECTOR(17)
+/* External Interrupt Request 2 */
+#define INT2_vect _VECTOR(18)
+/* TimerCounter0 Compare Match */
+#define TIMER0_COMP_vect _VECTOR(19)
+/* Store Program Memory Read */
+#define SPM_RDY_vect _VECTOR(20)
+// for 1 megahert
 #define F_CPU 1000000
+
+uint8_t cero_en_bit(volatile uint8_t *LUGAR,uint8_t BIT)
+{
+	return (!(*LUGAR&(1<<BIT)));
+}
+uint8_t uno_en_bit(volatile uint8_t *LUGAR,uint8_t BIT)
+{
+	return (*LUGAR&(1<<BIT));
+}
+
 int main(void)
 {
 	$1
@@ -142,4 +244,160 @@ def setPort(letter,strin):
 	return ans
 snip.rv = setPort(str(match.group(1)),str(match.group(2)))
 `
+endsnippet
+
+# ==========================
+# ========== keyboard ======
+# ==========================
+
+snippet m-key
+teclado_menu ${1:a-b-c-d} ${2:firstSection}_${3:secondSection[both can be rows or cols]} ${4:start}_${5:end}
+endsnippet
+snippet "teclado_menu (\w) (\w+) (\w+)" "menu para el teclado" r
+`!p
+# snip.rv for the return value
+def keyBoardFunction(letter,rows_cols,start_end):
+	ans = ""
+	firstHalf = int(rows_cols.split('_')[0])
+	secondHalf = int(rows_cols.split('_')[1])
+	start = int(start_end.split('_')[0])
+	end = int(start_end.split('_')[1])
+	counter=1
+	tempCont=0
+
+	#first load the port with ones
+	ans+="; cbi = clear bit in register\n"
+	ans+="ldi t1,0b"
+	for a in range(end+1,8):
+		ans+="0"
+		tempCont+=1
+		if tempCont == 4:
+			ans+="_"
+	for a in range(start,end+1):
+		ans+="1"
+		tempCont+=1
+		if tempCont == 4:
+			ans+="_"
+	for a in range(0,start):
+		ans+="0"
+		tempCont+=1
+		if tempCont == 4:
+			ans+="_"
+	
+
+	ans+="\n"
+	ans+="out port" + letter + ", t1\n\n"
+
+	for i in range(start,start+firstHalf):
+		if i != start:
+			ans+="sbi port"+letter+"," + str(i-1) + "\n"
+		ans+="cbi port" + letter + ", "+str(i)+"\n"
+		ans+="nop\nnop\n"
+		ans+="\n"
+		for j in range(start+firstHalf,end+1):
+			ans+="sbis pin" +letter+ "," + str(j) + "\n"
+			ans+="\trjmp teclado_"+str(counter) + "\n"
+			counter+=1
+		ans+="\n"
+
+	return ans
+
+snip.rv = keyBoardFunction(str(match.group(1)),str(match.group(2)),str(match.group(3)))
+`
+endsnippet
+
+
+
+# ==========================
+# ========== interrupciones ======
+# ==========================
+# options im-> inword
+snippet settim "for setting the interruptions"
+// functions
+// c-tim -- clean timer, tim -- start timers
+sei() ;
+// cli -- for clear interruptions
+// output compare register
+OCR0 = ${1:0b1111_1001}	//Es un 249 a 4mHz para contar 0.004 segundos, hay que contar 250 interrupciones para un segundo
+// timer/counter flag register
+
+// ||||||||ocf0|tov0|
+// tov0 indica que se activo interrupcion debido al overflow
+// ocf0 -> indica que se activo una interrupcion por comparacion
+// 0 -> activa, 1-> desactivada
+ldi r16, 0b0000_0011					//Limpiar banderas
+out TIFR, r16 ;
+
+// -> ||||||||bit1|bit0
+// bit1 habilita las interrupciones por comparacion
+// bit2 habilita las interrupciones por overflow
+
+TIMSK = 0b000000${2:00} ;
+
+// este es el contador principal y puede empezar en 0
+ldi r16, 0								//Ponemos en cero el contador
+TCNT0 = 0
+// the frequency is:
+//	f = (microcontroller hertz)/(ocrVal*preescaler)
+
+// modo y preescaler
+// |foc0|wgm00|com01|com00|wgm01|cs02|cs01|cs00|
+//  mode                wgm00  wgm01
+//  normal              0      0
+//  pwm(phase_correct)  0      1 // contador
+//  ctc                 1      0
+//  fastPWM             1      1 // mandar ondas
+
+//  cs02  cs01  cs00  description
+//  0     0     0     (counter_stopped)
+//  0     0     1     (no_preescaling)
+//  0     1     0     8
+//  0     1     1     64
+//  1     0     0     256
+//  1     0     1     1024
+//  1     1     0     external_clock_source_on_to_pin(clock_on_failing_edge)
+//  1     1     1     external_clock_source_on_to_pin(clock_on_rising_edge)
+
+TCCR0 = 0b0${3:0}00_${4:0}${5:011} ; //Modo y preescaler
+endsnippet
+
+
+
+snippet setint
+
+// command to set interruptions
+sei() ;
+
+
+// cargamos al registro GICR para abilitar las interrupciones de forma individual
+// general interrupt control register
+// |int1|int0|int2|-|-|-|IVSEL|IVCE|
+// default 0, 1 to enable interruptions
+GICR = 0b${1:0}${2:0}${3:0}00000 ;
+
+// cargamos al registro GIFR
+// general interrupt flag register
+// |intf1|intf0|intf2|-|-|-|-|-|
+// limpiados por default, 0=interruption in use// 1=default
+GIFR = 0b1110_0000 ;
+
+// cargamos al registro MCUCR
+// configuracion de int0 y int1
+// |sm2|se|sm1|isc11|isc10|isc01|isc00|
+// same table with int1=isc11-isc10|int0=isc01-isc00|
+// 0 0 -> low level 
+// 0 1 -> any logical change
+// 1 0 -> failing edge
+// 1 1 -> rising edge
+MCUCR = 0b0000_${4:00}${5:00} ;
+
+// cargamos el registro MCUCSR
+// para configurar int2
+// |JTD|ISC2|-|JTRF|WDRF|BORF|EXTRF|PORF|
+// ISC2 == 1 : flanco de subida
+// ISC2 == 0 : flanco de bajada
+
+MCUCSR = 0b0${6:0}000000 ; 
+
+
 endsnippet

@@ -1,6 +1,7 @@
 # global  functions
 # ===== global functions
-
+# sk -- for the skeleton
+# info -- for the information
 # === common tags
 # form -- for the form, a button opens a form
 # label -- for creating a label
@@ -127,17 +128,30 @@ def getMatchArr():
 	return arr
 endglobal
 
-
+# options im-> inword
+snippet info "information of the author"
+<!--- Date: 10/February/2022 - Thursday -->
+<!--- Author: Virgilio Murillo Ochoa -->
+<!--- personal github: Virgilio-AI -->
+<!--- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!--- contact: virgiliomurilloochoa1@gmail.com -->
+endsnippet
 
 snippet sk
+<!--- Date: 10/February/2022 - Thursday -->
+<!--- Author: Virgilio Murillo Ochoa -->
+<!--- personal github: Virgilio-AI -->
+<!--- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!--- contact: virgiliomurilloochoa1@gmail.com -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>$1</title>
 </head>
 <body>
-	$1
+	$2
 </body>
 </html>
 endsnippet
