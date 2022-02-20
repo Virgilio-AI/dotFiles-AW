@@ -108,3 +108,25 @@ augroup json_skeleton
 	autocmd!
 	autocmd BufEnter *.json call ExpandSkeleton('sk')
 augroup END
+
+augroup avr_skeleton
+	autocmd!
+	autocmd! BufEnter *.avr.c call ExpandSkeleton('sk_avr')
+augroup END
+
+" =================================
+" ========== sql skeletons 
+" =================================
+
+augroup sql_squeletons
+	autocmd!
+	autocmd! BufEnter *.sql call ExpandSkeleton('sk')
+augroup END
+
+" =================================
+" ========== c squeleton 
+" =================================
+augroup c_squeleton
+	autocmd!
+	autocmd BufEnter *.c call ExpandSkeleton('sk')
+augroup END
