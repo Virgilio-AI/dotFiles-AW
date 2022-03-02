@@ -49,13 +49,12 @@ Plug 'untitled-ai/jupyter_ascending.vim'
 
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } " for nvim in brave
 
-" for minimap 
-" Plug 'wfxr/minimap.vim' " requires code-minimap from the AUR
 
 " plugisn for c# and unity
 Plug 'OmniSharp/omnisharp-vim'
 " Plug 'dense-analysis/ale',{'for':['csharp','python'] } " for errors
 
+" plugin for file exploring
 Plug 'preservim/nerdtree'
 call plug#end() 
 

@@ -28,8 +28,7 @@ autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownCli
 " =================================
 function! CreateRangerBindings()
 	exec 'nnoremap <F6>3 :AsyncRun st -T "floating" -g "=150x50+250+100" -e sh -c "ranger" '
-	exec 'nnoremap <C-b> :FloatermNew ranger "' . expand('%:p:h') . '"<cr>'
-	exec 'inoremap <C-b> :FloatermNew ranger "' . expand('%:p:h') . '"<cr>'
+	exec 'nnoremap <F6><F6> :FloatermNew ranger "' . expand('%:p:h') . '"<cr>'
 endfunction
 " open file manager
 augroup openRanger
@@ -199,6 +198,15 @@ augroup end
 " ==================================================
 " =========== Plug ins key bindings ===================
 " ==================================================
+
+
+
+
+" =================================
+" ========== nerdtree 
+" =================================
+
+nnoremap <c-b> :NERDTreeToggle<CR>
 "fzf find commands
 nnoremap <leader>sp :Files 
 execute 'nnoremap <leader>sp :Files %:p:h<CR>'
@@ -236,9 +244,6 @@ nnoremap <leader>dx :call vimspector#ClearBreakpoints()<CR>
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsEditSplit="vertical"
 noremap <leader>es :UltiSnipsEdit
-" vim minimap bindings
-nnoremap <C-l> <esc>:MinimapToggle<CR>
-inoremap <C-l> <Esc>:MinimapToggle<CR>i
 
 
 " ========================Easy allign commands
@@ -322,15 +327,6 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
-"" Remap <C-f> and <C-b> for scroll float windows/popups.
-"if has('nvim-0.4.0') || has('patch-8.2.0750')
-"  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-"  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-"  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-"  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-"  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-"  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-"endif
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
@@ -454,7 +450,6 @@ augroup END
 
 augroup r_autocmds
 	autocmd FileType r nnoremap <F11> :w<CR>:call CompileAndRunRCode()
-	autocmd FileType r inoremap <F11>  :w<CR>:call CompileAndRunRCode()
 augroup end
 " =================================
 " ========== zsh scripting 
