@@ -796,7 +796,7 @@ snippet settim
 sei
 ; cli -- for clear interruptions
 ; output compare register
-ldi r16, ${1:0b1111_1001}	;Es un 249 a 4mHz para contar 0.004 segundos, hay que contar 250 interrupciones para un segundo
+ldi r16, ${1:0b1111_1001} ;Es un 249 a 4mHz para contar 0.004 segundos, hay que contar 250 interrupciones para un segundo
 out OCR0, r16
 ; timer/counter flag register
 
@@ -804,14 +804,14 @@ out OCR0, r16
 ; tov0 indica que se activo interrupcion debido al overflow
 ; ocf0 -> indica que se activo una interrupcion por comparacion
 ; 0 -> activa, 1-> desactivada
-ldi r16, 0b0000_0011					;Limpiar banderas
+ldi r16, 0b0000_0011 ;Limpiar banderas
 out TIFR, r16
 
 ; -> ||||||||bit1|bit0
 ; bit1 habilita las interrupciones por comparacion
 ; bit2 habilita las interrupciones por overflow
 
-ldi r16, 0b000000${2:00}						;Empieza deshabilitada para que no empiece a contar solo	
+ldi r16, 0b000000${2:00} ;Empieza deshabilitada para que no empiece a contar solo	
 out TIMSK, r16
 
 ; este es el contador principal y puede empezar en 0
