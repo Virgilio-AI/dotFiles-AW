@@ -1,11 +1,13 @@
 call plug#begin('~/.config/nvim/PlugIns/')
 
 " for color and personalization
-Plug 'rafi/awesome-vim-colorschemes' "ide
-Plug 'vim-airline/vim-airline' "personalization for vim
+" Plug 'rafi/awesome-vim-colorschemes' "ide
+" Plug 'vim-airline/vim-airline' "personalization for vim
 Plug 'luochen1990/rainbow' " for colors in brackets and operators
-
-Plug 'vim-airline/vim-airline-themes' "temas
+Plug 'itchyny/lightline.vim' " for the status line
+" Plug 'pacha/vem-tabline' " for the tabline
+"
+" Plug 'vim-airline/vim-airline-themes' "temas
 Plug 'ryanoasis/vim-devicons' "vim icons for windows 10
 Plug 'junegunn/vim-easy-align' " for easy alignment
 " =================================
@@ -48,12 +50,13 @@ Plug 'untitled-ai/jupyter_ascending.vim'
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } " for nvim in brave
 
 " for minimap 
-Plug 'wfxr/minimap.vim' " requires code-minimap from the AUR
+" Plug 'wfxr/minimap.vim' " requires code-minimap from the AUR
 
 " plugisn for c# and unity
 Plug 'OmniSharp/omnisharp-vim'
-Plug 'dense-analysis/ale' " for errors
+" Plug 'dense-analysis/ale',{'for':['csharp','python'] } " for errors
 
+Plug 'preservim/nerdtree'
 call plug#end() 
 
 
