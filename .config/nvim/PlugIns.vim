@@ -56,6 +56,12 @@ Plug 'OmniSharp/omnisharp-vim'
 
 " plugin for file exploring
 Plug 'preservim/nerdtree'
+Plug 'wesQ3/vim-windowswap'
+
+" for colors in vim
+Plug 'KabbAmine/vCoolor.vim'
+
+Plug 'RRethy/vim-hexokinase',{ 'do': 'make hexokinase' }
 call plug#end() 
 
 

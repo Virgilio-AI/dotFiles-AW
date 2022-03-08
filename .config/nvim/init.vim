@@ -117,9 +117,17 @@ let g:rainbow_conf = {
 \}
 let g:minimap_width = 10
 
+let g:Hexokinase_highlighters = ['backgroundfull']
+
+
 " =================================
 " ========== Set variables 
 " =================================
+"
+"
+
+" for colors
+set termguicolors
 set foldmethod=indent
 set foldnestmax=1
 set wildmenu

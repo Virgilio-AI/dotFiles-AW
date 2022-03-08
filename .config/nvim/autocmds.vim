@@ -24,6 +24,7 @@ augroup END
 augroup onEnter
 	autocmd!
 	au FileType python,tex,c,cpp,c++ :RainbowToggle
+	au BufEnter * :HexokinaseTurnOn
 augroup END
 
 " =================================
