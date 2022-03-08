@@ -1,0 +1,428 @@
+
+# global  functions
+# ===== global functions
+# sk -- for the skeleton
+# info -- for the information
+# === common tags
+# form -- for the form, a button opens a form
+# label -- for creating a label
+# div -- for a divition basic
+# cu -- for a custom tag
+# title
+# body
+# b -- so that you can get bold text
+# h\d ==== this is for the different levels of headers
+
+# p == for a paragraph
+# em -- so that you can emphasize
+# i -- so that you can get italic
+# small -- so that you can get small text
+# u -- for underline
+# strike -- for deleted text
+# # -- for comment
+# marquee -- for scrolling text
+# img -- for image
+# table -- for creating a table
+# ul -- unordered list
+# ol -- ordered list
+# a -- for a reference
+
+# hr -- for a line divition
+# br -- for line break
+# sup -- for writing that goes below a normal line
+# sub -- for text that is below the main line
+
+# ====== common entity numbers ======
+# cp -- &copy; -- for the copy right
+# reg --&reg; -- for the registered symbol
+# trd -- &trade; -- for the trade mark symbol
+
+
+# ===== semantic elements  ======
+# nav -- for navigation
+# footer -- for the lower part of a page
+
+# ==== input
+# input -- a basic form of input
+
+
+
+
+
+
+
+global !p
+def create_matrix_placeholders(snip):
+	# Create anonymous snippet body
+	anon_snippet_body = ""
+	# Get start and end line number of expanded snippet
+	start = snip.snippet_start[0]
+	end = snip.snippet_end[0]
+  # Append current line into anonymous snippet
+	for i in range(start, end + 1):
+		anon_snippet_body += snip.buffer[i]
+		anon_snippet_body += "" if i == end else "\n"
+	# Delete expanded snippet line till second to last line
+	for i in range(start, end):
+		del snip.buffer[start]
+	# Empty last expanded snippet line while preserving the line
+	snip.buffer[start] = ''
+	# Expand anonymous snippet
+	snip.expand_anon(anon_snippet_body)
+endglobal
+post_jump "snip"
+global !p
+def returnCommandSplitted(command):
+	cmd_arr = command.split('_')
+	return_command = ""
+	for a in cmd_arr:
+		return_command += a + " "
+	return_command = return_command[0:len(return_command)-1]
+	return return_command
+endglobal
+
+post_jump "snip"
+global !p
+
+def parseStatement(i,j,k,stri):
+	prev = ''
+	twoBehind=''
+	ans = ""
+	for ch in stri:
+
+		if ( ch == 'k' or ch == 'i' or ch == 'j' )  and prev == '$' and twoBehind == '\\':
+			ans = ans[:-2]
+			ans+=ch
+
+		elif ch == 'i' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(i)
+		elif ch == 'j' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(j)
+		elif ch == 'k' and prev == '$' and twoBehind != '\\':
+			ans = ans[:-1]
+			ans+=str(k)
+		elif ch == 'n' and prev == '\\':
+			ans = ans[:-1]
+			ans+="\n"
+
+		else :
+			ans+=ch
+
+		twoBehind = prev
+		prev = ch
+	return ans
+
+endglobal
+
+global !p
+def getMatchArr():
+	cont=1
+	arr = []
+	while 1 :
+		try :
+			arr.append(match.group(cont))
+			cont+=1
+		except :
+			break
+	return arr
+endglobal
+
+# options im-> inword
+snippet info "information of the author"
+<!--- Date: 10/February/2022 - Thursday -->
+<!--- Author: Virgilio Murillo Ochoa -->
+<!--- personal github: Virgilio-AI -->
+<!--- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!--- contact: virgiliomurilloochoa1@gmail.com -->
+endsnippet
+
+snippet sk
+<!--- Date: 10/February/2022 - Thursday -->
+<!--- Author: Virgilio Murillo Ochoa -->
+<!--- personal github: Virgilio-AI -->
+<!--- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!--- contact: virgiliomurilloochoa1@gmail.com -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>$1</title>
+</head>
+<body>
+	$2
+</body>
+</html>
+endsnippet
+snippet label
+<label for="${1:id}">$2</label>
+endsnippet
+
+snippet figure
+<figure>
+$1
+<figcaption>$2</figcaption>
+</figure>
+endsnippet
+
+snippet div
+<div>$1</div>
+endsnippet
+
+snippet footer
+<footer>$1</footer>
+endsnippet
+
+snippet nav
+<nav class="$1">$2</nav>
+endsnippet
+
+
+
+snippet cp
+&copy;
+endsnippet
+# options im-> inword
+snippet reg "registered mark" 
+&reg;
+endsnippet
+# options im-> inword
+snippet trd "traded mark" 
+&trade;
+endsnippet
+snippet sub
+<sub>$1</sub>
+endsnippet
+
+snippet sup
+<sup>$1</sup>
+endsnippet
+
+snippet hr
+<hr>$1</hr>
+endsnippet
+
+
+snippet b
+<b> $1<b\>
+endsnippet
+
+snippet title
+<title>$1</title>
+endsnippet
+
+snippet h1
+<h1>$1</h1>
+endsnippet
+
+snippet h2
+<h2>$1</h2>
+endsnippet
+
+snippet h3
+<h3>$1</h3>
+endsnippet
+
+snippet h4
+<h4>$1</h4>
+endsnippet
+
+snippet h5
+<h5>$1</h5>
+endsnippet
+
+snippet h6
+<h6>$1</h6>
+endsnippet
+
+snippet h7
+<h7>$1</h7>
+endsnippet
+
+snippet h8
+<h8>$1</h8>
+endsnippet
+
+snippet h9
+<h9>$1</h9>
+endsnippet
+
+snippet p
+<p>$1</p>
+endsnippet
+
+snippet cu
+<$1>$2</$1>
+endsnippet
+
+snippet em
+<em>$1</em>
+endsnippet
+
+
+snippet i
+<i>$1</i>
+endsnippet
+
+snippet small
+<small>$1</small>
+endsnippet
+
+
+snippet u "for underline"
+<u>$1</u>
+endsnippet
+
+snippet strike "for deleted text"
+<strike>$1</strike>
+endsnippet
+
+snippet a "for the reference"
+<a href="$1">$2</a>
+endsnippet
+
+
+
+snippet #
+<!--$1-->
+endsnippet
+
+snippet marquee " for scrolling text"
+<marquee loop="-1" scrollamount="2" width="100%">$1</marquee>
+endsnippet
+
+snippet br "for line break" im
+<br>
+endsnippet
+
+
+# options im-> inword
+snippet img "images"
+<img src="$1" width="$2" height="$3" border="0">
+endsnippet
+
+
+snippet table
+table ${1:rows}x${2:columns}
+endsnippet
+
+post_jump "create_matrix_placeholders(snip)"
+
+snippet "table (\d+)x(\d+)" "information of the snippet" r
+`!p
+# match.group(#) for the current match
+# snip.rv for the return value
+# snip.v.text -> the text
+# snip.v.mode 'v' | 'V' | '^V'
+def temp(arr):
+	arrLen = len(arr)
+	ans=""
+	cont = 1
+	ans+=" <!--params: rowspan="2" colspan="2"-->"
+	ans+="<table>\n"
+	for col in range(0,int(arr[0])):
+		ans+="<tr>\n"
+		for row in range(0,int(arr[1])):
+			if cont == 1:
+				ans+="<th> "+f"${cont}"+"</th>\n"
+			else:
+				ans+="<th>"+f"${cont}"+"</th>\n"
+			cont+=1
+		ans+="</tr>\n"
+	ans+="</table>\n"
+	return ans
+matchArr = getMatchArr()
+snip.rv = temp(matchArr)
+`
+endsnippet
+
+post_jump "snip"
+
+
+
+snippet ul
+ulist ${1:number of elements}
+endsnippet
+
+snippet ol
+olist ${1:number of elements}
+endsnippet
+
+post_jump "create_matrix_placeholders(snip)"
+
+snippet "ulist (\d+)" "unordered list" r
+`!p
+def temp(arr):
+	arrLen = len(arr)
+	ans=""
+	ans+="<ul>\n"
+	cont = 1
+	for num in range(0,int(arr[0])):
+		if cont == 1:
+			ans+="<li> "+f"${cont}"+"</li>\n"
+		else:
+			ans+="<li>"+f"${cont}"+"</li>\n"
+		cont+=1
+	ans+="</ul>\n"
+	return ans
+matchArr = getMatchArr()
+snip.rv = temp(matchArr)
+`
+endsnippet
+
+post_jump "snip"
+post_jump "create_matrix_placeholders(snip)"
+
+
+snippet "olist (\d+)" "ordered list" r
+`!p
+def temp(arr):
+	arrLen = len(arr)
+	ans=""
+	ans+="<ol>\n"
+	cont = 1
+	for num in range(0,int(arr[0])):
+		if cont == 1:
+			ans+="<li> "+f"${cont}"+"</li>\n"
+		else:
+			ans+="<li>"+f"${cont}"+"</li>\n"
+		cont+=1
+	ans+="</ol>\n"
+	return ans
+matchArr = getMatchArr()
+snip.rv = temp(matchArr)
+`
+endsnippet
+
+post_jump "snip"
+
+# options im-> inword
+snippet inh "for the input"
+<!--button checkbox-->
+<!--color date -->
+<!--datetime-local email-->
+<!--file hidden -->
+<!--image month -->
+<!--number passwrod -->
+<!--radio range-->
+<!--reset search -->
+<!--submit tel -->
+<!--text time -->
+<!--url week -->
+
+<!--placeholder="" -->
+<!--name="name" -->
+<!--id="id" -->
+
+endsnippet
+
+snippet in
+<input type="$1" id="$2" name="$2">
+endsnippet
+
+snippet form
+<form action="/$1">$2</form>
+endsnippet
+
