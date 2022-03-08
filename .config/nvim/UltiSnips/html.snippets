@@ -2,6 +2,17 @@
 # ===== global functions
 # sk -- for the skeleton
 # info -- for the information
+
+# layout -- for a django layout
+# login -- for django login
+# use_layout -- for using the django layout previously created
+# register -- for the molder for registration
+# for
+# checkUser -- for cheking the user
+
+
+
+
 # === common tags
 # form -- for the form, a button opens a form
 # label -- for creating a label
@@ -130,19 +141,19 @@ endglobal
 
 # options im-> inword
 snippet info "information of the author"
-<!--- Date: 10/February/2022 - Thursday -->
-<!--- Author: Virgilio Murillo Ochoa -->
-<!--- personal github: Virgilio-AI -->
-<!--- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
-<!--- contact: virgiliomurilloochoa1@gmail.com -->
+<!---  Date: `date +%d/%B/%Y\ -\ %A` -->
+<!---  Author: Virgilio Murillo Ochoa -->
+<!---  personal github: Virgilio-AI -->
+<!---  linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!---  contact: virgiliomurilloochoa1@gmail.com -->
 endsnippet
 
 snippet sk
-<!--- Date: 10/February/2022 - Thursday -->
-<!--- Author: Virgilio Murillo Ochoa -->
-<!--- personal github: Virgilio-AI -->
-<!--- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
-<!--- contact: virgiliomurilloochoa1@gmail.com -->
+<!---  Date: `date +%d/%B/%Y\ -\ %A` -->
+<!---  Author: Virgilio Murillo Ochoa -->
+<!---  personal github: Virgilio-AI -->
+<!---  linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!---  contact: virgiliomurilloochoa1@gmail.com -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -155,9 +166,221 @@ snippet sk
 </body>
 </html>
 endsnippet
+
+# options im-> inword
+snippet layout "for a django layout"
+
+<!---  Date: `date +%d/%B/%Y\ -\ %A` -->
+<!---  Author: Virgilio Murillo Ochoa -->
+<!---  personal github: Virgilio-AI -->
+<!---  linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!---  contact: virgiliomurilloochoa1@gmail.com -->
+
+<!DOCTYPE html>
+<html lang="${1:en|es}">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}
+			{% endblock %}
+			Virgilio Murillo
+		</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/${2:name_of_styles}.css' %}" />
+	</head>
+	<body>
+		<!--cabezera de la pagina-->
+		<header>
+			<div id="logotipo">
+				<!--logo django-->
+				<img src="{% static 'images/${4:png_logo}.png' %}" />
+				<h1>${5:title_logo}</h1>
+			</div>
+
+		</header>
+		<nav>
+			<ul>
+
+			<!--- this is defined in the context -->
+				{% for page in pages %}
+				<li >
+					<a href="/pagina/{{page.2}}">{{page.1}}</a>
+				</li>
+				{% endfor %}
+
+
+			<!--- check if there is a user active and show this -->
+				{% if user.first_name %}
+				<li>
+					<a href="articulos/">categorias</a>
+					<ul>
+						{% for category in categories %}
+						<li>
+							<a href="/categoria/{{category.0}}">{{category.1}} </a>
+						</li>
+						{% endfor %}
+					</ul>
+				</li>
+
+				<li>
+					<a href="/logout/">LogOut</a>
+				</li>
+				{% else %}
+
+
+				<li>
+					<a href="/registro/">Registro</a>
+				</li>
+
+				<li>
+					<a href="/login/">Login</a>
+				</li>
+				{% endif %}
+
+			</ul>
+		</nav>
+
+		<div class="barra">
+			<span class="esquina-izquierda"></span>
+			<span class="relleno-barra"></span>
+			<span class="esquina-derecha"></span>
+		</div>
+
+
+
+		<div id="Content">
+			<div class="box">
+
+			<!--- this will be used for the actual content of the page -->
+				{% block content %}
+
+				{% endblock %}
+			</div>
+		</div>
+
+		<footer>
+			${3:footer &copy; }
+
+		</footer>
+
+	</body>
+</html>
+endsnippet
+
+# options im-> inword
+snippet login "for the basic login page importing the used template"
+<!---  Date: `date +%d/%B/%Y\ -\ %A` -->
+<!---  Author: Virgilio Murillo Ochoa -->
+<!---  personal github: Virgilio-AI -->
+<!---  linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!---  contact: virgiliomurilloochoa1@gmail.com -->
+
+{% extends 'layouts/layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+
+{% block content %}
+	<h1 >{{title}}<h1/>
+	
+			{% if messages %}
+			{% for message in messages %}
+			<div class="alert alert-warning">
+				{{message}}
+			</div>
+			{% endfor %}
+			{% endif %}
+
+	<form method="post" action="">
+			{% csrf_token %}
+
+			<label for="username"> Nombre de usuario</label>
+			<input type="text" name="username"/>
+			<label for="password">contrasenia</label>
+			<input type="password" name="password"/>
+
+
+			<input type="submit" value="login"/>
+	</form>
+{% endblock %}
+endsnippet
+
+# options im-> inword
+snippet use_layout "for creating a page using the defined layout"
+
+<!---  Date: `date +%d/%B/%Y\ -\ %A` -->
+<!---  Author: Virgilio Murillo Ochoa -->
+<!---  personal github: Virgilio-AI -->
+<!---  linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!---  contact: virgiliomurilloochoa1@gmail.com -->
+
+{% extends 'layouts/layout.html' %}
+
+{% block title %}
+${1:title}
+{% endblock %}
+
+
+{% block content %}
+	<h1 >$1<h1/>
+
+{% endblock %}
+endsnippet
+# options im-> inword
+snippet register "for html for registering"
+
+<!---  Date: `date +%d/%B/%Y\ -\ %A` -->
+<!---  Author: Virgilio Murillo Ochoa -->
+<!---  personal github: Virgilio-AI -->
+<!---  linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
+<!---  contact: virgiliomurilloochoa1@gmail.com -->
+
+{% extends 'layouts/layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+
+{% block content %}
+	<h1 >{{title}}<h1/>
+	
+			{{register_form.errors}}
+	<form method="post" action="">
+			{% csrf_token %}
+			<!--
+			{{register_form.as_p}}
+			-->
+			{% for field in register_form %}
+				{{field.label}}
+				{{field}}
+			{% endfor %}
+
+			<input type="submit" value="registrarse"/>
+	</form>
+{% endblock %}
+endsnippet
+
+# options im-> inword
+snippet for "for in django"
+{% for ${1:item} in ${2:items} %}
+
+{% endfor %}
+endsnippet
+
+# options im-> inword
+snippet checkUser "for checking the user"
+{% if user.first_name %}
+{% endif %}
+endsnippet
+
+
 snippet label
 <label for="${1:id}">$2</label>
 endsnippet
+
 
 snippet figure
 <figure>
