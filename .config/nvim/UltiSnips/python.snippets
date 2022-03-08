@@ -91,13 +91,66 @@
 
 # sqlite3 --- for creating a connection to sqlite3
 # sqlite3c -- for executing a command in sqlite3j
-
-
 # mysql -- for creating a connection with mysql or mariadb 
 # mysqlc -- for executing a command in the mysql connector
 # mysqlq -- for getting the information from a query
 # rowcount -- for getting the number of rows affected after  a commit
 # encryption -- for encripting a password
+
+
+# -------------- python django
+
+# crateProject -- for creating a django project from scratch
+# migrate -- for applying models.py file. create tables
+
+# --- settings.py ------ MainProjectFolder
+# createApp -- for creating a django app
+# useMysql -- for using mysql
+# changeLanguage -- for setting the default language in the project
+# addContextProcessor -- these are used for global functions inside the html files
+
+# --- urls.py --- MainProjectFolder
+# importUrl -- for importing the url file from an other app into the main app
+# imageRoute -- for using an image from a route
+
+# --- views.py --- MainAppFolder
+
+# viewsHelp -- for creating a help file
+# login_page -- for creating a log in page
+# log_out -- for logging out form a page
+# register -- for registering user
+# getSqlObject -- for getting an sql object
+
+# --- apps.py --- MainAppFolder
+# appsHelp -- for help on the apps.py file
+
+# --- urls.py -- MainAppFolder
+# urlsHelp -- for help in importing directories
+
+# --- forms.py --- MainAppFolder
+# forms_help -- for registering a user in the database
+
+
+# --- layouts.html -- MainAppFolder/templates/layouts/
+# html_template -- for using templates
+
+
+# --- models.py --- SecondaryAppFolder
+# django_createTable -- for creating a table for the app
+
+# --- views.py --- SecondaryAppFolder
+# loginRequired -- require login to acces a page
+
+# --- admin -- SecondaryAppFolder
+# modClassDisplay -- for modifications on the django panel search bar and many others
+
+
+
+
+
+
+
+
 
 
 
@@ -800,6 +853,348 @@ snippet encryption "for encripting a password"
 # import hashlib
 cifrado = hashlib.sha256()
 cifrado.update(${1:string}.encode('utf8'))
+endsnippet
+
+
+
+
+# ==========================
+# ========== python django ======
+# ==========================
+
+# options im-> inword
+snippet createProject "for creating a django project"
+# django-admin startproject mysite
+
+endsnippet
+# options im-> inword
+snippet migrate "for creating a migration with databases"
+# python manage.py makemigrations
+# python manage.py sqlmigrate ${1:appName} ${2:migration_number ex:0001}
+# python manage.py migrate
+
+endsnippet
+# options im-> inword
+snippet createApp "for creating a django app"
+# type in the terminal
+python manage.py startapp polls
+
+# in the main file settings.py add the name of the app in installed apps
+# if apps.py is modified use the name in default_auto_field instead
+INSTALLED_APPS = [
+'$1'
+]
+endsnippet
+
+
+# options im-> inword
+snippet useMysql "for using mysql as default in django"
+DATABASES = {
+		'default': {
+			'ENGINE' : 'django.db.backends.mysql',
+			'NAME' : "django_course_second_project",
+			'USER' : 'test_django',
+			'PASSWORD' : '' ,
+			'HOST' : 'localhost',
+			'PORT' : ''
+			}
+		}
+endsnippet
+
+# options im-> inword
+snippet changeLanguage "for changing the default language for the app"
+# in the project settings
+# LANGUAGE_CODE = 'en-en'
+# LANGUAGE_CODE = 'en-es'
+
+endsnippet
+
+# options im-> inword
+snippet addContextProcessor "these are used for global funcitons inside the html files"
+# inside the main folder add in the TEMPLATES=[
+'${1:appName}.${2:nameOfContext}.${3:name_of_function}
+
+# and example would be
+
+# def get_pages(request):
+# 
+# 	temp = Page.objects.values_list('id','title','slug','visible').order_by('order')
+# 	pages = []
+# 	for i in range(len(temp)):
+# 		if temp[i][3] == True:
+# 			pages.append(temp[i])
+# 
+# 
+# 	return {
+# 			'pages' : pages
+# 			}
+
+endsnippet
+
+
+
+
+# options im-> inword
+snippet importUrl "for importing the url file from an other app into the main app"
+# from django.contrib import admin
+# from django.urls import path,include
+# from django.conf import settings
+# 
+# urlpatterns = [
+# 	path('',include('${1:appName}.urls')),
+# ]
+endsnippet
+
+
+# options im-> inword
+snippet viewsHelp "for help in the views file"
+
+# # for rendering html and to redirect into an other page
+# from django.shortcuts import render,redirect
+# # for poping messages
+# from django.contrib import messages
+# # for creating a user fast and easy
+# from django.contrib.auth.forms import UserCreationForm
+# # for creating a register form
+# from MainApp.forms import RegisterForm
+# # for loggin in and logging out
+# from django.contrib.auth import authenticate,login,logout
+
+# to create a view just add
+def name_of_pages(request):
+param1 = "param1"
+return render(request,'path/inside/templates/folder',
+{
+	'param1_title':param1,
+	'param2_title':"param2"
+})
+endsnippet
+
+# options im-> inword
+snippet login_page "for creating a basic login page"
+
+# check the log in snippet for html
+
+# def login_page(request):
+# 
+# 	if request.user.is_authenticated:
+# 		return redirect('/inicio/')
+# 	if request.method == 'POST':
+# 		username = request.POST.get('username')
+# 		password = request.POST.get('password')
+# 
+# 		user = authenticate(request,username = username,password = password)
+# 
+# 		if user is not None:
+# 			login(request,user)
+# 			return redirect('/inicio/')
+# 		else:
+# 			messages.warning(request,"no te has identificado correctamente")
+# 
+# 	return render(request,'users/login.html',{
+# 		'title':'identificate'
+# 		})
+
+endsnippet
+
+
+# options im-> inword
+snippet log_out "for logging out from a page"
+
+# def logout_user(request):
+# 	logout(request)
+# 	return redirect('login')
+
+endsnippet
+
+# options im-> inword
+snippet appsHelp "for help on the MainAppFolder"
+# from django.apps import AppConfig
+# 
+# 
+# class MainappConfig(AppConfig):
+# 	default_auto_field = 'django.db.models.BigAutoField'
+# 	name = 'MainApp'
+# then on the INSTALLED_APPS use the default_auto_field name
+endsnippet
+
+# options im-> inword
+snippet urlsHelp "for help in importing directories"
+# import the views from the same directorie
+
+# from . import views
+# from django.urls import path
+#
+# urlpatterns = [
+#		path('inicio/',views.index,name='index'),
+#		]
+
+endsnippet
+
+# options im-> inword
+snippet forms_help "for registering a user in the database"
+# from django import forms
+# 
+# from django.core import validators
+# 
+# from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.models import User
+# 
+# class RegisterForm(UserCreationForm):
+# 	class Meta:
+# 		model = User
+# 		fields = ['username','email','first_name','last_name','password1','password2']
+endsnippet
+
+# options im-> inword
+snippet html_template "for creating an html template"
+# inside the MainAppFolder
+# create the folder templates/layouts/
+# create the file layout.html and use the snippet html_template
+# create the file static/css for the right design in the page
+
+
+# create the pages app and inside it create the context_processors.py file
+inside it place 
+
+# from pages.models import Page
+# 
+# def get_pages(request):
+# 
+# 	temp = Page.objects.values_list('id','title','slug','visible').order_by('order')
+# 	pages = []
+# 	for i in range(len(temp)):
+# 		if temp[i][3] == True:
+# 			pages.append(temp[i])
+# 
+# 
+# 	return {
+# 			'pages' : pages
+# 			}
+
+to get the pages glbally for the whole project inside html files
+endsnippet
+
+# options im-> inword
+snippet register "for registering "
+
+# def register_page(request):
+# 
+# 	if request.user.is_authenticated:
+# 		return redirect('/inicio/')
+# 
+# 	register_form = RegisterForm()
+# 
+# 	if request.method == 'POST':
+# 		register_form = RegisterForm(request.POST)
+# 		if register_form.is_valid():
+# 			register_form.save()
+# 			return redirect('/inicio/')
+# 
+# 
+# 	return render(request,'users/register.html',{
+# 		'title':"registro",
+# 		'register_form':register_form
+# 		})
+
+# use the html snippet for registering
+endsnippet
+
+# options im-> inword
+snippet getSqlObject "for getting an sql object"
+
+# Create your views here.
+from .models import ${1:the_table_class}
+
+# inside a view
+	${2:objectName} = $1.objects.get(${3:condition})
+endsnippet
+
+# options im-> inword
+snippet django_createTable "for creating a table"
+
+from ckeditor.fields import RichTextField
+# import the user table
+from django.contrib.auth.models import User
+
+# # table named Category 
+# class Category(models.Model):
+# 	name = models.CharField(max_length=100,verbose_name="Nombre")
+# 	description = models.CharField(max_length=255,verbose_name = "Description")
+# 	created_at = models.DateTimeField(auto_now_add=True,verbose_name = "Descripción")
+# 
+# 	# the displayed information in django admin page
+# 	class Meta:
+# 		verbose_name = "Categoria"
+# 		verbose_name_plural = "categorias"
+# 	
+# 	# the name to be printed
+# 	def __str__(self):
+# 		return self.name
+# 
+# class Article(models.Model):
+# 	title = models.CharField(max_length=150,verbose_name="Título")
+# 	content = RichTextField(verbose_name="Contenido")
+# 	image = models.ImageField(default='null',verbose_name="Imagen",upload_to="articles")
+# 	public = models.BooleanField(verbose_name="publicado?")
+# 	# foreign key to create relationship many to one
+# 	user = models.ForeignKey(User,editable=False,verbose_name="Usuario",on_delete=models.CASCADE)
+# 	# many to many relationship between Category and Article
+# 	categories = models.ManyToManyField(Category,verbose_name='Categorias',blank=True)
+# 
+# 	created_at = models.DateTimeField(auto_now_add=True,verbose_name="Creado el")
+# 	updated_at = models.DateTimeField(auto_now=True,verbose_name="última actualización")
+# 
+# 
+# 	class Meta:
+# 		verbose_name = "Articulo"
+# 		verbose_name_plural = "Artículos"
+# 	
+# 	def __str__(self):
+# 		return self.title
+endsnippet
+
+# options im-> inword
+snippet loginRequired "require a log in for a page"
+
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url="login")
+# def page(request,slug):
+# 	page = Page.objects.get(slug=slug)
+# 	return render(request,"pages/page.html",{
+# 		"page": page
+# 		}
+# )
+
+endsnippet
+
+# options im-> inword
+snippet modClassDisplay "for modifications on the django panel search and many others"
+# class CategoryAdmin(admin.ModelAdmin):
+# 	readonly_fieds = ('created_at','updated_at')
+# 	search_fields = ('name','description')
+# 	list_display = ('name','created_at')
+# class ArticleAdmin(admin.ModelAdmin):
+# 	readonly_fieds = ('user','created_at','updated_at')
+# 	search_fields = ('title','content','user__username','categories__name')
+# 	list_display = ('title','user','public','created_at')
+# 	list_filter = ('public','user__username','categories__name')
+
+#
+
+# 	def save_model(self,request,obj,form,change):
+# 		if not obj.user_id:
+# 			obj.user_id = request.user.id
+# 		obj.save()
+
+#
+
+# admin.site.register(Category,CategoryAdmin)
+# admin.site.register(Article,ArticleAdmin)
+
+
+
 endsnippet
 
 
