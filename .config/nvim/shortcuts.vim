@@ -73,7 +73,9 @@ nnoremap -p :call PasteCleanNormal()<CR>
 vnoremap -p :call PasteCleanVisual()<CR>
 
 vnoremap <c-r> y<ESC>/<c-r>"<CR> 
-" vnoremap <leader>p "_dP
+
+vnoremap p "_dP
+vnoremap d "_d
 
 " for changing folding methods
 nnoremap <leader>fi :set foldmethod=indent<CR>
@@ -207,6 +209,7 @@ augroup end
 " =================================
 
 nnoremap <c-b> :NERDTreeToggle<CR>
+nnoremap <A-b> :NERDTreeFocus<CR>
 "fzf find commands
 nnoremap <leader>sp :Files 
 execute 'nnoremap <leader>sp :Files %:p:h<CR>'

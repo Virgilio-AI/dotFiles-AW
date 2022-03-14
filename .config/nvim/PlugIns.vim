@@ -4,7 +4,7 @@ call plug#begin('~/.config/nvim/PlugIns/')
 " Plug 'rafi/awesome-vim-colorschemes' "ide
 " Plug 'vim-airline/vim-airline' "personalization for vim
 Plug 'luochen1990/rainbow' " for colors in brackets and operators
-Plug 'itchyny/lightline.vim' " for the status line
+Plug 'itchyny/lightline.vim'
 " Plug 'pacha/vem-tabline' " for the tabline
 "
 " Plug 'vim-airline/vim-airline-themes' "temas

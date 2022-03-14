@@ -1,7 +1,7 @@
 # ------------- global functions ------
-# create matrix placeholders
-# create matrix
-# info
+	# create matrix placeholders
+	# create matrix
+	# info
 # --------------- gui's with tkiner ---- 
 # s-gui
 # gBut -- for a button
@@ -103,6 +103,7 @@
 # crateProject -- for creating a django project from scratch
 # migrate -- for applying models.py file. create tables
 
+
 # --- settings.py ------ MainProjectFolder
 # createApp -- for creating a django app
 # useMysql -- for using mysql
@@ -141,7 +142,7 @@
 # --- views.py --- SecondaryAppFolder
 # loginRequired -- require login to acces a page
 
-# --- admin -- SecondaryAppFolder
+# --- admin.py -- SecondaryAppFolder
 # modClassDisplay -- for modifications on the django panel search bar and many others
 
 
@@ -968,6 +969,8 @@ return render(request,'path/inside/templates/folder',
 	'param1_title':param1,
 	'param2_title':"param2"
 })
+
+# for python tag interpolation use {{ var|safe }}
 endsnippet
 
 # options im-> inword
@@ -1020,6 +1023,8 @@ endsnippet
 
 # options im-> inword
 snippet urlsHelp "for help in importing directories"
+# first create the file urls in the app
+
 # import the views from the same directorie
 
 # from . import views

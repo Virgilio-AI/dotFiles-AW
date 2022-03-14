@@ -1,42 +1,45 @@
 
 " =================================
-" ========== Vim Ariline config 
+" ========== for changin the lightline plugin 
 " =================================
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'wombat'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
 
-syntax on
-filetype plugin on
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.paste = ''
-let g:airline_symbols.paste = ''
-let g:airline_symbols.paste = ''
-let g:airline_symbols.whitespace = '◀'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-
-let g:airline_symbols.linenr = ''
+" syntax on
+" filetype plugin on
 
 
+" 		let g:lightline.component = {
+" 		    \ 'mode': '%{lightline#mode()}',
+" 		    \ 'absolutepath': '%F',
+" 		    \ 'relativepath': '%f',
+" 		    \ 'filename': '%t',
+" 		    \ 'modified': '%M',
+" 		    \ 'bufnum': '%n',
+" 		    \ 'paste': '%{&paste?"PASTE":""}',
+" 		    \ 'readonly': '%R',
+" 		    \ 'charvalue': '%b',
+" 		    \ 'charvaluehex': '%B',
+" 		    \ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
+" 		    \ 'fileformat': '%{&ff}',
+" 		    \ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
+" 		    \ 'percent': '%3p%%',
+" 		    \ 'percentwin': '%P',
+" 		    \ 'spell': '%{&spell?&spelllang:""}',
+" 		    \ 'lineinfo': '%3l:%-2c',
+" 		    \ 'line': '%l',
+" 		    \ 'column': '%c',
+" 		    \ 'close': '%999X X ',
+" 		    \ 'winnr': '%{winnr()}' }
+
+
+let g:lightline = {
+\ 'active': {
+\   'left': [ [ 'mode', 'paste' ],
+\             [ 'gitbranch', 'absolutepath', 'modified' ] ],
+\   'right': [ [ 'lineinfo' ],
+\              [ 'filetype' ],
+\              [ 'readonly', ] ]
+\ },
+\ 'component_function': {
+\   'gitbranch': 'FugitiveHead'
+\ },
+\ }

@@ -1,7 +1,7 @@
 
- "mage} ================================= ========== Main Variables 
-" =================================
-
+"  "mage} ================================= ========== Main Variables 
+" " =================================
+" 
 let g:CONFIG_PATH = '~/.config/nvim'
 let g:USER = "rockhight"
 let g:GROUP = "wheel"
@@ -13,13 +13,6 @@ let &directory = expand( g:CONFIG_PATH .'/.vimdata/swap//')
 let &backupdir = expand( g:CONFIG_PATH . '/.vimdata/backup//')
 let &undodir = expand(   g:CONFIG_PATH . '/.vimdata/undo//')
 
-" =================================
-" ========== setting the folding method 
-" =================================
-" augroup vimrc_folding
-"   au BufReadPre * setlocal foldmethod=indent
-"   au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-" augroup END
 " =================================
 " ========== buffer variables 
 " =================================
@@ -127,6 +120,7 @@ let g:Hexokinase_highlighters = ['backgroundfull']
 "
 
 " for colors
+set showtabline=2
 set termguicolors
 set foldmethod=indent
 set foldnestmax=1
