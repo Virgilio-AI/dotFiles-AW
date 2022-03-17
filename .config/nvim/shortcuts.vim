@@ -498,3 +498,10 @@ augroup PYTHON
 	exe 'autocmd BufEnter *.py nnoremap <leader>df :w<CR>:AsyncRun st -T "floating" -g "=150x50" -e sh -c "python -m pudb %:p"'
 augroup END
 
+" =================================
+" ========== Compile And Run c# 
+" =================================
+
+augroup csharp
+	autocmd BufEnter *.cs nnoremap <F11> :call CompileAndRunCsharp()<CR>
+augroup END

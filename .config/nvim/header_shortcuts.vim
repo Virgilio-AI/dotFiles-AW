@@ -589,3 +589,14 @@ function! CompileAVR()
 endfunction
 
 
+" =================================
+" ========== Compile And Run Csharp 
+" =================================
+
+function! CompileAndRunCsharp()
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+	let l:filename = expand("%<")
+	let l:CompileCsharp = 'mcs ' . l:filename . '.cs ; '
+	let l:RunCSharp = 'mono ' . l:filename . '.exe ; '
+	exe l:ExecuteCommands . '"' . l:CompileCsharp . l:RunCSharp . ' read -n1 ; "'
+endfunction
