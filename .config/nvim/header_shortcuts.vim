@@ -594,6 +594,7 @@ endfunction
 " =================================
 
 function! CompileAndRunCsharp()
+	:w
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:filename = expand("%<")
 	let l:CompileCsharp = 'mcs ' . l:filename . '.cs ; '

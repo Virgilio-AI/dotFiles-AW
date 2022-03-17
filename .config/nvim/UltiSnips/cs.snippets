@@ -1,6 +1,10 @@
 # ====== snippets for c#
 # info -- for the info header snippet
 # sk -- for the skeleton
+# inherit -- for help on inheritance
+
+# ==== avalonia 
+# createApp -- for creating an avalonia app
 
 # ===== Unity snippets
 # controlMesh -- help for controlling a mesh
@@ -50,6 +54,46 @@ class $1 {
 	}
 }
 endsnippet
+
+# options im-> inword
+snippet inherit "for help on the inheritance"
+// to use from an other file
+// using filename
+<access_modifier> class <base_class_name>
+{
+	// Base class Implementation
+}
+
+<access_modifier> class <derived_class_name> : <base_class_name>
+{
+	// Derived class implementation
+}
+endsnippet
+
+# ==========================
+# ========== avalonia ====== for GUI's
+# ==========================
+
+# options im-> inword
+snippet createApp "for creating an avalonia app"
+// create the app
+dotnet new avalonia.mvvm -o MyApp
+
+// run the program
+// check the TargetFrameworksValue in the csproj file
+dotnet run --framework [TargetFrameworksValue]
+endsnippet
+# options im-> inword
+snippet Interface "for help on interfaces"
+
+endsnippet
+
+# options im-> inword
+snippet wordToTrigger "information of the snippet"
+
+endsnippet
+
+
 # ==========================
 # ========== Unity snippets ======
 # ==========================
