@@ -55,7 +55,7 @@ recurseFolder(){
 	level=$2
 	# echo "level is: $level"
 	# use () instead of [[]] for some examples
-	if (( level > 2 )) ;
+	if (( level > 3 )) ;
 	then
 		return 0
 	fi
