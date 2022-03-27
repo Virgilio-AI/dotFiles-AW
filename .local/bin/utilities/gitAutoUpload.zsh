@@ -58,6 +58,7 @@ commitToUpload(){
 	git commit -m "update"
 	git push origin upload
 	git checkout master
+	git checkout upload -- .
 }
 
 recurseFolder(){
