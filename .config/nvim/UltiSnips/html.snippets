@@ -2,6 +2,7 @@
 # ===== global functions
 # sk -- for the skeleton
 # info -- for the information
+# boot -- for bootstrap 5
 
 # layout -- for a django layout
 # login -- for django login
@@ -9,6 +10,7 @@
 # register -- for the molder for registration
 # for
 # checkUser -- for cheking the user
+# ckeditor -- for setting the rich editor
 
 
 
@@ -146,6 +148,11 @@ snippet info "information of the author"
 <!---  personal github: Virgilio-AI -->
 <!---  linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203 -->
 <!---  contact: virgiliomurilloochoa1@gmail.com -->
+endsnippet
+
+# options im-> inword
+snippet boot  "for bootstrap 5 "
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 endsnippet
 
 snippet sk
@@ -374,6 +381,11 @@ endsnippet
 snippet checkUser "for checking the user"
 {% if user.first_name %}
 {% endif %}
+endsnippet
+# options im-> inword
+snippet ckeditor "for setting the ckeditor"
+			{{ form.media }}
+			{{ form.as_p }}
 endsnippet
 
 

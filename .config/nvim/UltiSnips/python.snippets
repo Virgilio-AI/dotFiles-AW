@@ -781,6 +781,7 @@ snippet sk
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
 from typing import *
+import heapq as hp
 
 endsnippet
 
@@ -978,25 +979,29 @@ snippet login_page "for creating a basic login page"
 
 # check the log in snippet for html
 
-# def login_page(request):
-# 
-# 	if request.user.is_authenticated:
-# 		return redirect('/inicio/')
-# 	if request.method == 'POST':
-# 		username = request.POST.get('username')
-# 		password = request.POST.get('password')
-# 
-# 		user = authenticate(request,username = username,password = password)
-# 
-# 		if user is not None:
-# 			login(request,user)
-# 			return redirect('/inicio/')
-# 		else:
-# 			messages.warning(request,"no te has identificado correctamente")
-# 
-# 	return render(request,'users/login.html',{
-# 		'title':'identificate'
-# 		})
+#from django.shortcuts import render, redirect
+#from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+#
+#from django.contrib.auth.models import User
+#from django.contrib.auth import login,logout,authenticate
+#
+#from django.db import IntegrityError
+#
+#def loginuser(request):
+#	dic = {}
+#	dic['form'] = AuthenticationForm()
+#	if request.method == 'GET':
+#		return render(request,'todo/loginuser.html',dic)
+#	else:
+#		user = authenticate(request,username =request.POST['username'],password=request.POST['password'])
+#		if user is None:
+#			dic['error'] = "username and password did not match"
+#		else:
+#			login(request,user)
+#			return redirect('home')
+#
+#		return render(request,'todo/loginuser.html',dic)
+
 
 endsnippet
 
@@ -1004,9 +1009,18 @@ endsnippet
 # options im-> inword
 snippet log_out "for logging out from a page"
 
-# def logout_user(request):
-# 	logout(request)
-# 	return redirect('login')
+#from django.shortcuts import render, redirect
+#from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+#
+#from django.contrib.auth.models import User
+#from django.contrib.auth import login,logout,authenticate
+#
+#from django.db import IntegrityError
+
+#def logoutuser(request):
+#	if request.method == 'POST':
+#		logout(request)
+#		return redirect('home')
 
 endsnippet
 
@@ -1083,25 +1097,27 @@ endsnippet
 # options im-> inword
 snippet register "for registering "
 
-# def register_page(request):
-# 
-# 	if request.user.is_authenticated:
-# 		return redirect('/inicio/')
-# 
-# 	register_form = RegisterForm()
-# 
-# 	if request.method == 'POST':
-# 		register_form = RegisterForm(request.POST)
-# 		if register_form.is_valid():
-# 			register_form.save()
-# 			return redirect('/inicio/')
-# 
-# 
-# 	return render(request,'users/register.html',{
-# 		'title':"registro",
-# 		'register_form':register_form
-# 		})
-
+##signupuser Create your views here.
+#def signupuser(request):
+#	dic = {}
+#	dic['form'] = UserCreationForm()
+#	if request.method == 'GET':
+#		return render(request,'todo/signupuser.html',dic)
+#	else:
+#		if request.POST['password1'] == request.POST['password2']:
+#			try:
+#				user = User.objects.create_user(request.POST['username'],password=request.POST['password1'])
+#				user.save()
+#				login(request,user)
+#				return redirect('currenttodos')
+#
+#			except IntegrityError:
+#				dic['error'] = "this user already exists in the database"
+#				return render(request,'todo/signupuser.html',dic)
+#		else:
+#			dic['error'] = "Passwords didn't match"
+#			return render(request,'todo/signupuser.html',dic)
+#
 # use the html snippet for registering
 endsnippet
 
@@ -1176,6 +1192,7 @@ endsnippet
 
 # options im-> inword
 snippet modClassDisplay "for modifications on the django panel search and many others"
+# from .models import Category
 # class CategoryAdmin(admin.ModelAdmin):
 # 	readonly_fieds = ('created_at','updated_at')
 # 	search_fields = ('name','description')
