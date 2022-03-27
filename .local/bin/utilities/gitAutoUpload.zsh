@@ -47,7 +47,18 @@ sudo rsync -aAXv --delete $ZDOTDIR ~/Documents/GitRepos/autoInstaller-AW/etcZdot
 sudo rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/autoInstaller-AW/profile ; 
 
 
-
+commitToUpload(){
+	git branch | grep -q "upload"
+	if [ $? -ne 0 ]
+	then
+		git branch upload
+	fi
+	git checkout upload
+	git add .
+	git commit -m "update"
+	git push origin upload
+	git checkout master
+}
 
 recurseFolder(){
 	# :h for name only
@@ -67,7 +78,7 @@ recurseFolder(){
 			git status 2>&1 | grep -q "deleted\|modified\|untracked files present"  ;
 			if [[ $? -eq 0 ]]
 			then
-				st -T "floating" -g "=150x49" -e zsh -c "lazygit " ;
+				commitToUpload
 			else
 				git status 2>&1 | grep -q "nothing to commit"  ;
 				# use () instead of [[]] for some examples
@@ -87,3 +98,4 @@ recurseFolder(){
 folder=$HOME/Documents/GitRepos
 
 recurseFolder $folder 0
+

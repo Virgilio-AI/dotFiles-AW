@@ -3,6 +3,15 @@
 # ===== global functions
 # sk -- for the skeleton
 # info -- for the information
+# ==== django snippets === 
+# block -- for creating a block works for ereditary
+# if -- for creating a basic if
+# extends -- fro importing an other html file
+# register -- for registering a user or any other information
+# login -- for logging in into the accoount
+# logout -- for loggin out
+# richText -- for ckeditor rich text
+
 # === common tags
 # form -- for the form, a button opens a form
 # label -- for creating a label
@@ -155,6 +164,63 @@ snippet sk
 	$2
 </body>
 </html>
+endsnippet
+
+# ==========================
+# ========== django snippets ======
+# ==========================
+
+# options im-> inword
+snippet block "for creating a block works for ereditary"
+{% block %}
+	$1
+{% endblock %}
+endsnippet
+# options im-> inword
+snippet if "for creating a basic if"
+{% if %}
+	$1
+{% endif %}
+endsnippet
+# options im-> inword
+snippet extends "for importing a html template"
+{% extends '${1:name/inside/templates/folder.html}' %}
+endsnippet
+# options im-> inword
+snippet register "for registering a user in the django dtaabase"
+
+		<!--check the python snippet for passing the form-->
+		<form method="POST">
+			{% csrf_token %}
+			{{ form }}
+			<button>Sing Up</button>
+		</form>
+endsnippet
+
+# options im-> inword
+snippet login "for loggin in"
+		<form method="POST">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Sing In</button>
+		</form>
+endsnippet
+
+# options im-> inword
+snippet logout "for logging out"
+		<!--This only creates a button-->
+		<form action="{% url 'logoutuser' %}" method="POST">
+			{% csrf_token %}
+			<button type="submit">log out</button>
+
+		</form>
+endsnippet
+
+# options im-> inword
+snippet ckeditor "media files"
+just add
+{{ form.media }} 
+{{ form.as_p }}
 endsnippet
 snippet label
 <label for="${1:id}">$2</label>

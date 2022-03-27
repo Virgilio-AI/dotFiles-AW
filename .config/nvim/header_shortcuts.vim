@@ -551,11 +551,11 @@ function! CompileAVR()
 	" delete _
 	let l:Line = line(".")
 	let l:Column = col(".")
-	sleep 100m
+	sleep 200m
 	:% s/\(\d\)_\(\d\)/\1\2/g
-	sleep 100m
+	sleep 200m
 	:w!
-	sleep 100m
+	sleep 200m
 
 
 
@@ -580,12 +580,12 @@ function! CompileAVR()
 
 	let l:Line = line(".")
 	let l:Column = col(".")
-	sleep 100m
+	sleep 200m
 	:% s/0b\(\d\d\d\d\)\(\d\d\d\d\)/0b\1_\2/g
-	sleep 100m
+	sleep 200m
 	:w!
-	sleep 100m
-
+	sleep 200m
+	exe "call cursor(" . l:Line . "," . l:Column . ")"
 endfunction
 
 
