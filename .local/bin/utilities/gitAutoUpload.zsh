@@ -55,6 +55,16 @@ commitToUpload(){
 	then
 		git branch upload
 	fi
+
+
+	# check if changes have been done
+	git status 2>&1 | grep -q "deleted\|modified\|untracked files present"  ;
+	if [[ $? -ne 0 ]]
+	then
+		# commit the doned changes to the branch upload
+		return
+	fi
+
 	# backup all the content into tmp folder
 	mkdir -p /tmp/ArchWater/gitAutoUpload/$nameOfFolder/ ;
 	sudo rsync -aAXv --delete --exclude=.git . /tmp/ArchWater/gitAutoUpload/$nameOfFolder/ ;
