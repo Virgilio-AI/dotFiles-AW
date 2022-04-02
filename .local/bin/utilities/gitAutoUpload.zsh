@@ -14,37 +14,37 @@
 # ==========================
 
 
-rsync -aAXv --delete --exclude=.git ~/.local/src/dwm/ ~/Documents/GitRepos/Arch-Water_programs/dwm/
-rsync -aAXv --delete --exclude=.git ~/.local/src/dmenu/ ~/Documents/GitRepos/Arch-Water_programs/dmenu/
-rsync -aAXv --delete --exclude=.git ~/.local/src/dwmblocks/ ~/Documents/GitRepos/Arch-Water_programs/dwmblocks/
-rsync -aAXv --delete --exclude=.git ~/.local/src/st/ ~/Documents/GitRepos/Arch-Water_programs/st/
+sudo rsync -aAXv --delete --exclude=.git ~/.local/src/dwm/ ~/Documents/GitRepos/Arch-Water_programs/dwm/
+sudo rsync -aAXv --delete --exclude=.git ~/.local/src/dmenu/ ~/Documents/GitRepos/Arch-Water_programs/dmenu/
+sudo rsync -aAXv --delete --exclude=.git ~/.local/src/dwmblocks/ ~/Documents/GitRepos/Arch-Water_programs/dwmblocks/
+sudo rsync -aAXv --delete --exclude=.git ~/.local/src/st/ ~/Documents/GitRepos/Arch-Water_programs/st/
 
 # ==========================
 # ========== dot files is better ======
 # ==========================
 
-rsync -aAXv --delete --exclude={'.git','BraveSoftware','cfiles','Electron','google-chrome','libreoffice','qutebrowser','Udeler','GeoGebra','GIMP','inkscape','unity3d','unityhub','UnityHub','FreeCAD'} ~/.config/ ~/Documents/GitRepos/dotFiles-AW/.config/ ;
-rsync -aAXv --delete --exclude={'qutebrowser','.git','Proteus 7 Professional'} ~/.local/ ~/Documents/GitRepos/dotFiles-AW/.local/ ;
-rsync -aAXv --delete --exclude=.git ~/images/ ~/Documents/GitRepos/dotFiles-AW/images/ ;
-rsync -aAXv --exclude=.git ~/Documents/GitRepos/installationGuide-AW/main.pdf ~/Documents/GitRepos/archiso-AW/airootfs/root/InstallationGuide.pdf ;
+sudo rsync -aAXv --delete --exclude={'.git','BraveSoftware','cfiles','Electron','google-chrome','libreoffice','qutebrowser','Udeler','GeoGebra','GIMP','inkscape','unity3d','unityhub','UnityHub','FreeCAD'} ~/.config/ ~/Documents/GitRepos/dotFiles-AW/.config/ ;
+sudo rsync -aAXv --delete --exclude={'qutebrowser','.git','Proteus 7 Professional'} ~/.local/ ~/Documents/GitRepos/dotFiles-AW/.local/ ;
+sudo rsync -aAXv --delete --exclude=.git ~/images/ ~/Documents/GitRepos/dotFiles-AW/images/ ;
+sudo rsync -aAXv --exclude=.git ~/Documents/GitRepos/installationGuide-AW/main.pdf ~/Documents/GitRepos/archiso-AW/airootfs/root/InstallationGuide.pdf ;
 
 # for zsh files and profile file
 
 # ==========================
 # ========== sync auto archiso ======
 # ==========================
-rsync -aAXv --delete ~/.config/zsh/ ~/Documents/GitRepos/archiso-AW/airootfs/root/autoInstaller-AW/zdotdir/ ; 
-rsync -aAXv --delete /etc/zsh/ ~/Documents/GitRepos/archiso-AW/airootfs/root/autoInstaller-AW/etcZdotdir/ ; 
-rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/archiso-AW/airootfs/root/autoInstaller-AW/profile ;
+sudo rsync -aAXv --delete ~/.config/zsh/ ~/Documents/GitRepos/archiso-AW/airootfs/root/autoInstaller-AW/zdotdir/ ; 
+sudo rsync -aAXv --delete /etc/zsh/ ~/Documents/GitRepos/archiso-AW/airootfs/root/autoInstaller-AW/etcZdotdir/ ; 
+sudo rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/archiso-AW/airootfs/root/autoInstaller-AW/profile ;
 
 
 # ==========================
 # ========== sync the autoInstaller profile ======
 # ==========================
 
-rsync -aAXv --delete ~/.config/zsh/ ~/Documents/GitRepos/autoInstaller-AW/zdotdir/ ; 
-rsync -aAXv --delete $ZDOTDIR ~/Documents/GitRepos/autoInstaller-AW/etcZdotdir/ ; 
-rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/autoInstaller-AW/profile ; 
+sudo rsync -aAXv --delete ~/.config/zsh/ ~/Documents/GitRepos/autoInstaller-AW/zdotdir/ ; 
+sudo rsync -aAXv --delete $ZDOTDIR ~/Documents/GitRepos/autoInstaller-AW/etcZdotdir/ ; 
+sudo rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/autoInstaller-AW/profile ; 
 
 
 commitToUpload(){
@@ -67,7 +67,7 @@ commitToUpload(){
 
 	# backup all the content into tmp folder
 	mkdir -p /tmp/ArchWater/gitAutoUpload/$nameOfFolder/ ;
-	rsync -aAXv --delete --exclude=.git . /tmp/ArchWater/gitAutoUpload/$nameOfFolder/ ;
+	sudo rsync -aAXv --delete --exclude=.git . /tmp/ArchWater/gitAutoUpload/$nameOfFolder/ ;
 
 
 	# go to the upload branch
@@ -79,7 +79,7 @@ commitToUpload(){
 
 
 	# copy all the files to master ( all the previously created files)
-	rsync -aAXv --exclude=.git /tmp/ArchWater/gitAutoUpload/$nameOfFolder/ . ;
+	sudo rsync -aAXv --exclude=.git /tmp/ArchWater/gitAutoUpload/$nameOfFolder/ . ;
 }
 
 
