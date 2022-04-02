@@ -601,3 +601,10 @@ function! CompileAndRunCsharp()
 	let l:RunCSharp = 'mono ' . l:filename . '.exe ; '
 	exe l:ExecuteCommands . '"' . l:CompileCsharp . l:RunCSharp . ' read -n1 ; "'
 endfunction
+
+function! CompileAndRunCsharpAvalonia()
+	:wa
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+	let l:CompileAndRun = 'dotnet run --framework net6.0; '
+	exe l:ExecuteCommands . '"' . l:CompileAndRun . ' read -n1 ; "'
+endfunction

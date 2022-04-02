@@ -102,6 +102,8 @@
 
 # crateProject -- for creating a django project from scratch
 # migrate -- for applying models.py file. create tables
+# commonPackages -- for a list of common packages for django
+
 
 
 # --- settings.py ------ MainProjectFolder
@@ -782,8 +784,14 @@ snippet sk
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
 # web: virgiliomurillo.com
+
 from typing import *
 import heapq as hp
+from collections import deque
+
+# set = set() # .remove(val),.add(val)
+# dic = {} # .remove(id),dic[key] = val
+# arr = []
 
 endsnippet
 
@@ -878,6 +886,12 @@ snippet migrate "for creating a migration with databases"
 # python manage.py sqlmigrate ${1:appName} ${2:migration_number ex:0001}
 # python manage.py migrate
 
+endsnippet
+# options im-> inword
+snippet commonPackages "for a list of common package"
+django-ckeditor
+mysqlclient
+pillow
 endsnippet
 # options im-> inword
 snippet createApp "for creating a django app"

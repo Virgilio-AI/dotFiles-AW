@@ -113,6 +113,22 @@ recurseFolder(){
 	done
 }
 
+echo "==============================="
+echo "The Main Program has started"
+echo "==============================="
+echo "The Main Program has started"
+echo "==============================="
+echo "The Main Program has started"
+echo "==============================="
+echo "The Main Program has started"
+echo "==============================="
+echo "The Main Program has started"
+echo "==============================="
+echo "The Main Program has started"
+echo "==============================="
+echo "The Main Program has started"
+echo "==============================="
+echo "The Main Program has started"
 folder=$HOME/Documents/GitRepos
 
 recurseFolder $folder 0
