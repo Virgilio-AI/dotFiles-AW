@@ -61,7 +61,7 @@ Plug 'wesQ3/vim-windowswap'
 " for colors in vim
 Plug 'KabbAmine/vCoolor.vim'
 
-Plug 'RRethy/vim-hexokinase',{ 'do': 'make hexokinase' }
+" Plug 'RRethy/vim-hexokinase',{ 'do': 'make hexokinase' }
 
 " now a plugin for live editing html css and bootstrap
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}

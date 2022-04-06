@@ -1,3 +1,39 @@
+# main
+# sk -- for the skeleton
+# info -- for file info
+# object -- for creating an object
+# array -- for creating an array
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 global !p
 def create_matrix_placeholders(snip):
 	# Create anonymous snippet body
@@ -103,4 +139,17 @@ snippet sk
 // linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 // contact: virgiliomurilloochoa1@gmail.com
 // web: virgiliomurillo.com
+endsnippet
+
+# options im-> inword
+snippet object "for creating an object"
+"${1:name}":{
+	"example":"example",
+	"example":1,
+}
+endsnippet
+
+# options im-> inword
+snippet array "for creating an array"
+"${1:name}":["elem1","elem2"]
 endsnippet

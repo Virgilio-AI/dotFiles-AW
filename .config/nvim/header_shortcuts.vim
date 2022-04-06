@@ -314,6 +314,8 @@ endfunction
 function! CompileAndRunAssemblyForAvr()
 	let l:Line = line(".")
 	let l:Column = col(".")
+	echom l:Line
+	echom l:Column
 	sleep 100m
 	:% s/\(\d\)_\(\d\)/\1\2/g
 	sleep 100m
@@ -337,8 +339,11 @@ function! CompileAndRunAssemblyForAvr()
 	sleep 100m
 	:% s/\(0b\d\d\d\d\)\(\d\d\d\d\)/\1_\2/g
 	sleep 100m
-	exe "call cursor(" . l:Line . "," . l:Column . ")"
 	:w!
+
+	sleep 400m
+
+	exe ":call cursor(" . l:Line . "," . l:Column . ")"
 endfunction
 
 function! CompileAndRunAssemblyCode()
@@ -578,14 +583,14 @@ function! CompileAVR()
 	exe l:finalScript
 
 
-	let l:Line = line(".")
-	let l:Column = col(".")
 	sleep 200m
 	:% s/0b\(\d\d\d\d\)\(\d\d\d\d\)/0b\1_\2/g
 	sleep 200m
 	:w!
 	sleep 200m
-	exe "call cursor(" . l:Line . "," . l:Column . ")"
+	echom l:Line
+	echom l:Column
+	exe ":call cursor(" . l:Line . "," . l:Column . ")"
 endfunction
 
 
@@ -596,10 +601,14 @@ endfunction
 function! CompileAndRunCsharp()
 	:w
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
-	let l:filename = expand("%<")
-	let l:CompileCsharp = 'mcs ' . l:filename . '.cs ; '
-	let l:RunCSharp = 'mono ' . l:filename . '.exe ; '
-	exe l:ExecuteCommands . '"' . l:CompileCsharp . l:RunCSharp . ' read -n1 ; "'
+	if filereadable('run.sh')
+		exe ':AsyncRun st -T "floating" -e sh -c "sh run.sh ; read -n1" '
+	else
+		let l:filename = expand("%<")
+		let l:CompileCsharp = 'mcs ' . l:filename . '.cs ; '
+		let l:RunCSharp = 'mono ' . l:filename . '.exe ; '
+		exe l:ExecuteCommands . '"' . l:CompileCsharp . l:RunCSharp . ' read -n1 ; "'
+	endif
 endfunction
 
 function! CompileAndRunCsharpAvalonia()

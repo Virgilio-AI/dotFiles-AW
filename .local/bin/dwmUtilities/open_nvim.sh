@@ -1,1 +1,1 @@
-st -e sh -c "nvim"
+st -e sh -c "nvim $1"

@@ -24,7 +24,7 @@ augroup END
 augroup onEnter
 	autocmd!
 	au FileType python,tex,c,cpp,c++ :RainbowToggle
-	au BufEnter * :HexokinaseTurnOn
+"	au BufEnter * :HexokinaseTurnOn
 
 	" Start NERDTree and put the cursor back in the other window.
 	autocmd VimEnter * NERDTree | wincmd p

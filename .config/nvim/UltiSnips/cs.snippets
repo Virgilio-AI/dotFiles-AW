@@ -3,9 +3,14 @@
 # sk -- for the skeleton
 # inherit -- for help on inheritance
 # cout -- for printing
+# readjson -- for reading a json file
+# split -- for splitting string
 
-# ==== avalonia 
-# createApp -- for creating an avalonia app
+
+
+
+
+
 
 # ===== Unity snippets
 # controlMesh -- help for controlling a mesh
@@ -74,7 +79,44 @@ endsnippet
 
 # options im-> inword
 snippet cout "for printing information"
-Console.Write("Hola mundo");
+Console.Write("$1");
+endsnippet
+
+# options im-> inword
+snippet readjson "for reading a json file"
+// in the terminal use:
+// nuget install Newtonsoft.Json
+// copy the dll into the same folder
+// then create a sh file that contains
+
+//mcs -reference:Newtonsoft.Json.dll program.cs
+//mono program.exe
+
+//using System;
+//using System.IO;
+//using Newtonsoft.Json;
+//
+//using (StreamReader r = new StreamReader("test.json"))
+//{
+//	string json = r.ReadToEnd();
+//	dynamic array = JsonConvert.DeserializeObject(json);
+//	foreach(var item in array)
+//	{
+//		//				foreach(var subitem in item)
+//		//				{
+//		//					Console.WriteLine(subitem);
+//		//				}
+//		Console.WriteLine(item);
+//		//				Console.WriteLine("{0} {1}", item.Firstname, item.Lastname);
+//		Console.WriteLine("-------");
+//	}
+// }
+
+endsnippet
+
+# options im-> inword
+snippet split "for splitting string"
+string[] $3 = $1.Split('$2');
 endsnippet
 
 # ==========================

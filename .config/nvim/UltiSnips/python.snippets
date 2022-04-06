@@ -2,7 +2,8 @@
 	# create matrix placeholders
 	# create matrix
 	# info
-# --------------- gui's with tkiner ---- 
+# --------------- gui's with tkinter ---- 
+# figma -- for automatically creating tkinter from figma
 # s-gui
 # gBut -- for a button
 # gLab -- for a label
@@ -330,6 +331,12 @@ $3.set($1[0]) # default value
 $3DropMenu = OptionMenu($4, $3, *$1)
 $3DropMenu.pack()
 
+endsnippet
+
+
+# options im-> inword
+snippet figma "for automatically creating tkinter from figma"
+tkdesigner $FILE_URL $FIGMA_TOKEN
 endsnippet
 snippet s-gui
 # pack is for piling elements and grid is like a spread sheet
