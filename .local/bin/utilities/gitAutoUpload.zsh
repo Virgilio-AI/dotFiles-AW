@@ -1,12 +1,12 @@
 #!/usr/bin/zsh
-# ###############################
-# # Author: Virgilio Murillo Ochoa
-# # Date: 25/January/2022 - Tuesday
-# # personal github: Virgilio-AI
-# # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
-# # contact: virgiliomurilloochoa1@gmail.com
-# # #########################################
-# setopt +o nomatch
+###############################
+# Author: Virgilio Murillo Ochoa
+# Date: 25/January/2022 - Tuesday
+# personal github: Virgilio-AI
+# linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+# contact: virgiliomurilloochoa1@gmail.com
+# #########################################
+setopt +o nomatch
 
 
 # ==========================
@@ -58,7 +58,7 @@ commitToUpload(){
 
 
 	# check if changes have been done
-	git status 2>&1 | grep -q "deleted\|modified\|untracked files present"  ;
+	git status 2>&1 | grep -q "deleted\|modified\|untracked files present";
 	if [[ $? -ne 0 ]]
 	then
 		# commit the doned changes to the branch upload
@@ -94,7 +94,6 @@ recurseFolder(){
 	then
 		return 0
 	fi
-
 	for file in $1/* ; do
 		# check if the current iteration is a folder
 		if [[ -d $file ]]
@@ -139,7 +138,9 @@ echo "==============================="
 echo "The Main Program has started"
 echo "==============================="
 echo "The Main Program has started"
+
+
+
 folder=$HOME/Documents/GitRepos
 
 recurseFolder $folder 0
-

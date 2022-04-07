@@ -42,9 +42,9 @@ sudo rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/archiso-AW/airootfs/
 # ========== sync the autoInstaller profile ======
 # ==========================
 
-sudo rsync -aAXv --delete ~/.config/zsh/ ~/Documents/GitRepos/autoInstaller-AW/zdotdir/ ; 
-sudo rsync -aAXv --delete $ZDOTDIR ~/Documents/GitRepos/autoInstaller-AW/etcZdotdir/ ; 
-sudo rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/autoInstaller-AW/profile ; 
+sudo rsync -aAXv --delete ~/.config/zsh/ ~/Documents/GitRepos/autoInstaller-AW/zdotdir/ ;
+sudo rsync -aAXv --delete $ZDOTDIR ~/Documents/GitRepos/autoInstaller-AW/etcZdotdir/ ;
+sudo rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/autoInstaller-AW/profile ;
 
 
 
@@ -59,30 +59,33 @@ recurseFolder(){
 	then
 		return 0
 	fi
-
 	for file in $1/* ; do
 		if [[ -d $file ]]
 		then
 			cd $file
-			git status 2>&1 | grep -q "deleted\|modified\|untracked files present"  ;
+			git status 2>&1 | grep -q "deleted\|modified\|untracked files present";
 			if [[ $? -eq 0 ]]
 			then
 				st -T "floating" -g "=150x49" -e zsh -c "lazygit " ;
 			else
-				git status 2>&1 | grep -q "nothing to commit"  ;
+				git status 2>&1 | grep -q "nothing to commit";
 				# use () instead of [[]] for some examples
 				if [[ $? -eq 0 ]]
 				then
 					continue
 				else
 					recurseFolder $file $((level+1))
-					level=$((level - 1))
+					level=$((level-1))
 					# echo "end recurse"
 				fi
 			fi
 		fi
 	done
 }
+
+
+
+
 
 folder=$HOME/Documents/GitRepos
 
