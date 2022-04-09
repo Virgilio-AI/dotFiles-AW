@@ -15,6 +15,7 @@
 # portada - template para portada
 # reference - a clickabel link in text
 # url - a url link
+# figure -- for a figure
 
 
 
@@ -282,4 +283,14 @@ endsnippet
 
 snippet url
 \url{${1:link}}
+endsnippet
+
+
+# options im-> inword
+snippet figure "for an image figure"
+		\begin{figure}[h]
+			\begin{center}
+			% incluya aqui la image con \p
+			\end{center}
+		\end{figure}
 endsnippet

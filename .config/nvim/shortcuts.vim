@@ -90,6 +90,7 @@ noremap <leader>( a(<Esc>h%xi)<Esc>%hx
 noremap <leader>) a)<Esc>h%xi(<Esc>%hx
 noremap <leader>{ a{<Esc>h%xi}<Esc>%hx
 noremap <leader>} a}<Esc>h%xi{<Esc>%hx
+noremap <leader>% a%<Esc>h%xi%<Esc>%hx
 "min and maximize windows
 nnoremap <leader>hp :vertical resize +30<CR>
 nnoremap <leader>hm :vertical resize -30<CR>
