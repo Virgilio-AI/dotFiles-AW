@@ -292,7 +292,7 @@ function! BurnAtmel16()
 	let l:FileName = expand("%")
 	let l:Name = expand("%<")
 	# 	let Mhz = input("megahertz(1,2,4,8)")
-	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
+	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 1Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
 	exe l:ExecuteCommands . '"' . l:BurnMicro . ' ;  read -n1 ' . '"'
 endfunction
 
@@ -314,8 +314,6 @@ endfunction
 function! CompileAndRunAssemblyForAvr()
 	let l:Line = line(".")
 	let l:Column = col(".")
-	echom l:Line
-	echom l:Column
 	sleep 100m
 	:% s/\(\d\)_\(\d\)/\1\2/g
 	sleep 100m
@@ -338,10 +336,8 @@ function! CompileAndRunAssemblyForAvr()
 	endif
 	sleep 100m
 	:% s/\(0b\d\d\d\d\)\(\d\d\d\d\)/\1_\2/g
-	sleep 100m
+	sleep 100
 	:w!
-
-	sleep 400m
 
 	exe ":call cursor(" . l:Line . "," . l:Column . ")"
 endfunction
@@ -583,14 +579,14 @@ function! CompileAVR()
 	exe l:finalScript
 
 
+	let l:Line = line(".")
+	let l:Column = col(".")
 	sleep 200m
 	:% s/0b\(\d\d\d\d\)\(\d\d\d\d\)/0b\1_\2/g
 	sleep 200m
 	:w!
 	sleep 200m
-	echom l:Line
-	echom l:Column
-	exe ":call cursor(" . l:Line . "," . l:Column . ")"
+	exe "call cursor(" . l:Line . "," . l:Column . ")"
 endfunction
 
 
