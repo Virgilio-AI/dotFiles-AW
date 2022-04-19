@@ -165,3 +165,11 @@
 
 .config/qutebrowser
 .local/src/st
+
+# testing the zsh functionality
+#
+#
+#
+#for ignoring all the windows programs
+.local/bin/windowsPrograms
+.local/bin/windowsPrograms/*
