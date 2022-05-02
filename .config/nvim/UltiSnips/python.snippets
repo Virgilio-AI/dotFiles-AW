@@ -98,6 +98,7 @@
 # == grouping and sorting
 # group_by -- for grouping a dataframe by a column name
 # sort_values -- to sort the values by a column name
+# multiFunction -- for apply multiple functions to the group
 
 # == data types and missing values
 # datatype -- for getting the datatype of a column
@@ -983,6 +984,15 @@ snippet sort_values "for sorting a pandas dataframe"
 countries_reviewed.sort_values(by=['country', 'len'])
 endsnippet
 
+
+# options im-> inword
+snippet multiFunction "to apply multiple funcitons to the dataframe"
+# example
+
+price_extremes = reviews.groupby('variety').price.agg([min, max])
+endsnippet
+
+
 # options im-> inword
 snippet datatype "for getting the data type of a column"
 reviews.price.dtype
@@ -1024,10 +1034,8 @@ pd.concat([canadian_youtube, british_youtube])
 
 
 # combine dataframes that have an index in common
-left = canadian_youtube.set_index(['title', 'trending_date'])
-right = british_youtube.set_index(['title', 'trending_date'])
-
-left.join(right, lsuffix='_CAN', rsuffix='_UK')
+# where MeetID is the index in common and can be different
+powerlifting_combined = powerlifting_meets.set_index("MeetID").join(powerlifting_competitors.set_index("MeetID"))
 endsnippet
 
 
