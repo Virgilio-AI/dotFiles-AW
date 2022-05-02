@@ -107,6 +107,28 @@
 # rename -- for renaming the dataset
 # combineDataframe -- for combining a dataframe
 
+# == data cleaning
+# fillWithNextToItVal -- for fill NaN values with the value that comes directly after it
+
+# == scaling and normalization
+# scaleData -- for scaling the used data
+# normalizeData -- for normalizing the given data for a machine learning algoritm
+
+# == parse dates in dataset
+# parseDate -- for parsing a date
+
+# == char encoding
+# fileEncodingProblems -- for finding the file encoding
+# encode -- for encoding a string
+
+# == inconsistencies
+# lookAndFix -- for looking and fixing inconsistencies
+# fuuzyMatching -- for searching and replacing inconsistencies
+
+
+
+
+
 
 
 
@@ -554,6 +576,10 @@ endsnippet
 # options im-> inword
 snippet readCsv "for reading a pandas csv"
 ${2:name} = pd.read_csv(${1:path/to/csv.csv})
+
+
+# for specific encoding
+# kickstarter_2016 = pd.read_csv("../input/kickstarter-projects/ks-projects-201612.csv", encoding='Windows-1252')
 endsnippet
 
 # options im-> inword
@@ -860,6 +886,11 @@ snippet read_csv "for reading a pandas csv"
 # set the index col manually
 # index_col=num
 dt_name = pd.read_csv("path/to/file.csv")
+
+
+# for specific encoding
+# kickstarter_2016 = pd.read_csv("../input/kickstarter-projects/ks-projects-201612.csv", encoding='Windows-1252')
+
 endsnippet
 # options im-> inword
 snippet csv_len "for getting the length of the csv"
@@ -1039,11 +1070,120 @@ powerlifting_combined = powerlifting_meets.set_index("MeetID").join(powerlifting
 endsnippet
 
 
+# options im-> inword
+snippet fillWithNextToItVal "for fill NaN values with the value that comes directly after it"
+sf_permits_with_na_imputed = sf_permits.fillna(method='bfill', axis=0)
+endsnippet
 
 
+# options im-> inword
+snippet scalingData "for scaling the needed data"
+## this is used to place the data in a matter of 0 - 1
+# generate 1000 data points randomly drawn from an exponential distribution
+original_data = np.random.exponential(size=1000)
+
+# mix-max scale the data between 0 and 1
+# where the columns are the list of columns to be normalized
+scaled_data = minmax_scaling(original_data, columns=[0])
+endsnippet
+
+# options im-> inword
+snippet normalizeData "for normalizing the given data for a machine learning algoritm"
+# normalize the exponential data with boxcox
+normalized_data = stats.boxcox(original_data)
+endsnippet
 
 
+# options im-> inword
+snippet parseDate "for parsing a date"
+# where pd is for pandas and landslides['date'] is the name of the column
+landslides['date_parsed'] = pd.to_datetime(landslides['date'], format="%m/%d/%y")
+endsnippet
 
+# options im-> inword
+snippet fileEncodingProblems "for finding the file encoding"
+# get the byte size of the file to predict the needed file encoding
+def getSize(fileobject):
+	fileobject.seek(0,2) # move the cursor to the end of the file
+	size = fileobject.tell()
+	return size
+
+file = open('../input/fatal-police-shootings-in-the-us/PoliceKillingsUS.csv', 'rb')
+print( getSize(file))
+
+
+# now replace with the number of bytes needed
+with open("../input/fatal-police-shootings-in-the-us/PoliceKillingsUS.csv", 'rb') as rawdata:
+	result = chardet.detect(rawdata.read(${1:number_of_bytes}))
+
+# check what the character encoding might be
+print(result)
+
+# now replace the needed file encoding
+police_killings = pd.read_csv("../input/fatal-police-shootings-in-the-us/PoliceKillingsUS.csv",encoding='Windows-1252')
+endsnippet
+
+
+# options im-> inword
+snippet encode "for encoding a string"
+# encode it to a different encoding, replacing characters that raise errors
+after = before.encode("utf-8", errors="replace")
+endsnippet
+
+
+# options im-> inword
+snippet lookAndFix "for looking and fixing the needed inconsistencies"
+# get all the unique values in the 'Country' column
+countries = professors['Country'].unique()
+
+# sort them alphabetically and then take a closer look
+countries.sort()
+countries
+
+# convert to lower case
+professors['Country'] = professors['Country'].str.lower()
+# remove trailing white spaces
+professors['Country'] = professors['Country'].str.strip()
+
+endsnippet
+
+# options im-> inword
+snippet fuuzyMatching "for searching and replacing inconsistencies "
+# get the top 10 closest matches to "south korea"
+matches = fuzzywuzzy.process.extract("south korea", countries, limit=10, scorer=fuzzywuzzy.fuzz.token_sort_ratio)
+
+# take a look at them
+matches
+###################################
+######################
+
+
+# function to replace rows in the provided column of the provided dataframe
+# that match the provided string above the provided ratio with the provided string
+def replace_matches_in_column(df, column, string_to_match, min_ratio = 47):
+# get a list of unique strings
+	strings = df[column].unique()
+
+# get the top 10 closest matches to our input string
+matches = fuzzywuzzy.process.extract(string_to_match, strings, 
+		limit=10, scorer=fuzzywuzzy.fuzz.token_sort_ratio)
+
+# only get matches with a ratio > 90
+	close_matches = [matches[0] for matches in matches if matches[1] >= min_ratio]
+
+# get the rows of all the close matches in our dataframe
+rows_with_matches = df[column].isin(close_matches)
+
+# replace all rows with close matches with the input matches 
+	df.loc[rows_with_matches, column] = string_to_match
+
+# let us know the function's done
+	print("All done!")
+
+# use the function we just wrote to replace close matches to "south korea" with "south korea"
+replace_matches_in_column(df=professors, column='Country', string_to_match="south korea")
+
+endsnippet
 
 
 
@@ -1056,8 +1196,10 @@ endsnippet
 # ==========================
 
 snippet plotcsv
+
 ${1:nombre} = "${2:path}"
 $1_dt = pd.read_csv($1)
+
 endsnippet
 
 snippet plot2dsk
