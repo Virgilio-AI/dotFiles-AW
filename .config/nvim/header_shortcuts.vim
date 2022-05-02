@@ -421,7 +421,7 @@ function! RunCompetitivePython()
 		echom " using environment"
 		let l:source = 'source venv/bin/activate ;'
 		let l:deactivate = 'deactivate ; '
-		let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+		let l:StTerminal = ':AsyncRun st -T "floating" -g "100x50" -e sh -c "'
 		let l:StTerminalCLose = ' read -n1 "'
 		let l:filename = expand('%<')
 		if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
@@ -430,7 +430,7 @@ function! RunCompetitivePython()
 			exe l:StTerminal . ' python ' . l:filename . '.py ; ' . l:StTerminalCLose
 		endif
 	else
-		let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+		let l:StTerminal = ':AsyncRun st -T "floating" -g "100x50" -e sh -c "'
 		let l:StTerminalCLose = ' read -n1 "'
 		let l:filename = expand('%<')
 		if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
@@ -444,7 +444,7 @@ function! RunCompetitivePython()
 endfunction
 
 function! RunCompetitivePythonIn()
-	let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+	let l:StTerminal = ':AsyncRun st -T "floating" -g "100x50" -e sh -c "'
 	let l:StTerminalCLose = ' read -n1 "'
 	let l:filename = expand('%<')
 	let l:RunFileFolder = ' ~/.config/nvim/runFileConfigurations'
