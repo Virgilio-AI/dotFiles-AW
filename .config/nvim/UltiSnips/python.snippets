@@ -1251,7 +1251,18 @@ plt.title("Average Arrival Delay for Each Airline, by Month")
 
 # Heatmap showing average arrival delay for each airline by month
 # annot for showing the values on each cell
-sns.heatmap(data=flight_data, annot=True)
+
+# for the colors
+
+cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", ["red","violet","blue"])
+
+# simply pass a list of colors if you want it to be discrete
+# ex: ['red','blue']
+
+sns.heatmap(data=flight_data, annot=True,cmap=cmap)
+
+
+
 
 # Add label for horizontal axis
 plt.xlabel("Airline")
