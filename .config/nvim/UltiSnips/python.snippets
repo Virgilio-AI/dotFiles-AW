@@ -24,6 +24,7 @@
 
 
 # ---------------   python
+# printCommands -- for pringting the commands available for a datatype or some other kind of object
 # ==== strings
 # forString - for iterate string c style
 # ins - insert variable into a string
@@ -74,7 +75,9 @@
 # plotPoint
 # plotFunction
 
-# ----------------    pandas
+# ==========================
+# ========== Kaggle ======
+# ==========================
 # import_pandas -- for importing pandas
 # create_dataframe -- for creating a pandas dataframe
 # create_series -- for creating a pandas series ( list of values)
@@ -86,7 +89,7 @@
 # get_val -- for getting the value of the column and row
 # get_row -- for getting the row of the pandas dataframe
 # getRange_col -- for getting a range in a column
-# getRange_crow -- for getting a range in a row
+# getRange_row -- for getting a range in a row
 # getRange_row_index -- for setting the index column for the dataframe 
 # conditional_selection -- for getting a dataframe with a condition
 # assignToColumn -- for assigning a value to a column
@@ -124,6 +127,12 @@
 # == inconsistencies
 # lookAndFix -- for looking and fixing inconsistencies
 # fuuzyMatching -- for searching and replacing inconsistencies
+
+
+# == graphs
+# linePlot -- for plotting a line plot
+# barChart -- for plotting a barChart
+
 
 
 
@@ -710,6 +719,12 @@ snippet sublist "for getting a sublist (slicing)"
 # list[start:end+1:step]
 endsnippet
 
+# options im-> inword
+snippet printCommands "for pringting the commands available for a datatype or some other kind of object"
+for i in dir(${1:dataType}):
+	if i[0] != '_' and "${2:keyword}" in i:
+		print(i)
+endsnippet
 
 snippet forString
 for element in range(0, len(${1:string_name})):
@@ -891,6 +906,9 @@ dt_name = pd.read_csv("path/to/file.csv")
 # for specific encoding
 # kickstarter_2016 = pd.read_csv("../input/kickstarter-projects/ks-projects-201612.csv", encoding='Windows-1252')
 
+# for loading dates as index
+# museum_data = pd.read_csv(museum_filepath,index_col="Date",parse_dates=True)
+
 endsnippet
 # options im-> inword
 snippet csv_len "for getting the length of the csv"
@@ -929,6 +947,10 @@ endsnippet
 # options im-> inword
 snippet getRange_row "for getting a range in a row"
 # dataframe.iloc[start:end-1]
+
+# also you can do
+# museum_data.loc[first_slice_q:second_slice_q]
+# because for dates it tends to work because you use a specific index and cannot be -1
 endsnippet
 
 # options im-> inword
@@ -1186,6 +1208,54 @@ replace_matches_in_column(df=professors, column='Country', string_to_match="sout
 endsnippet
 
 
+# options im-> inword
+snippet linePlot "for plotting a line plot"
+# Set the width and height of the figure
+# to set the plot figure size
+plt.figure(figsize=(16,6))
+
+# Line chart showing how FIFA rankings evolved over time 
+# where data is the pandas dataframe
+# this will plot all the columns as lines
+sns.lineplot(data=fifa_data)
+
+
+# to add a line to the plot just use the
+# sns.lineplot(data=column)
+
+plt.plot()
+endsnippet
+
+# options im-> inword
+snippet barChart "for plotting a bar chart"
+# Set the width and height of the figure
+plt.figure(figsize=(10,6))
+
+# Add title
+plt.title("Average Arrival Delay for Spirit Airlines Flights, by Month")
+
+# Bar chart showing average arrival delay for Spirit Airlines flights by month
+sns.barplot(x=flight_data.index, y=flight_data['NK'])
+
+# Add label for vertical axis
+plt.ylabel("Arrival delay (in minutes)")
+endsnippet
+
+# options im-> inword
+snippet heatMap "for plotting a heat map"
+# Set the width and height of the figure
+plt.figure(figsize=(14,7))
+
+# Add title
+plt.title("Average Arrival Delay for Each Airline, by Month")
+
+# Heatmap showing average arrival delay for each airline by month
+# annot for showing the values on each cell
+sns.heatmap(data=flight_data, annot=True)
+
+# Add label for horizontal axis
+plt.xlabel("Airline")
+endsnippet
 
 
 
