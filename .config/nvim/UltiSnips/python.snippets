@@ -78,6 +78,7 @@
 # ==========================
 # ========== Kaggle ======
 # ==========================
+# loc_iloc -- for help on loc iloc
 # import_pandas -- for importing pandas
 # create_dataframe -- for creating a pandas dataframe
 # create_series -- for creating a pandas series ( list of values)
@@ -132,6 +133,13 @@
 # == graphs
 # linePlot -- for plotting a line plot
 # barChart -- for plotting a barChart
+# heatMap -- for plotting a heat map
+# scatterPlot -- for creating a scatter plot
+# histogram -- for creating a histogram
+# smoothedHistogram -- for creating a smoothed histogram
+# 2dsmoothedhistogram -- for creating a smoothed 2d histogram
+# setstyle -- for setting the style on the plot
+
 
 
 
@@ -876,6 +884,12 @@ endsnippet
 # ========== pandas ======
 # ==========================
 # options im-> inword
+
+# options im-> inword
+snippet loc_iloc "for information on loc and iloc"
+# the iloc if for using the integer position of the dataframe
+# the loc is for using the label position on the dataframe
+endsnippet
 snippet import_pandas "for importing pandas"
 import pandas as pd
 endsnippet
@@ -1266,6 +1280,69 @@ sns.heatmap(data=flight_data, annot=True,cmap=cmap)
 
 # Add label for horizontal axis
 plt.xlabel("Airline")
+endsnippet
+
+
+
+# options im-> inword
+snippet scatterPlot "for creating a scatter plot"
+
+
+# Set the width and height of the figure
+plt.figure(figsize=(14,7))
+
+# note that the scatter plot should only be used once
+# for creating a scatter plot
+sns.scatterplot(x=insurance_data['bmi'], y=insurance_data['charges'])
+
+# now for creating a regresion line plot
+sns.regplot(x=insurance_data['bmi'], y=insurance_data['charges'])
+
+
+
+# now for plotting multiple variables
+sns.scatterplot(x=insurance_data['bmi'], y=insurance_data['charges'], hue=insurance_data['smoker'])
+
+# sns.lmplot(x="bmi", y="charges", hue="smoker", data=insurance_data)
+
+# also a variable is the swarm plot
+sns.swarmplot(x=insurance_data['smoker'],y=insurance_data['charges'])
+endsnippet
+
+# options im-> inword
+snippet histogram "for creating a histogram"
+# Histograms for each species
+sns.distplot(a=iris_set_data['Petal Length (cm)'], label="Iris-setosa", kde=False)
+sns.distplot(a=iris_ver_data['Petal Length (cm)'], label="Iris-versicolor", kde=False)
+sns.distplot(a=iris_vir_data['Petal Length (cm)'], label="Iris-virginica", kde=False)
+
+# Add title
+plt.title("Histogram of Petal Lengths, by Species")
+
+# Force legend to appear
+plt.legend()
+endsnippet
+
+# options im-> inword
+snippet smoothedHistogram "for creating a smoothed histogram"
+# KDE plots for each species
+sns.kdeplot(data=iris_set_data['Petal Length (cm)'], label="Iris-setosa", shade=True)
+sns.kdeplot(data=iris_ver_data['Petal Length (cm)'], label="Iris-versicolor", shade=True)
+sns.kdeplot(data=iris_vir_data['Petal Length (cm)'], label="Iris-virginica", shade=True)
+
+# Add title
+plt.title("Distribution of Petal Lengths, by Species")
+endsnippet
+
+# options im-> inword
+snippet 2dsmoothedhistogram "for a 2d smoothed histogram"
+# 2D KDE plot
+sns.jointplot(x=iris_data['Petal Length (cm)'], y=iris_data['Sepal Width (cm)'], kind="kde")
+endsnippet
+
+# options im-> inword
+snippet setstyle "for setting the style"
+sns.set_style("dark")
 endsnippet
 
 
