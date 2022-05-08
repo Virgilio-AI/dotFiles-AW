@@ -78,6 +78,19 @@
 # ==========================
 # ========== Kaggle ======
 # ==========================
+
+
+# import_kaggle -- for importing the necessary for machine learning plotting and other things
+# === machine learning
+# split_validation -- for split validating a model
+# model_descition_tree -- for using the model descition tree
+# model_random_forest -- for using the random forest model
+# getMAE -- for getting mean absolute error
+# getBsetTreeSize -- basic code to loop through tree sizes
+# export_csv -- for exporting a solution csv file
+
+
+# === pandas
 # loc_iloc -- for help on loc iloc
 # import_pandas -- for importing pandas
 # create_dataframe -- for creating a pandas dataframe
@@ -135,11 +148,19 @@
 # barChart -- for plotting a barChart
 # heatMap -- for plotting a heat map
 # scatterPlot -- for creating a scatter plot
+# scatterMultipleSameTarget -- for creating a multiple scatter plots with the same target
 # histogram -- for creating a histogram
 # smoothedHistogram -- for creating a smoothed histogram
 # 2dsmoothedhistogram -- for creating a smoothed 2d histogram
 # setstyle -- for setting the style on the plot
 
+# ==== feature engineering
+# mutual_info_regression -- for creating a mutual info regression
+# clustering -- for clustering the information
+
+
+
+# == 
 
 
 
@@ -165,12 +186,8 @@
 # dropna -- to drop missing data in the dataset
 # pd_y -- for setting the target column
 # pd_x -- for setting the input columns
-# split_validation -- for split validating a model
-# model_descition_tree -- for using the model descition tree
-# model_random_forest -- for using the random forest model
-# getMAE -- for getting mean absolute error
-# getBsetTreeSize -- basic code to loop through tree sizes
-# export_csv -- for exporting a solution csv file
+
+
 
 
 # ----------------    system interaction
@@ -618,6 +635,29 @@ snippet pd_x "for setting the X input variables"
 x_column = [${1:'name1','name2'}]
 X = ${2:data_frame}.x_column
 endsnippet
+
+
+# options im-> inword
+snippet import_kaggle "for importing the necessary for machine learning plotting and other things"
+from sklearn.ensemble import RandomForestRegressor # random forest regressor
+from sklearn.model_selection import cross_val_score # the cross validation module
+
+
+
+# Setup feedback system
+from learntools.core import binder # the binder
+binder.bind(globals())
+from learntools.feature_engineering_new.ex2 import * # for importing all in feature engineering
+
+import matplotlib.pyplot as plt # for importing matplotlib
+import numpy as np # for importing numpy
+import pandas as pd # for importing pandas
+import seaborn as sns # seaborn is used to plot
+
+
+
+endsnippet
+
 
 # options im-> inword
 snippet split_validation "for setting the split validation"
@@ -1307,6 +1347,16 @@ sns.scatterplot(x=insurance_data['bmi'], y=insurance_data['charges'], hue=insura
 
 # also a variable is the swarm plot
 sns.swarmplot(x=insurance_data['smoker'],y=insurance_data['charges'])
+
+endsnippet
+
+# options im-> inword
+snippet scatterMultipleSameTarget "for creating a multiple scatter plots with the same target"
+features = ["YearBuilt", "MoSold", "ScreenPorch"]
+# in this the y is the target and the x is the list behind
+sns.relplot(
+	x="value", y="SalePrice", col="variable", data=df.melt(id_vars="SalePrice", value_vars=features), facet_kws=dict(sharex=False),
+);
 endsnippet
 
 # options im-> inword
@@ -1343,6 +1393,41 @@ endsnippet
 # options im-> inword
 snippet setstyle "for setting the style"
 sns.set_style("dark")
+endsnippet
+
+
+
+# ==  feature engineering
+# options im-> inword
+snippet mutual_info_regression "for creating a mutual info regression"
+from sklearn.feature_selection import mutual_info_regression
+
+# where X is the whole dataset and the y is the target
+# the discrete features are the integer values
+def make_mi_scores(X, y, discrete_features):
+	mi_scores = mutual_info_regression(X, y, discrete_features=discrete_features)
+	mi_scores = pd.Series(mi_scores, name="MI Scores", index=X.columns)
+	mi_scores = mi_scores.sort_values(ascending=False)
+	return mi_scores
+
+mi_scores = make_mi_scores(X, y, discrete_features)
+mi_scores[::3]  # show a few features with their MI scores
+endsnippet
+
+
+# options im-> inword
+snippet clustering "for clustering information"
+# Create cluster feature
+kmeans = KMeans(n_clusters=6)
+X["Cluster"] = kmeans.fit_predict(X)
+X["Cluster"] = X["Cluster"].astype("category")
+
+X.head()
+
+
+sns.relplot(
+	x="Longitude", y="Latitude", hue="Cluster", data=X, height=6,
+);
 endsnippet
 
 
