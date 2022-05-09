@@ -30,31 +30,31 @@ logFile=/tmp/utilities/gitAutoUpdate
 mkdir /tmp/utilities
 touch /tmp/utilities/gitAutoUpdate
 
-echo " # ========== sync the folders of arch water linux ====== " | tee -a logFile
-echo " # ========== sync the folders of arch water linux ====== " | tee -a logFile
-echo " # ========== sync the folders of arch water linux ====== " | tee -a logFile
-echo " # ========== sync the folders of arch water linux ====== " | tee -a logFile
-echo " # ========== sync the folders of arch water linux ====== " | tee -a logFile
+echo " # ========== sync the folders of arch water linux ====== " | tee -a $logFile
+echo " # ========== sync the folders of arch water linux ====== " | tee -a $logFile
+echo " # ========== sync the folders of arch water linux ====== " | tee -a $logFile
+echo " # ========== sync the folders of arch water linux ====== " | tee -a $logFile
+echo " # ========== sync the folders of arch water linux ====== " | tee -a $logFile
 
-rsync -aAXv --delete --exclude=.git ~/.local/src/dwm/ $folder/Arch-Water_programs/dwm/ | tee -a logFile
-rsync -aAXv --delete --exclude=.git ~/.local/src/dmenu/ $folder/Arch-Water_programs/dmenu/| tee -a logFile
-rsync -aAXv --delete --exclude=.git ~/.local/src/dwmblocks/ $folder/Arch-Water_programs/dwmblocks/| tee -a logFile
-rsync -aAXv --delete --exclude=.git ~/.local/src/st/ $folder/Arch-Water_programs/st/| tee -a logFile
+rsync -aAXv --delete --exclude=.git ~/.local/src/dwm/ $folder/Arch-Water_programs/dwm/ | tee -a $logFile
+rsync -aAXv --delete --exclude=.git ~/.local/src/dmenu/ $folder/Arch-Water_programs/dmenu/| tee -a $logFile
+rsync -aAXv --delete --exclude=.git ~/.local/src/dwmblocks/ $folder/Arch-Water_programs/dwmblocks/| tee -a $logFile
+rsync -aAXv --delete --exclude=.git ~/.local/src/st/ $folder/Arch-Water_programs/st/| tee -a $logFile
 
 # ==========================
 # ========== dot files is better ======
 # ==========================
 #
 
-echo " # ========== sync the folders of dot files ====== " | tee -a logFile
-echo " # ========== sync the folders of dot files ====== " | tee -a logFile
-echo " # ========== sync the folders of dot files ====== " | tee -a logFile
-echo " # ========== sync the folders of dot files ====== " | tee -a logFile
+echo " # ========== sync the folders of dot files ====== " | tee -a $logFile
+echo " # ========== sync the folders of dot files ====== " | tee -a $logFile
+echo " # ========== sync the folders of dot files ====== " | tee -a $logFile
+echo " # ========== sync the folders of dot files ====== " | tee -a $logFile
 
-rsync -aAXv --delete --exclude={'.git','BraveSoftware','cfiles','Electron','google-chrome','libreoffice','qutebrowser','Udeler','GeoGebra','GIMP','inkscape','unity3d','unityhub','UnityHub','FreeCAD'} ~/.config/ $folder/dotFiles-AW/.config/ | tee -a logFile
-rsync -aAXv --delete --exclude={'qutebrowser','.git','Proteus 7 Professional'} ~/.local/ $folder/dotFiles-AW/.local/ | tee -a logFile
-rsync -aAXv --delete --exclude=.git ~/images/ $folder/dotFiles-AW/images/ | tee -a logFile
-rsync -aAXv --exclude=.git $folder/installationGuide-AW/main.pdf $folder/archiso-AW/airootfs/root/InstallationGuide.pdf | tee -a logFile
+rsync -aAXv --delete --exclude={'.git','BraveSoftware','cfiles','Electron','google-chrome','libreoffice','qutebrowser','Udeler','GeoGebra','GIMP','inkscape','unity3d','unityhub','UnityHub','FreeCAD'} ~/.config/ $folder/dotFiles-AW/.config/ | tee -a $logFile
+rsync -aAXv --delete --exclude={'qutebrowser','.git','Proteus 7 Professional'} ~/.local/ $folder/dotFiles-AW/.local/ | tee -a $logFile
+rsync -aAXv --delete --exclude=.git ~/images/ $folder/dotFiles-AW/images/ | tee -a $logFile
+rsync -aAXv --exclude=.git $folder/installationGuide-AW/main.pdf $folder/archiso-AW/airootfs/root/InstallationGuide.pdf | tee -a $logFile
 
 # for zsh files and profile file
 
@@ -63,15 +63,15 @@ rsync -aAXv --exclude=.git $folder/installationGuide-AW/main.pdf $folder/archiso
 # ==========================
 #
 
-echo " # ========== sync the archiso folders ====== " | tee -a logFile
-echo " # ========== sync the archiso folders ====== " | tee -a logFile
-echo " # ========== sync the archiso folders ====== " | tee -a logFile
-echo " # ========== sync the archiso folders ====== " | tee -a logFile
+echo " # ========== sync the archiso folders ====== " | tee -a $logFile
+echo " # ========== sync the archiso folders ====== " | tee -a $logFile
+echo " # ========== sync the archiso folders ====== " | tee -a $logFile
+echo " # ========== sync the archiso folders ====== " | tee -a $logFile
 
 
-rsync -aAXv --delete --exclude=out ~/.config/zsh/ $folder/archiso-AW/airootfs/root/autoInstaller-AW/zdotdir/ | tee -a logFile
-rsync -aAXv --delete --exclude=out /etc/zsh/ $folder/archiso-AW/airootfs/root/autoInstaller-AW/etcZdotdir/ | tee -a logFile
-rsync -aAXv --delete --exclude=out /etc/profile $folder/archiso-AW/airootfs/root/autoInstaller-AW/profile | tee -a logFile
+rsync -aAXv --delete --exclude=out ~/.config/zsh/ $folder/archiso-AW/airootfs/root/autoInstaller-AW/zdotdir/ | tee -a $logFile
+rsync -aAXv --delete --exclude=out /etc/zsh/ $folder/archiso-AW/airootfs/root/autoInstaller-AW/etcZdotdir/ | tee -a $logFile
+rsync -aAXv --delete --exclude=out /etc/profile $folder/archiso-AW/airootfs/root/autoInstaller-AW/profile | tee -a $logFile
 
 
 # ==========================
@@ -82,18 +82,18 @@ rsync -aAXv --delete --exclude=out /etc/profile $folder/archiso-AW/airootfs/root
 
 
 
-echo " # ========== sync the autoInstaller folders ====== " | tee -a logFile
-echo " # ========== sync the autoInstaller folders ====== " | tee -a logFile
-echo " # ========== sync the autoInstaller folders ====== " | tee -a logFile
-echo " # ========== sync the autoInstaller folders ====== " | tee -a logFile
-echo " # ========== sync the autoInstaller folders ====== " | tee -a logFile
-echo " # ========== sync the autoInstaller folders ====== " | tee -a logFile
-echo " # ========== sync the autoInstaller folders ====== " | tee -a logFile
-echo " # ========== sync the autoInstaller folders ====== " | tee -a logFile
+echo " # ========== sync the autoInstaller folders ====== " | tee -a $logFile
+echo " # ========== sync the autoInstaller folders ====== " | tee -a $logFile
+echo " # ========== sync the autoInstaller folders ====== " | tee -a $logFile
+echo " # ========== sync the autoInstaller folders ====== " | tee -a $logFile
+echo " # ========== sync the autoInstaller folders ====== " | tee -a $logFile
+echo " # ========== sync the autoInstaller folders ====== " | tee -a $logFile
+echo " # ========== sync the autoInstaller folders ====== " | tee -a $logFile
+echo " # ========== sync the autoInstaller folders ====== " | tee -a $logFile
 
-rsync -aAXv --delete ~/.config/zsh/ $folder/autoInstaller-AW/zdotdir/ | tee logFile
-rsync -aAXv --delete $ZDOTDIR $folder/autoInstaller-AW/etcZdotdir/ | tee logFile
-rsync -aAXv --delete /etc/profile $folder/autoInstaller-AW/profile | tee logFile
+rsync -aAXv --delete ~/.config/zsh/ $folder/autoInstaller-AW/zdotdir/ | tee $logFile
+rsync -aAXv --delete $ZDOTDIR $folder/autoInstaller-AW/etcZdotdir/ | tee $logFile
+rsync -aAXv --delete /etc/profile $folder/autoInstaller-AW/profile | tee $logFile
 
 
 
@@ -150,22 +150,22 @@ recurseFolder(){
 	done
 }
 
-echo "==============================="
-echo "The Main Program has started"
-echo "==============================="
-echo "The Main Program has started"
-echo "==============================="
-echo "The Main Program has started"
-echo "==============================="
-echo "The Main Program has started"
-echo "==============================="
-echo "The Main Program has started"
-echo "==============================="
-echo "The Main Program has started"
-echo "==============================="
-echo "The Main Program has started"
-echo "==============================="
-echo "The Main Program has started"
+echo "===============================" | tee -a $folder
+echo "The Main Program has started" | tee -a $folder
+echo "===============================" | tee -a $folder
+echo "The Main Program has started" | tee -a $folder
+echo "===============================" | tee -a $folder
+echo "The Main Program has started" | tee -a $folder
+echo "===============================" | tee -a $folder
+echo "The Main Program has started" | tee -a $folder
+echo "===============================" | tee -a $folder
+echo "The Main Program has started" | tee -a $folder
+echo "===============================" | tee -a $folder
+echo "The Main Program has started" | tee -a $folder
+echo "===============================" | tee -a $folder
+echo "The Main Program has started" | tee -a $folder
+echo "===============================" | tee -a $folder
+echo "The Main Program has started" | tee -a $folder
 
 recurseFolder $folder 0
 
