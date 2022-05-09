@@ -27,6 +27,8 @@ logFile=/tmp/utilities/gitAutoUpdate
 # ==========================
 # ========== sync the folders of arch water linux ======
 # ==========================
+mkdir /tmp/utilities
+touch /tmp/utilities/gitAutoUpdate
 
 echo " # ========== sync the folders of arch water linux ====== " | tee -a logFile
 echo " # ========== sync the folders of arch water linux ====== " | tee -a logFile
