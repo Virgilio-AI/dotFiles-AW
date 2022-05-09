@@ -54,6 +54,8 @@ exe "nnoremap <leader>evh :call OpenVimrcHeaderRelatedFile()"
 " =========== For editing better ===================
 " ================================================== 
 
+" delete current line and go to end of previous
+inoremap <C-k> <Esc>VxkA
 " for reversing a string better
 vnoremap ;rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 
@@ -88,6 +90,7 @@ noremap <leader>( a(<Esc>h%xi)<Esc>%hx
 noremap <leader>) a)<Esc>h%xi(<Esc>%hx
 noremap <leader>{ a{<Esc>h%xi}<Esc>%hx
 noremap <leader>} a}<Esc>h%xi{<Esc>%hx
+noremap <leader>% a%<Esc>h%xi%<Esc>%hx
 "min and maximize windows
 nnoremap <leader>hp :vertical resize +30<CR>
 nnoremap <leader>hm :vertical resize -30<CR>
@@ -504,4 +507,6 @@ augroup END
 
 augroup csharp
 	autocmd BufEnter *.cs nnoremap <F11> :call CompileAndRunCsharp()<CR>
+	autocmd BufEnter *.cs nnoremap <F12> :call CompileAndRunCsharpAvalonia()<CR>
 augroup END
+

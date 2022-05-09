@@ -1,4 +1,8 @@
 #lias Lines configured by zsh-newuser-install
+	if [[ $list ]]
+	then
+
+	fi
 HISTFILE=$XDG_HOME_CONFIG/zsh/.histfile
 HISTSIZE=1000
 SAVEHIST=10000
@@ -54,12 +58,76 @@ alias nv="nvim"
 
 
 # alias for pacman -> greping errors and warnings
-alias pacman='sudo pacman'
 alias tree='tree -a'
 alias unrar='unrar e'
 # for creating notebooks
 alias create-notebook='python $HOME/.local/bin/create-notebook.py'
 # alias for shutdown commiting all
+
+
+pacman()
+{
+	# create the folder if it doesn't exists
+	file=~/.personalMetadata
+	if [[ ! -d $file ]]
+	then
+		mkdir $file
+	fi
+
+	# for getting all the installed packages automatically
+	
+
+	stri=$@
+	list=("${(@s[ ])stri}")
+	if [[ ${list[1]} == "-S" || ${list[1]} == "-Sy" ]]
+	then
+		echo "This is a file to download"
+		for (( i=1;i<$#list ; i++)); do
+			var=$((i + 1))
+			echo "${list[$var]}"
+			echo "${list[$var]}" >> $file/pacmanPackages.txt
+		done
+
+	fi
+
+#	echo "$list" >> $file/pacmanPackages.txt
+#	echo "$list"
+
+	sudo pacman $@
+
+}
+paru()
+{
+
+	# create the folder if it doesn't exists
+	file=~/.personalMetadata
+	if [[ ! -d $file ]]
+	then
+		mkdir $file
+	fi
+
+	# for getting all the installed packages automatically
+	
+
+	stri=$@
+	list=("${(@s[ ])stri}")
+	if [[ ${list[1]} == "-S" || ${list[1]} == "-Sy" ]]
+	then
+		echo "This is a file to download"
+		for (( i=1;i<$#list ; i++)); do
+			var=$((i + 1))
+			echo "${list[$var]}"
+			echo "${list[$var]}" >> $file/paruPackages.txt
+		done
+
+	fi
+
+#	echo "$list" >> $file/pacmanPackages.txt
+#	echo "$list"
+
+	command paru $@
+
+}
 
 shutdown()
 {
@@ -67,9 +135,9 @@ shutdown()
 	if [ $# -eq 0 ]  ; then 
 		shutdown -c
 		sh gitAutoCommit.zsh
-		command shutdown
+		sudo shutdown
 	else
-		command shutdown $@
+		sudo shutdown $@
 	fi
 }
 
@@ -79,9 +147,9 @@ reboot()
 # if number of parameters equal cero
 	if [ $# -eq 0 ]  ; then 
 		sh gitAutoCommit.zsh
-		command reboot
+		sudo reboot
 	else
-		command reboot $@
+		sudo reboot $@
 	fi
 }
 
@@ -98,9 +166,9 @@ parse_git_branch() {
       branch=${match[1]}
       branch_cut=${branch:0:35}
       if (( ${#branch} > ${#branch_cut} )); then
-          echo "(${branch_cut}…${state})"
+          echo "(${branch_cut})…${state}"
       else
-          echo "(${branch}${state})"
+          echo "(${branch})${state}"
       fi
     fi
 }
@@ -109,14 +177,14 @@ setopt PROMPT_SUBST
 set -o GLOB_SUBST
 
 # neofetch --gtk-shorthand off --gtk2 off --gtk3 off --color_blocks off
- source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ## change sudo default editor
 SUDO_EDITOR=/usr/bin/nvim
 export EDITOR=nvim
 export VISUAL=nvim
 export SUDO_EDITOR
 export MANPAGER='nvim +Man!'
-PROMPT='%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%f%b '
+PROMPT='%S%F{green}%n%s%f%B%~%F{yellow} $(parse_git_branch)%f %F{red}$%f%b '
 
 
 

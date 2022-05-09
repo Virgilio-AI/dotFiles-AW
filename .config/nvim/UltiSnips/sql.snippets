@@ -10,14 +10,11 @@
 # showUsers -- to show all users available in the server
 # showAll -- for showing everything in a table
 # describe -- for showing the rows of a table
-# showCurUser -- for showing the current user
 # =========== databases ============
 # createDatabase -- for creating a database
 # deleteDatabase -- for deleting a database
 
-# grantAll -- to grant all privileges to user over the database
 # showPrivileges -- to show the privileges
-# helpUsers -- to get help on the users
 
 # ========== table modifications ========
 # foreign -- for  a foreign key
@@ -28,6 +25,13 @@
 # insert -- for inserting a new value into the table
 # insertIfne -- for inserting a value if it doesn't exist
 # update -- for updating the database
+
+
+# =========== users ======
+# passChange -- for changing the password of a user
+# helpUsers -- to get help on the users
+# grantAll -- to grant all privileges to user over the database
+# showCurUser -- for showing the current user
 
 
 
@@ -41,6 +45,7 @@ snippet info "personal information"
 -- personal github: Virgilio-AI
 -- linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 -- contact: virgiliomurilloochoa1@gmail.com
+-- web: virgiliomurillo.com
 $1
 endsnippet
 
@@ -115,9 +120,6 @@ select * from $1 ;
 endsnippet
 
 # options im-> inword
-snippet showCurUser ""
-select user() ;
-endsnippet
 # ==========================
 # ========== databases ======
 # ==========================
@@ -131,11 +133,6 @@ snippet deleteDatabase "for deleting a database"
 drop database ${1:is exists} ${2:name_of_database}
 endsnippet
 # options im-> inword
-snippet grantAll "grant all privileges to user over database"
--- use it on the terminal as sudo
--- sudo mariadb
-grant all privileges on ${1:database_name}.* to '${2:username}'@${3:localhost} ;
-endsnippet
 # options im-> inword
 snippet showPrivileges "to show the privileges"
 show grants for '${1:username}'@'${2:localhost} ;
@@ -179,9 +176,6 @@ snippet union "merge two queries into one"
 -- from branch
 endsnippet
 # options im-> inword
-snippet helpUsers "for getting help on the users"
-# the user that is been used when login normally is the '' user
-endsnippet
 # ==========================
 # ========== table modifications ======
 # ==========================
@@ -247,6 +241,33 @@ set ${2:column_name} = ${3:value}
 -- ex: name='tom',name='jon'
 where ${4:condition} ;
 endsnippet
+
+
+# ==========================
+# ========== users ======
+# ==========================
+
+# options im-> inword
+snippet passChange "for changing the password of a user"
+SET PASSWORD FOR '$1'@${2:localhost} = PASSWORD("$3");
+endsnippet
+snippet helpUsers "for getting help on the users"
+# the user that is been used when login normally is the '' user
+endsnippet
+
+
+snippet grantAll "grant all privileges to user over database"
+-- use it on the terminal as sudo
+-- sudo mariadb
+grant all privileges on ${1:database_name}.* to '${2:username}'@${3:localhost} ;
+endsnippet
+
+
+snippet showCurUser " to show the current user"
+select user() ;
+endsnippet
+
+
 
 snippet deleteRow
 -- to delete a row from the table

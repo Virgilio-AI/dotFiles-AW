@@ -292,7 +292,7 @@ function! BurnAtmel16()
 	let l:FileName = expand("%")
 	let l:Name = expand("%<")
 	# 	let Mhz = input("megahertz(1,2,4,8)")
-	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 8Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
+	let l:BurnMicro = 'sudo avrdude -c usbasp -p m16 -B 1Mhz -F -U hfuse:w:0xd9:m -U flash:w:' . l:Name . '.hex'
 	exe l:ExecuteCommands . '"' . l:BurnMicro . ' ;  read -n1 ' . '"'
 endfunction
 
@@ -336,9 +336,10 @@ function! CompileAndRunAssemblyForAvr()
 	endif
 	sleep 100m
 	:% s/\(0b\d\d\d\d\)\(\d\d\d\d\)/\1_\2/g
-	sleep 100m
-	exe "call cursor(" . l:Line . "," . l:Column . ")"
+	sleep 100
 	:w!
+
+	exe ":call cursor(" . l:Line . "," . l:Column . ")"
 endfunction
 
 function! CompileAndRunAssemblyCode()
@@ -416,7 +417,7 @@ function! RunCompetitivePython()
 		echom " using environment"
 		let l:source = 'source venv/bin/activate ;'
 		let l:deactivate = 'deactivate ; '
-		let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+		let l:StTerminal = ':AsyncRun st -T "floating" -g "100x50" -e sh -c "'
 		let l:StTerminalCLose = ' read -n1 "'
 		let l:filename = expand('%<')
 		if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
@@ -425,7 +426,7 @@ function! RunCompetitivePython()
 			exe l:StTerminal . ' python ' . l:filename . '.py ; ' . l:StTerminalCLose
 		endif
 	else
-		let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+		let l:StTerminal = ':AsyncRun st -T "floating" -g "100x50" -e sh -c "'
 		let l:StTerminalCLose = ' read -n1 "'
 		let l:filename = expand('%<')
 		if filereadable('.ReadInputsPython.zsh') && filereadable('.RunPython.zsh')
@@ -439,7 +440,7 @@ function! RunCompetitivePython()
 endfunction
 
 function! RunCompetitivePythonIn()
-	let l:StTerminal = ':AsyncRun st -T "floating" -g "200x50" -e sh -c "'
+	let l:StTerminal = ':AsyncRun st -T "floating" -g "100x50" -e sh -c "'
 	let l:StTerminalCLose = ' read -n1 "'
 	let l:filename = expand('%<')
 	let l:RunFileFolder = ' ~/.config/nvim/runFileConfigurations'
@@ -596,8 +597,19 @@ endfunction
 function! CompileAndRunCsharp()
 	:w
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
-	let l:filename = expand("%<")
-	let l:CompileCsharp = 'mcs ' . l:filename . '.cs ; '
-	let l:RunCSharp = 'mono ' . l:filename . '.exe ; '
-	exe l:ExecuteCommands . '"' . l:CompileCsharp . l:RunCSharp . ' read -n1 ; "'
+	if filereadable('run.sh')
+		exe ':AsyncRun st -T "floating" -e sh -c "sh run.sh ; read -n1" '
+	else
+		let l:filename = expand("%<")
+		let l:CompileCsharp = 'mcs ' . l:filename . '.cs ; '
+		let l:RunCSharp = 'mono ' . l:filename . '.exe ; '
+		exe l:ExecuteCommands . '"' . l:CompileCsharp . l:RunCSharp . ' read -n1 ; "'
+	endif
+endfunction
+
+function! CompileAndRunCsharpAvalonia()
+	:wa
+	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+	let l:CompileAndRun = 'dotnet run --framework net6.0; '
+	exe l:ExecuteCommands . '"' . l:CompileAndRun . ' read -n1 ; "'
 endfunction

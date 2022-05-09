@@ -2,7 +2,8 @@
 	# create matrix placeholders
 	# create matrix
 	# info
-# --------------- gui's with tkiner ---- 
+# --------------- gui's with tkinter ---- 
+# figma -- for automatically creating tkinter from figma
 # s-gui
 # gBut -- for a button
 # gLab -- for a label
@@ -23,14 +24,18 @@
 
 
 # ---------------   python
+# printCommands -- for pringting the commands available for a datatype or some other kind of object
 # ==== strings
 # forString - for iterate string c style
 # ins - insert variable into a string
 
 # ==== data structures
 # list - for creating a python list
+# sublist - for getting a sublist
 # set - unordered collection of data type, no duplicate
 # tuple - same to list but inmutable
+# help -- for getting help
+# dir -- for checking what to do with a variable type
 
 # ==== files
 # file_open - open a file and read it line by line
@@ -70,10 +75,104 @@
 # plotPoint
 # plotFunction
 
-# ----------------    pandas
+# ==========================
+# ========== Kaggle ======
+# ==========================
+# loc_iloc -- for help on loc iloc
+# import_pandas -- for importing pandas
+# create_dataframe -- for creating a pandas dataframe
+# create_series -- for creating a pandas series ( list of values)
+# read_csv -- for reading a pandas csv
+# csv_len -- for getting the length of the csv
+# csv_head -- for getting the top five elements of the csv
+
+# get_column -- for getting the column of a dataframe
+# get_val -- for getting the value of the column and row
+# get_row -- for getting the row of the pandas dataframe
+# getRange_col -- for getting a range in a column
+# getRange_row -- for getting a range in a row
+# getRange_row_index -- for setting the index column for the dataframe 
+# conditional_selection -- for getting a dataframe with a condition
+# assignToColumn -- for assigning a value to a column
+# columnDescription -- for getting the description of a column (mean, describe, etc)
+# == Sumary functions and maps
+# columnDescription --for getting the description of a column (mean, describe, etc)
+# mapFunction -- for applying a basic function to all cells in a column
+# applyFunction -- for applying a function to all the rows in a dataset
+# == grouping and sorting
+# group_by -- for grouping a dataframe by a column name
+# sort_values -- to sort the values by a column name
+# multiFunction -- for apply multiple functions to the group
+
+# == data types and missing values
+# datatype -- for getting the datatype of a column
+# convertType -- for converting a data type of a column pandas
+# NaN -- for managing Null values or Not a Number values
+# rename -- for renaming the dataset
+# combineDataframe -- for combining a dataframe
+
+# == data cleaning
+# fillWithNextToItVal -- for fill NaN values with the value that comes directly after it
+
+# == scaling and normalization
+# scaleData -- for scaling the used data
+# normalizeData -- for normalizing the given data for a machine learning algoritm
+
+# == parse dates in dataset
+# parseDate -- for parsing a date
+
+# == char encoding
+# fileEncodingProblems -- for finding the file encoding
+# encode -- for encoding a string
+
+# == inconsistencies
+# lookAndFix -- for looking and fixing inconsistencies
+# fuuzyMatching -- for searching and replacing inconsistencies
+
+
+# == graphs
+# linePlot -- for plotting a line plot
+# barChart -- for plotting a barChart
+# heatMap -- for plotting a heat map
+# scatterPlot -- for creating a scatter plot
+# histogram -- for creating a histogram
+# smoothedHistogram -- for creating a smoothed histogram
+# 2dsmoothedhistogram -- for creating a smoothed 2d histogram
+# setstyle -- for setting the style on the plot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ---------------    prevPandas
 # plotcsv
 # pcombinecsv
 # dataDrop
+# readcsv -- for reading a csv as a pandas dataframe
+# describe -- for describing a pandas dataframe
+# columns -- for getting the column names
+# dropna -- to drop missing data in the dataset
+# pd_y -- for setting the target column
+# pd_x -- for setting the input columns
+# split_validation -- for split validating a model
+# model_descition_tree -- for using the model descition tree
+# model_random_forest -- for using the random forest model
+# getMAE -- for getting mean absolute error
+# getBsetTreeSize -- basic code to loop through tree sizes
+# export_csv -- for exporting a solution csv file
+
+
 # ----------------    system interaction
 
 # shOutput
@@ -102,6 +201,8 @@
 
 # crateProject -- for creating a django project from scratch
 # migrate -- for applying models.py file. create tables
+# commonPackages -- for a list of common packages for django
+
 
 
 # --- settings.py ------ MainProjectFolder
@@ -329,6 +430,12 @@ $3DropMenu = OptionMenu($4, $3, *$1)
 $3DropMenu.pack()
 
 endsnippet
+
+
+# options im-> inword
+snippet figma "for automatically creating tkinter from figma"
+tkdesigner $FILE_URL $FIGMA_TOKEN
+endsnippet
 snippet s-gui
 # pack is for piling elements and grid is like a spread sheet
 root = Tk()
@@ -483,6 +590,129 @@ axis=1, # 0 -> rows 1 -> columns
 inplace=False # alter the dataFrame
 )
 endsnippet
+# options im-> inword
+snippet readCsv "for reading a pandas csv"
+${2:name} = pd.read_csv(${1:path/to/csv.csv})
+
+
+# for specific encoding
+# kickstarter_2016 = pd.read_csv("../input/kickstarter-projects/ks-projects-201612.csv", encoding='Windows-1252')
+endsnippet
+
+# options im-> inword
+snippet describe "for describing data"
+${1:pandas_dataframe}.describe
+endsnippet
+
+# options im-> inword
+snippet columns "for getting the column names in pandas"
+${1:name}.columns
+endsnippet
+
+# options im-> inword
+snippet pd_y "for setting the y variable"
+y = ${1:data_frame}.${2:column_name}
+endsnippet
+# options im-> inword
+snippet pd_x "for setting the X input variables"
+x_column = [${1:'name1','name2'}]
+X = ${2:data_frame}.x_column
+endsnippet
+
+# options im-> inword
+snippet split_validation "for setting the split validation"
+from sklearn.model_selection import train_test_split
+
+# split data into training and validation data, for both features and target
+# The split is based on a random number generator. Supplying a numeric value to
+# the random_state argument guarantees we get the same split every time we
+# run this script.
+# X is the parameters given and y is the target
+# random state is the seed for the train -- use the same seed for same results
+
+train_X, val_X, train_y, val_y = train_test_split(X, y, random_state = 0)
+# Define model
+melbourne_model = DecisionTreeRegressor()
+# Fit model
+melbourne_model.fit(train_X, train_y)
+
+# get predicted prices on validation data
+val_predictions = melbourne_model.predict(val_X)
+print(mean_absolute_error(val_y, val_predictions))
+endsnippet
+
+# options im-> inword
+snippet model_descition_tree "for a basic model"
+from sklearn.tree import DecisionTreeRegressor
+
+# Define model. Specify a number for random_state to ensure same results each run
+melbourne_model = DecisionTreeRegressor(random_state=1)
+# X is the parameters and y is the target
+# Fit model
+melbourne_model.fit(X, y)
+
+print("Making predictions for the following 5 houses:")
+print(X.head())
+print("The predictions are")
+print(melbourne_model.predict(X.head()))
+endsnippet
+
+# options im-> inword
+snippet model_random_forest "is the descition tree with randomness"
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
+
+# X is the parameters and y is the target
+forest_model = RandomForestRegressor(random_state=1)
+forest_model.fit(train_X, train_y)
+melb_preds = forest_model.predict(val_X)
+print(mean_absolute_error(val_y, melb_preds))
+endsnippet
+
+# options im-> inword
+snippet getMAE "for getting the mean absolute error of a basic model"
+# this is to get the error testing different size of tree (tree nodes)
+# is meant to be used in a loop
+
+def get_mae(max_leaf_nodes, train_X, val_X, train_y, val_y):
+	model = DecisionTreeRegressor(max_leaf_nodes=max_leaf_nodes, random_state=0)
+	model.fit(train_X, train_y)
+	preds_val = model.predict(val_X)
+	mae = mean_absolute_error(val_y, preds_val)
+	return(mae)
+endsnippet
+
+# options im-> inword
+snippet getBestTreeSize "for getting the best tree size"
+# these are just random numbers used for finding the correct tree size
+# maybe a binary search can be apropiate
+
+candidate_max_leaf_nodes = [5, 25, 50, 100, 250, 500]
+# Write loop to find the ideal tree size from candidate_max_leaf_nodes
+prev = float('inf')
+tree_size = candidate_max_leaf_nodes[0]
+
+for leaf_nodes in candidate_max_leaf_nodes:
+	mae = get_mae(leaf_nodes,train_X,val_X,train_y,val_y)
+	if(prev > mae):
+		tree_size = leaf_nodes
+		prev = mae
+
+# Store the best value of max_leaf_nodes (it will be either 5, 25, 50, 100, 250 or 500)
+best_tree_size = tree_size
+
+endsnippet
+
+# options im-> inword
+snippet export_csv "for exporting a csv file"
+# Run the code to save predictions in the format used for competition scoring
+
+output = pd.DataFrame({'Id': test_data.Id,
+	'SalePrice': test_preds})
+output.to_csv('submission.csv', index=False)
+endsnippet
+
+
 
 # ==========================
 # ========== python ======
@@ -490,6 +720,18 @@ endsnippet
 
 snippet list
 ${1:temp} = [$2]
+endsnippet
+
+# options im-> inword
+snippet sublist "for getting a sublist (slicing)"
+# list[start:end+1:step]
+endsnippet
+
+# options im-> inword
+snippet printCommands "for pringting the commands available for a datatype or some other kind of object"
+for i in dir(${1:dataType}):
+	if i[0] != '_' and "${2:keyword}" in i:
+		print(i)
 endsnippet
 
 snippet forString
@@ -500,9 +742,24 @@ endsnippet
 snippet set
 ${1:temp} = {$2}
 endsnippet
+# options im-> inword
+snippet sublist "getting information on sublist"
+
+endsnippet
 
 snippet tuple
 ${1:temp} = ($2)
+endsnippet
+
+# options im-> inword
+snippet help "for getting help"
+help($1)
+endsnippet
+
+# options im-> inword
+snippet dir "for getting information on a var type"
+print(dir(rolls))
+# where rolls is  a numpy.ndarray
 endsnippet
 
 snippet ins "" im
@@ -626,10 +883,481 @@ endsnippet
 # ==========================
 # ========== pandas ======
 # ==========================
+# options im-> inword
+
+# options im-> inword
+snippet loc_iloc "for information on loc and iloc"
+# the iloc if for using the integer position of the dataframe
+# the loc is for using the label position on the dataframe
+endsnippet
+snippet import_pandas "for importing pandas"
+import pandas as pd
+endsnippet
+
+# options im-> inword
+snippet create_dataframe "for creating a pandas dataframe"
+# optionales
+# index=['idx1','idx2']
+pd.DataFrame({'${1:col_name}':[${2:vals,separated,by,comman}]})
+endsnippet
+
+# options im-> inword
+snippet create_series "for creating a pandas series ( list of values)"
+# optionals
+# index=['index1','index2', ... , 'index5'] -- to assigning a name to the indices
+# name = "name of series" -- for assigning a name to the whole series
+pd.Series([1, 2, 3, 4, 5])
+endsnippet
+
+# options im-> inword
+snippet read_csv "for reading a pandas csv"
+# optionals
+# set the index col manually
+# index_col=num
+dt_name = pd.read_csv("path/to/file.csv")
+
+
+# for specific encoding
+# kickstarter_2016 = pd.read_csv("../input/kickstarter-projects/ks-projects-201612.csv", encoding='Windows-1252')
+
+# for loading dates as index
+# museum_data = pd.read_csv(museum_filepath,index_col="Date",parse_dates=True)
+
+endsnippet
+# options im-> inword
+snippet csv_len "for getting the length of the csv"
+dt_name.shape
+endsnippet
+
+# options im-> inword
+snippet csv_head "for getting the top 5 elements of the csv"
+dt_name.head()
+endsnippet
+
+# options im-> inword
+snippet get_column "for getting the column of a dataframe"
+# dataframe.title
+# dataframe["title"]
+endsnippet
+
+# options im-> inword
+snippet get_val "for getting the value of the column and row"
+# dataframe["title"][num]
+endsnippet
+
+# options im-> inword
+snippet get_row "for getting the row of the pandas dataframe"
+#dataframe.iloc[index_num]
+endsnippet
+
+
+# options im-> inword
+snippet getRange_col "for getting a range in a column"
+# dataframe.loc[row_start:row_end,column]
+# you can pass a list instead to get only the needed indices
+# dataframe.loc[[1,2,3,4],[col1,col2]]
+endsnippet
+
+# options im-> inword
+snippet getRange_row "for getting a range in a row"
+# dataframe.iloc[start:end-1]
+
+# also you can do
+# museum_data.loc[first_slice_q:second_slice_q]
+# because for dates it tends to work because you use a specific index and cannot be -1
+endsnippet
+
+# options im-> inword
+snippet getRange_row_index "for getting a range of rows using the index"
+# remember that loc takes the last element of the range unlike python
+dataframe.loc[row_start:row_end,'index_name_1','index_name_2']
+# you can use a list [1,2,5] instead of a range 1:2
+endsnippet
+
+# options im-> inword
+snippet set_index "for setting the index column for the dataframe"
+dataframe.set_index("title")
+endsnippet
+
+# options im-> inword
+snippet conditional_selection "for getting a dataframe with a condition"
+dataframe.loc[dataframe.title == "Italy"]
+# optional
+# dataframe.loc[dataframe.title.isin(['Italy','France'])]
+# dataframe.loc[dataframe.title.notnull())]
+# use always parenthesis since it tends to fail
+# use & and | instead of and or
+endsnippet
+
+# options im-> inword
+snippet assignToColumn "for assigning a value to a column"
+dataframe['col_title'] = 'constant'
+dataframe['col_title'] = range(len(dataframe),0,-1)
+endsnippet
+
+# options im-> inword
+snippet columnDescription "for getting the column description"
+# for getting general information on the dataframe
+# dt_dataframe['col_name'].describe()
+# for getting the mean needed
+# dt_dataframe['col_name'].mean()
+# for getting the unique values
+# dt_dataframe['col_name'].unique()
+# for getting the times each element appears in the list
+# dt_dataframe['col_name'].value_counts()
+
+endsnippet
+
+
+# options im-> inword
+snippet mapFunction "for applying a basic function to all cells in a column"
+# column_mean = dataFrame.col_name.mean()
+# also you can put a function instead of a lambda function
+# dataFrame.col_name.map(lambda p: p - column_mean)
+
+# also you can apply a operand like
+# and it will be the same
+# dataFrame.col_name - column_mean
+
+# also < > ==  etc
+# example:
+# dataFrame.col_name + " - " + dataFrame.second_col_name
+endsnippet
+
+
+# options im-> inword
+snippet applyFunction "for applying a function to all the rows in a dataset"
+def function(row):
+	row.col_name = row.col_name - 5
+	return row
+
+dataFrame.apply(function, axis='columns')
+endsnippet
+
+
+
+
+
+# options im-> inword
+snippet group_by "for grouping a dataframe by a column name"
+reviews.groupby(['col_name','col_name2']).apply(function,axis='columns')
+
+# reset to normal index
+# reviews.reset_index()
+endsnippet
+
+# options im-> inword
+snippet sort_values "for sorting a pandas dataframe"
+countries_reviewed.sort_values(by=['country', 'len'])
+endsnippet
+
+
+# options im-> inword
+snippet multiFunction "to apply multiple funcitons to the dataframe"
+# example
+
+price_extremes = reviews.groupby('variety').price.agg([min, max])
+endsnippet
+
+
+# options im-> inword
+snippet datatype "for getting the data type of a column"
+reviews.price.dtype
+
+# for getting all columns
+reviews.dtypes
+endsnippet
+
+# options im-> inword
+snippet convertType "for converting a data type of a column pandas"
+reviews.points.astype('float64')
+endsnippet
+
+# options im-> inword
+snippet NaN "for managing Null values or Not a Number values"
+reviews[pd.isnull(reviews.country)]
+reviews[pd.notnull(reviews.country)]
+reviews.region_2.fillna("Unknown")
+
+# also for replacing the values
+reviews.taster_twitter_handle.replace("@kerinokeefe", "@kerino")
+endsnippet
+
+# options im-> inword
+snippet rename "for renaming the dataset"
+reviews.rename(columns={'points': 'score'})
+reviews.rename(index={0: 'firstEntry', 1: 'secondEntry'})
+
+reviews.rename_axis("wines", axis='rows').rename_axis("fields", axis='columns')
+
+
+endsnippet
+
+
+# options im-> inword
+snippet combineDataframe "for combining a dataframe"
+# when you have different dataframes with the same columns
+pd.concat([canadian_youtube, british_youtube])
+
+
+# combine dataframes that have an index in common
+# where MeetID is the index in common and can be different
+powerlifting_combined = powerlifting_meets.set_index("MeetID").join(powerlifting_competitors.set_index("MeetID"))
+endsnippet
+
+
+# options im-> inword
+snippet fillWithNextToItVal "for fill NaN values with the value that comes directly after it"
+sf_permits_with_na_imputed = sf_permits.fillna(method='bfill', axis=0)
+endsnippet
+
+
+# options im-> inword
+snippet scalingData "for scaling the needed data"
+## this is used to place the data in a matter of 0 - 1
+# generate 1000 data points randomly drawn from an exponential distribution
+original_data = np.random.exponential(size=1000)
+
+# mix-max scale the data between 0 and 1
+# where the columns are the list of columns to be normalized
+scaled_data = minmax_scaling(original_data, columns=[0])
+endsnippet
+
+# options im-> inword
+snippet normalizeData "for normalizing the given data for a machine learning algoritm"
+# normalize the exponential data with boxcox
+normalized_data = stats.boxcox(original_data)
+endsnippet
+
+
+# options im-> inword
+snippet parseDate "for parsing a date"
+# where pd is for pandas and landslides['date'] is the name of the column
+landslides['date_parsed'] = pd.to_datetime(landslides['date'], format="%m/%d/%y")
+endsnippet
+
+# options im-> inword
+snippet fileEncodingProblems "for finding the file encoding"
+# get the byte size of the file to predict the needed file encoding
+def getSize(fileobject):
+	fileobject.seek(0,2) # move the cursor to the end of the file
+	size = fileobject.tell()
+	return size
+
+file = open('../input/fatal-police-shootings-in-the-us/PoliceKillingsUS.csv', 'rb')
+print( getSize(file))
+
+
+# now replace with the number of bytes needed
+with open("../input/fatal-police-shootings-in-the-us/PoliceKillingsUS.csv", 'rb') as rawdata:
+	result = chardet.detect(rawdata.read(${1:number_of_bytes}))
+
+# check what the character encoding might be
+print(result)
+
+# now replace the needed file encoding
+police_killings = pd.read_csv("../input/fatal-police-shootings-in-the-us/PoliceKillingsUS.csv",encoding='Windows-1252')
+endsnippet
+
+
+# options im-> inword
+snippet encode "for encoding a string"
+# encode it to a different encoding, replacing characters that raise errors
+after = before.encode("utf-8", errors="replace")
+endsnippet
+
+
+# options im-> inword
+snippet lookAndFix "for looking and fixing the needed inconsistencies"
+# get all the unique values in the 'Country' column
+countries = professors['Country'].unique()
+
+# sort them alphabetically and then take a closer look
+countries.sort()
+countries
+
+# convert to lower case
+professors['Country'] = professors['Country'].str.lower()
+# remove trailing white spaces
+professors['Country'] = professors['Country'].str.strip()
+
+endsnippet
+
+# options im-> inword
+snippet fuuzyMatching "for searching and replacing inconsistencies "
+# get the top 10 closest matches to "south korea"
+matches = fuzzywuzzy.process.extract("south korea", countries, limit=10, scorer=fuzzywuzzy.fuzz.token_sort_ratio)
+
+# take a look at them
+matches
+###################################
+######################
+
+
+# function to replace rows in the provided column of the provided dataframe
+# that match the provided string above the provided ratio with the provided string
+def replace_matches_in_column(df, column, string_to_match, min_ratio = 47):
+# get a list of unique strings
+	strings = df[column].unique()
+
+# get the top 10 closest matches to our input string
+matches = fuzzywuzzy.process.extract(string_to_match, strings, 
+		limit=10, scorer=fuzzywuzzy.fuzz.token_sort_ratio)
+
+# only get matches with a ratio > 90
+	close_matches = [matches[0] for matches in matches if matches[1] >= min_ratio]
+
+# get the rows of all the close matches in our dataframe
+rows_with_matches = df[column].isin(close_matches)
+
+# replace all rows with close matches with the input matches 
+	df.loc[rows_with_matches, column] = string_to_match
+
+# let us know the function's done
+	print("All done!")
+
+# use the function we just wrote to replace close matches to "south korea" with "south korea"
+replace_matches_in_column(df=professors, column='Country', string_to_match="south korea")
+
+endsnippet
+
+
+# options im-> inword
+snippet linePlot "for plotting a line plot"
+# Set the width and height of the figure
+# to set the plot figure size
+plt.figure(figsize=(16,6))
+
+# Line chart showing how FIFA rankings evolved over time 
+# where data is the pandas dataframe
+# this will plot all the columns as lines
+sns.lineplot(data=fifa_data)
+
+
+# to add a line to the plot just use the
+# sns.lineplot(data=column)
+
+plt.plot()
+endsnippet
+
+# options im-> inword
+snippet barChart "for plotting a bar chart"
+# Set the width and height of the figure
+plt.figure(figsize=(10,6))
+
+# Add title
+plt.title("Average Arrival Delay for Spirit Airlines Flights, by Month")
+
+# Bar chart showing average arrival delay for Spirit Airlines flights by month
+sns.barplot(x=flight_data.index, y=flight_data['NK'])
+
+# Add label for vertical axis
+plt.ylabel("Arrival delay (in minutes)")
+endsnippet
+
+# options im-> inword
+snippet heatMap "for plotting a heat map"
+# Set the width and height of the figure
+plt.figure(figsize=(14,7))
+
+# Add title
+plt.title("Average Arrival Delay for Each Airline, by Month")
+
+# Heatmap showing average arrival delay for each airline by month
+# annot for showing the values on each cell
+
+# for the colors
+
+cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", ["red","violet","blue"])
+
+# simply pass a list of colors if you want it to be discrete
+# ex: ['red','blue']
+
+sns.heatmap(data=flight_data, annot=True,cmap=cmap)
+
+
+
+
+# Add label for horizontal axis
+plt.xlabel("Airline")
+endsnippet
+
+
+
+# options im-> inword
+snippet scatterPlot "for creating a scatter plot"
+
+
+# Set the width and height of the figure
+plt.figure(figsize=(14,7))
+
+# note that the scatter plot should only be used once
+# for creating a scatter plot
+sns.scatterplot(x=insurance_data['bmi'], y=insurance_data['charges'])
+
+# now for creating a regresion line plot
+sns.regplot(x=insurance_data['bmi'], y=insurance_data['charges'])
+
+
+
+# now for plotting multiple variables
+sns.scatterplot(x=insurance_data['bmi'], y=insurance_data['charges'], hue=insurance_data['smoker'])
+
+# sns.lmplot(x="bmi", y="charges", hue="smoker", data=insurance_data)
+
+# also a variable is the swarm plot
+sns.swarmplot(x=insurance_data['smoker'],y=insurance_data['charges'])
+endsnippet
+
+# options im-> inword
+snippet histogram "for creating a histogram"
+# Histograms for each species
+sns.distplot(a=iris_set_data['Petal Length (cm)'], label="Iris-setosa", kde=False)
+sns.distplot(a=iris_ver_data['Petal Length (cm)'], label="Iris-versicolor", kde=False)
+sns.distplot(a=iris_vir_data['Petal Length (cm)'], label="Iris-virginica", kde=False)
+
+# Add title
+plt.title("Histogram of Petal Lengths, by Species")
+
+# Force legend to appear
+plt.legend()
+endsnippet
+
+# options im-> inword
+snippet smoothedHistogram "for creating a smoothed histogram"
+# KDE plots for each species
+sns.kdeplot(data=iris_set_data['Petal Length (cm)'], label="Iris-setosa", shade=True)
+sns.kdeplot(data=iris_ver_data['Petal Length (cm)'], label="Iris-versicolor", shade=True)
+sns.kdeplot(data=iris_vir_data['Petal Length (cm)'], label="Iris-virginica", shade=True)
+
+# Add title
+plt.title("Distribution of Petal Lengths, by Species")
+endsnippet
+
+# options im-> inword
+snippet 2dsmoothedhistogram "for a 2d smoothed histogram"
+# 2D KDE plot
+sns.jointplot(x=iris_data['Petal Length (cm)'], y=iris_data['Sepal Width (cm)'], kind="kde")
+endsnippet
+
+# options im-> inword
+snippet setstyle "for setting the style"
+sns.set_style("dark")
+endsnippet
+
+
+
+
+
+# ==========================
+# ========== prevPandas ======
+# ==========================
 
 snippet plotcsv
+
 ${1:nombre} = "${2:path}"
 $1_dt = pd.read_csv($1)
+
 endsnippet
 
 snippet plot2dsk
@@ -688,6 +1416,7 @@ snippet infoj
 - personal github: Virgilio-AI
 - linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 - contact: virgiliomurilloochoa1@gmail.com
+- web: virgiliomurillo.com
 endsnippet
 
 
@@ -780,8 +1509,15 @@ snippet sk
 # personal github: Virgilio-AI
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
+
 from typing import *
 import heapq as hp
+from collections import deque
+
+# set = set() # .remove(val),.add(val)
+# dic = {} # .remove(id),dic[key] = val
+# arr = []
 
 endsnippet
 
@@ -791,6 +1527,7 @@ snippet info
 # personal github: Virgilio-AI
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
 endsnippet
 
 
@@ -875,6 +1612,12 @@ snippet migrate "for creating a migration with databases"
 # python manage.py sqlmigrate ${1:appName} ${2:migration_number ex:0001}
 # python manage.py migrate
 
+endsnippet
+# options im-> inword
+snippet commonPackages "for a list of common package"
+django-ckeditor
+mysqlclient
+pillow
 endsnippet
 # options im-> inword
 snippet createApp "for creating a django app"

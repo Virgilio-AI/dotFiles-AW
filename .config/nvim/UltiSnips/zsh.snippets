@@ -17,6 +17,8 @@
 #
 # ===== main functionalities =====
 #
+# math -- for using math 
+# arrlen -- for getting the length of an array
 # split -- for spliting a string from a character
 # function -- for creating a function
 # stringArr -- a string as an array
@@ -225,8 +227,15 @@ endsnippet
 # ==========================
 # ========== main functionalities ======
 # ==========================
-
+snippet math
+ans=$(( 3 + i ))
+endsnippet
+snippet arrlen
+len=$#name
+endsnippet
 snippet split
+# the character us just the character alone example : , .
+# the string is the name of the string witouth the $ or anuthing else
 ${1:parts}=("${(@s[${2:character}])${3:string}}") # ex: a line
 endsnippet
 
@@ -256,6 +265,7 @@ snippet sk
 # personal github: Virgilio-AI
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
 # #########################################
 $1
 endsnippet
@@ -267,6 +277,7 @@ snippet info
 # personal github: Virgilio-AI
 # linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 # contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
 # ############################
 endsnippet
 
