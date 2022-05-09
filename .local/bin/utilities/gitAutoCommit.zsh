@@ -35,7 +35,6 @@ sudo rsync -aAXv --delete --exclude={'.git','BraveSoftware','cfiles','Electron',
 sudo rsync -aAXv --delete --exclude={'qutebrowser','.git','Proteus 7 Professional'} ~/.local/ ~/Documents/GitRepos/dotFiles-AW/.local/ | tee -a /tmp/utilities/gitAutoCommit
 sudo rsync -aAXv --delete --exclude=.git ~/images/ ~/Documents/GitRepos/dotFiles-AW/images/ | tee -a /tmp/utilities/gitAutoCommit
 sudo rsync -aAXv --exclude=.git ~/Documents/GitRepos/installationGuide-AW/main.pdf ~/Documents/GitRepos/archiso-AW/airootfs/root/InstallationGuide.pdf | tee -a /tmp/utilities/gitAutoCommit
- | tee -a /tmp/utilities/gitAutoCommit
 # for zsh files and profile file
 
 # ==========================
