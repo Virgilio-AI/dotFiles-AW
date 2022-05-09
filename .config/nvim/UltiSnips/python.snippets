@@ -36,6 +36,7 @@
 # tuple - same to list but inmutable
 # help -- for getting help
 # dir -- for checking what to do with a variable type
+# heap -- for help on heaps
 
 # ==== files
 # file_open - open a file and read it line by line
@@ -160,13 +161,52 @@
 
 
 
-# == 
+# == intermediate machine learning -- for more refined machine learning
+
+# scoreModels -- for scoring the models
+# imputter -- for replacing missing values with a simple regression
+# completeImputter -- for using imputer and specifying that the imputter was performed in a column
+# ordinalEncoder -- for categorical values to encode them in integer colum
+# oneHotEncoding -- like the above but particullarly usefull when you have a column that encapsulates mo categories
+# splitOneHotEncoding -- for using ordinalEncoder on columns that have a lot of unique values
+# pipeLine -- for using a pipieline for better performance and less bugs
+# crossValidation -- for using crossvalidation with a pipeline and a regressionForest
+# xgboost -- for using the better xgboost
+# dataLeackage -- for looking and dropping data leackage
 
 
+# == sql data analysis big query
+# loadBigQuery -- for loading the python big query module
+# BQ_query -- for executing a sql command in big query
+# BQ_big_queries -- for executing a big query without exceding the limit
+# BQ_groupBy_having_count -- for executing thouse on a database big query
+# BQ_orderBy -- for ordering by
+# BQ_dates -- for working with dates on big query
+# BQ_with_as -- for nested queries better readability
+# BQ_join -- for join in big query
+
+# == advanced big query
+# BQ_left_join -- for doing the big query left join
+# BQ_over_clause -- for using the over clause
+# BQ_partition_clause -- for using the partition clause
+# BQ_unest -- for unesting nested data or repeated data
+# BQ_speed_functions -- usable functions to see the efficiency of the queries
+
+# == intro to deep learning
+# model1LinearUnit -- for creating a model with one linear unit
+# getWeightsAndBiases -- for getting weights and biases
+# plotOutputOfUntrained -- for plotting the output of an untrained linear model
+# loss_optimizer -- for adding a loss and the optimizer
+# train_dl -- for training a deep learning model
+# plotLosstrainingData -- for plotting loss training data
+# animateDeepLearning -- for animating a deep learnig project
+# earlyStopping -- for getting an early stopping
+# binaryClassification -- for classifying in bynary
 
 
-
-
+# === computer vision
+# define_pretrained_base -- for defining the pre trained base
+# 
 
 
 
@@ -802,6 +842,13 @@ print(dir(rolls))
 # where rolls is  a numpy.ndarray
 endsnippet
 
+# options im-> inword
+snippet heap "for help on heaps"
+test = [[]] * 4
+# for pushing into a heap
+hp.heappush(test[2],6)
+endsnippet
+
 snippet ins "" im
 "+str($1)+"
 endsnippet
@@ -1429,6 +1476,1133 @@ sns.relplot(
 	x="Longitude", y="Latitude", hue="Cluster", data=X, height=6,
 );
 endsnippet
+
+
+# options im-> inword
+snippet scoreModels "for scoring the models"
+from sklearn.ensemble import RandomForestRegressor
+
+# Define the models
+model_1 = RandomForestRegressor(n_estimators=50, random_state=0)
+model_2 = RandomForestRegressor(n_estimators=100, random_state=0)
+model_3 = RandomForestRegressor(n_estimators=100, criterion='absolute_error', random_state=0)
+model_4 = RandomForestRegressor(n_estimators=200, min_samples_split=20, random_state=0)
+model_5 = RandomForestRegressor(n_estimators=100, max_depth=7, random_state=0)
+
+models = [model_1, model_2, model_3, model_4, model_5]
+
+from sklearn.metrics import mean_absolute_error
+
+# Function for comparing different models
+def score_model(model, X_t=X_train, X_v=X_valid, y_t=y_train, y_v=y_valid):
+	model.fit(X_t, y_t)
+	preds = model.predict(X_v)
+	return mean_absolute_error(y_v, preds)
+
+for i in range(0, len(models)):
+	mae = score_model(models[i])
+	print("Model %d MAE: %d" % (i+1, mae))
+
+
+endsnippet
+
+# options im-> inword
+snippet imputter "for replacing missing values with a simple regression"
+from sklearn.impute import SimpleImputer
+
+# Imputation
+my_imputer = SimpleImputer()
+imputed_X_train = pd.DataFrame(my_imputer.fit_transform(X_train))
+imputed_X_valid = pd.DataFrame(my_imputer.transform(X_valid))
+
+# Imputation removed column names; put them back
+imputed_X_train.columns = X_train.columns
+imputed_X_valid.columns = X_valid.columns
+
+print("MAE from Approach 2 (Imputation):")
+print(score_dataset(imputed_X_train, imputed_X_valid, y_train, y_valid))
+endsnippet
+
+# options im-> inword
+snippet completeImputter "for using imputer and specifying that the imputter was performed in a column"
+# Make copy to avoid changing original data (when imputing)
+X_train_plus = X_train.copy()
+X_valid_plus = X_valid.copy()
+
+# Make new columns indicating what will be imputed
+for col in cols_with_missing:
+	X_train_plus[col + '_was_missing'] = X_train_plus[col].isnull()
+	X_valid_plus[col + '_was_missing'] = X_valid_plus[col].isnull()
+
+# Imputation
+my_imputer = SimpleImputer()
+imputed_X_train_plus = pd.DataFrame(my_imputer.fit_transform(X_train_plus))
+imputed_X_valid_plus = pd.DataFrame(my_imputer.transform(X_valid_plus))
+
+# Imputation removed column names; put them back
+imputed_X_train_plus.columns = X_train_plus.columns
+imputed_X_valid_plus.columns = X_valid_plus.columns
+
+print("MAE from Approach 3 (An Extension to Imputation):")
+print(score_dataset(imputed_X_train_plus, imputed_X_valid_plus, y_train, y_valid))
+endsnippet
+
+# options im-> inword
+snippet ordinalEncoder "for categorical values to encode them in integer colum"
+from sklearn.preprocessing import OrdinalEncoder
+
+# Make copy to avoid changing original data 
+label_X_train = X_train.copy()
+label_X_valid = X_valid.copy()
+
+# Apply ordinal encoder to each column with categorical data
+ordinal_encoder = OrdinalEncoder()
+label_X_train[object_cols] = ordinal_encoder.fit_transform(X_train[object_cols])
+label_X_valid[object_cols] = ordinal_encoder.transform(X_valid[object_cols])
+
+print("MAE from Approach 2 (Ordinal Encoding):") 
+print(score_dataset(label_X_train, label_X_valid, y_train, y_valid))
+endsnippet
+
+
+# options im-> inword
+snippet oneHotEncoding "like the above but particullarly usefull when you have a column that encapsulates mo categories"
+from sklearn.preprocessing import OneHotEncoder
+
+# Apply one-hot encoder to each column with categorical data
+OH_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
+OH_cols_train = pd.DataFrame(OH_encoder.fit_transform(X_train[object_cols]))
+OH_cols_valid = pd.DataFrame(OH_encoder.transform(X_valid[object_cols]))
+
+# One-hot encoding removed index; put it back
+OH_cols_train.index = X_train.index
+OH_cols_valid.index = X_valid.index
+
+# Remove categorical columns (will replace with one-hot encoding)
+num_X_train = X_train.drop(object_cols, axis=1)
+num_X_valid = X_valid.drop(object_cols, axis=1)
+
+# Add one-hot encoded columns to numerical features
+OH_X_train = pd.concat([num_X_train, OH_cols_train], axis=1)
+OH_X_valid = pd.concat([num_X_valid, OH_cols_valid], axis=1)
+
+print("MAE from Approach 3 (One-Hot Encoding):") 
+print(score_dataset(OH_X_train, OH_X_valid, y_train, y_valid))
+endsnippet
+
+# options im-> inword
+snippet splitOneHotEncoding "for using ordinalEncoder on columns that have a lot of unique values"
+## for separating the high unique values columns
+# Columns that will be one-hot encoded
+low_cardinality_cols = [col for col in object_cols if X_train[col].nunique() < 10]
+
+# Columns that will be dropped from the dataset
+high_cardinality_cols = list(set(object_cols)-set(low_cardinality_cols))
+
+print('Categorical columns that will be one-hot encoded:', low_cardinality_cols)
+print('\nCategorical columns that will be dropped from the dataset:', high_cardinality_cols)
+
+# now one hot encoding and cardinality encoding
+
+
+from sklearn.preprocessing import OneHotEncoder
+
+# Apply one-hot encoder to each column with categorical data
+OH_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
+OH_cols_train = pd.DataFrame(OH_encoder.fit_transform(X_train[low_cardinality_cols]))
+OH_cols_valid = pd.DataFrame(OH_encoder.transform(X_valid[low_cardinality_cols]))
+
+# One-hot encoding removed index; put it back
+OH_cols_train.index = X_train.index
+OH_cols_valid.index = X_valid.index
+
+# Remove categorical columns (will replace with one-hot encoding)
+num_X_train = X_train.drop(object_cols, axis=1)
+num_X_valid = X_valid.drop(object_cols, axis=1)
+
+# Add one-hot encoded columns to numerical features
+OH_X_train = pd.concat([num_X_train, OH_cols_train], axis=1)
+OH_X_valid = pd.concat([num_X_valid, OH_cols_valid], axis=1)
+endsnippet
+
+# options im-> inword
+snippet pipeLine "for using a pipieline for better performance and less bugs"
+# Step 1: Define Preprocessing Steps
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
+
+# Preprocessing for numerical data
+numerical_transformer = SimpleImputer(strategy='constant')
+
+# Preprocessing for categorical data
+categorical_transformer = Pipeline(steps=[
+	('imputer', SimpleImputer(strategy='most_frequent')),
+	('onehot', OneHotEncoder(handle_unknown='ignore'))
+])
+
+# Bundle preprocessing for numerical and categorical data
+preprocessor = ColumnTransformer(
+	transformers=[
+		('num', numerical_transformer, numerical_cols),
+		('cat', categorical_transformer, categorical_cols)
+	])
+# Step 2: Define the Model
+
+from sklearn.ensemble import RandomForestRegressor
+
+model = RandomForestRegressor(n_estimators=100, random_state=0)
+
+
+
+
+# Step 3: Create and Evaluate the Pipeline
+from sklearn.metrics import mean_absolute_error
+
+# Bundle preprocessing and modeling code in a pipeline
+my_pipeline = Pipeline(steps=[('preprocessor', preprocessor),('model', model)])
+
+# Preprocessing of training data, fit model 
+my_pipeline.fit(X_train, y_train)
+
+# Preprocessing of validation data, get predictions
+preds = my_pipeline.predict(X_valid)
+
+# Evaluate the model
+score = mean_absolute_error(y_valid, preds)
+print('MAE:', score)
+endsnippet
+
+
+# options im-> inword
+snippet crossValidation "for using crossvalidation with a pipeline and a regressionForest"
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+
+my_pipeline = Pipeline(steps=[('preprocessor', SimpleImputer()),('model',RandomForestRegressor(n_estimators=50,random_state=0))])
+
+from sklearn.model_selection import cross_val_score
+
+# Multiply by -1 since sklearn calculates *negative* MAE
+scores = -1 * cross_val_score(my_pipeline, X, y,cv=5,scoring='neg_mean_absolute_error')
+
+print("MAE scores:\n", scores)
+
+endsnippet
+
+# options im-> inword
+snippet xgboost "for using the better xgboost"
+from xgboost import XGBRegressor
+
+my_model = XGBRegressor()
+my_model.fit(X_train, y_train)
+
+from sklearn.metrics import mean_absolute_error
+
+predictions = my_model.predict(X_valid)
+print("Mean Absolute Error: " + str(mean_absolute_error(predictions, y_valid)))
+
+endsnippet
+
+
+
+
+
+
+# options im-> inword
+snippet dataLeackage "for looking and dropping data leackage"
+
+
+## first we test the model and see that it has 98% of accuracy
+from sklearn.pipeline import make_pipeline
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+
+# Since there is no preprocessing, we don't need a pipeline (used anyway as best practice!)
+my_pipeline = make_pipeline(RandomForestClassifier(n_estimators=100))
+cv_scores = cross_val_score(my_pipeline, X, y, cv=5,scoring='accuracy')
+
+print("Cross-validation accuracy: %f" % cv_scores.mean())
+
+## then we can see that the expenditure is creating the leackage
+expenditures_cardholders = X.expenditure[y]
+expenditures_noncardholders = X.expenditure[~y]
+
+print('Fraction of those who did not receive a card and had no expenditures: %.2f' \
+	%((expenditures_noncardholders == 0).mean()))
+print('Fraction of those who received a card and had no expenditures: %.2f' \
+	%(( expenditures_cardholders == 0).mean()))
+
+
+## so we fix the leackage
+# Drop leaky predictors from dataset
+potential_leaks = ['expenditure', 'share', 'active', 'majorcards']
+X2 = X.drop(potential_leaks, axis=1)
+
+# Evaluate the model with leaky predictors removed
+cv_scores = cross_val_score(my_pipeline, X2, y, cv=5,scoring='accuracy')
+
+print("Cross-val accuracy: %f" % cv_scores.mean())
+endsnippet
+
+
+
+
+# options im-> inword
+snippet loadBigQuery "for loading the python big query module"
+from google.cloud import bigquery
+
+
+# Create a "Client" object
+client = bigquery.Client()
+
+
+# Construct a reference to the "hacker_news" dataset
+dataset_ref = client.dataset("hacker_news", project="bigquery-public-data")
+
+# API request - fetch the dataset
+dataset = client.get_dataset(dataset_ref)
+
+# List all the tables in the "hacker_news" dataset
+tables = list(client.list_tables(dataset))
+
+# Print names of all tables in the dataset (there are four!)
+for table in tables:  
+	print(table.table_id)
+
+
+# Construct a reference to the "full" table
+table_ref = dataset_ref.table("full")
+
+# API request - fetch the table
+table = client.get_table(table_ref)
+
+# Print information on all the columns in the "full" table in the "hacker_news" dataset
+table.schema
+
+
+# Preview the first five lines of the "full" table
+client.list_rows(table, max_results=5).to_dataframe()
+
+# Preview the first five entries in the "by" column of the "full" table
+client.list_rows(table, selected_fields=table.schema[:1], max_results=5).to_dataframe()
+
+endsnippet
+
+# options im-> inword
+snippet BQ_query "for executing a sql command in big query"
+
+from google.cloud import bigquery
+
+# Create a "Client" object
+client = bigquery.Client()
+
+# Construct a reference to the "openaq" dataset
+dataset_ref = client.dataset("openaq", project="bigquery-public-data")
+
+# API request - fetch the dataset
+dataset = client.get_dataset(dataset_ref)
+
+# List all the tables in the "openaq" dataset
+tables = list(client.list_tables(dataset))
+
+# Print names of all tables in the dataset (there's only one!)
+for table in tables:  
+	print(table.table_id)
+
+# Construct a reference to the "global_air_quality" table
+table_ref = dataset_ref.table("global_air_quality")
+
+# API request - fetch the table
+table = client.get_table(table_ref)
+
+# Preview the first five lines of the "global_air_quality" table
+client.list_rows(table, max_results=5).to_dataframe()
+
+
+
+#### now actually the query
+
+# Query to select all the items from the "city" column where the "country" column is 'US'
+query = """
+	SELECT city
+	FROM `bigquery-public-data.openaq.global_air_quality`
+	WHERE country = 'US'
+	"""
+
+# Create a "Client" object
+client = bigquery.Client()
+
+# Set up the query
+query_job = client.query(query)
+
+
+# API request - run the query, and return a pandas DataFrame
+us_cities = query_job.to_dataframe()
+
+# What five cities have the most measurements?
+us_cities.city.value_counts().head()
+
+
+
+
+endsnippet
+
+# options im-> inword
+snippet BQ_big_queries "for executing a big query without exceding the limit"
+### you can test wheter the query is going to be very huge
+
+
+# Query to get the score column from every row where the type column has value "job"
+query = """
+	SELECT score, title
+	FROM `bigquery-public-data.hacker_news.full`
+	WHERE type = "job" 
+	"""
+
+# Create a QueryJobConfig object to estimate size of query without running it
+dry_run_config = bigquery.QueryJobConfig(dry_run=True)
+
+# API request - dry run query to estimate costs
+dry_run_query_job = client.query(query, job_config=dry_run_config)
+
+print("This query will process {} bytes.".format(dry_run_query_job.total_bytes_processed))
+
+
+
+### especify the limit and execut the query
+# Only run the query if it's less than 1 MB
+ONE_MB = 1000*1000
+safe_config = bigquery.QueryJobConfig(maximum_bytes_billed=ONE_MB)
+
+# Set up the query (will only run if it's less than 1 MB)
+safe_query_job = client.query(query, job_config=safe_config)
+
+# API request - try to run the query, and return a pandas DataFrame
+safe_query_job.to_dataframe()
+
+endsnippet
+
+
+# options im-> inword
+snippet BQ_groupBy_having_count ""
+from google.cloud import bigquery
+
+# Create a "Client" object
+client = bigquery.Client()
+
+# Construct a reference to the "hacker_news" dataset
+dataset_ref = client.dataset("hacker_news", project="bigquery-public-data")
+
+# API request - fetch the dataset
+dataset = client.get_dataset(dataset_ref)
+
+# Construct a reference to the "comments" table
+table_ref = dataset_ref.table("comments")
+
+# API request - fetch the table
+table = client.get_table(table_ref)
+
+# Preview the first five lines of the "comments" table
+client.list_rows(table, max_results=5).to_dataframe()
+
+
+### this is where the code starts
+
+
+# Query to select comments that received more than 10 replies
+query_popular = """
+	SELECT parent, COUNT(id)
+	FROM `bigquery-public-data.hacker_news.comments`
+	GROUP BY parent
+	HAVING COUNT(id) > 10
+	"""
+
+# Set up the query (cancel the query if it would use too much of 
+# your quota, with the limit set to 10 GB)
+safe_config = bigquery.QueryJobConfig(maximum_bytes_billed=10**10)
+query_job = client.query(query_popular, job_config=safe_config)
+
+# API request - run the query, and convert the results to a pandas DataFrame
+popular_comments = query_job.to_dataframe()
+
+# Print the first five rows of the DataFrame
+popular_comments.head()
+
+
+
+endsnippet
+
+
+# options im-> inword
+snippet BQ_orderBy "for working with the order by"
+query = """
+select id,name,animal
+from `bigquery-public-data.pet_records.pets`
+order by id
+"""
+endsnippet
+
+# options im-> inword
+snippet BQ_dates "for working with dates on big query"
+# Query to find out the number of accidents for each day of the week
+query = """
+	SELECT COUNT(consecutive_number) AS num_accidents, 
+		EXTRACT(DAYOFWEEK FROM timestamp_of_crash) AS day_of_week
+	FROM `bigquery-public-data.nhtsa_traffic_fatalities.accident_2015`
+	GROUP BY day_of_week
+	ORDER BY num_accidents DESC
+	"""
+# also check the documentation for extract method
+
+#########
+##### convert the datetime to date
+######
+query_with_CTE = """ 
+	WITH time AS 
+	(
+		SELECT DATE(block_timestamp) AS trans_date
+		FROM `bigquery-public-data.crypto_bitcoin.transactions`
+	)
+	SELECT COUNT(1) AS transactions,
+		trans_date
+	FROM time
+	GROUP BY trans_date
+	ORDER BY trans_date
+	"""
+
+# Set up the query (cancel the query if it would use too much of 
+# your quota, with the limit set to 10 GB)
+safe_config = bigquery.QueryJobConfig(maximum_bytes_billed=10**10)
+query_job = client.query(query_with_CTE, job_config=safe_config)
+
+# API request - run the query, and convert the results to a pandas DataFrame
+transactions_by_date = query_job.to_dataframe()
+
+# Print the first five rows
+transactions_by_date.head()
+endsnippet
+
+
+# options im-> inword
+snippet BQ_with_as "for nested queries better readability"
+
+query = """
+with seniors as 
+(
+	select id,name
+	from `bigquery-public-data.nhtsa_traffic_fatalities.accident_2015`
+	where years_old > 5
+)
+"""
+
+select id
+from seniors
+endsnippet
+
+# options im-> inword
+snippet BQ_join "for join in big query"
+# Query to determine the number of files per license, sorted by number of files
+query = """
+	SELECT L.license, COUNT(1) AS number_of_files
+	FROM `bigquery-public-data.github_repos.sample_files` AS sf
+	INNER JOIN `bigquery-public-data.github_repos.licenses` AS L 
+		ON sf.repo_name = L.repo_name
+	GROUP BY L.license
+	ORDER BY number_of_files DESC
+	"""
+
+# Set up the query (cancel the query if it would use too much of 
+# your quota, with the limit set to 10 GB)
+safe_config = bigquery.QueryJobConfig(maximum_bytes_billed=10**10)
+query_job = client.query(query, job_config=safe_config)
+
+# API request - run the query, and convert the results to a pandas DataFrame
+file_count_by_license = query_job.to_dataframe()
+endsnippet
+
+
+
+# == advanced BQ
+# options im-> inword
+snippet BQ_left_join "for doing the big query left join"
+# Query to select all stories posted on January 1, 2012, with number of comments
+join_query = """
+	WITH c AS
+	(
+	SELECT parent, COUNT(*) as num_comments
+	FROM `bigquery-public-data.hacker_news.comments` 
+	GROUP BY parent
+	)
+	SELECT s.id as story_id, s.by, s.title, c.num_comments
+	FROM `bigquery-public-data.hacker_news.stories` AS s
+	LEFT JOIN c
+	ON s.id = c.parent
+	WHERE EXTRACT(DATE FROM s.time_ts) = '2012-01-01'
+	ORDER BY c.num_comments DESC
+	"""
+
+# Run the query, and return a pandas DataFrame
+join_result = client.query(join_query).result().to_dataframe()
+join_result.head()
+endsnippet
+
+
+# options im-> inword
+snippet BQ_over_clause ""
+# Query to count the (cumulative) number of trips per day
+num_trips_query = """
+	WITH trips_by_day AS
+	(
+	SELECT DATE(start_date) AS trip_date,
+		COUNT(*) as num_trips
+	FROM `bigquery-public-data.san_francisco.bikeshare_trips`
+	WHERE EXTRACT(YEAR FROM start_date) = 2015
+	GROUP BY trip_date
+	)
+	SELECT *,
+		SUM(num_trips) 
+			OVER (
+				ORDER BY trip_date
+				ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+				) AS cumulative_trips
+		FROM trips_by_day
+	"""
+
+# Run the query, and return a pandas DataFrame
+num_trips_result = client.query(num_trips_query).result().to_dataframe()
+num_trips_result.head()
+
+
+endsnippet
+
+# options im-> inword
+snippet  partition_by "for using the partition clause"
+# Query to track beginning and ending stations on October 25, 2015, for each bike
+start_end_query = """
+	SELECT bike_number,
+		TIME(start_date) AS trip_time,
+		FIRST_VALUE(start_station_id)
+			OVER (
+				PARTITION BY bike_number
+				ORDER BY start_date
+				ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+				) AS first_station_id,
+				E(end_station_id)
+				(
+				PARTITION BY bike_number
+				ORDER BY start_date
+				ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+				) AS last_station_id,
+		start_station_id,
+		end_station_id
+	FROM `bigquery-public-data.san_francisco.bikeshare_trips`
+	WHERE DATE(start_date) = '2015-10-25' 
+	"""
+
+# Run the query, and return a pandas DataFrame
+start_end_result = client.query(start_end_query).result().to_dataframe()
+start_end_result.head()
+endsnippet
+
+
+# options im-> inword
+snippet BQ_unest "for unesting nested data or repeated data"
+
+# Your code here
+all_langs_query = """
+	SELECT l.name, l.bytes
+	FROM `bigquery-public-data.github_repos.languages`,
+		UNNEST(language) as l
+	WHERE repo_name = 'polyrabbit/polyglot'
+	ORDER BY l.bytes DESC
+	"""
+endsnippet
+
+
+
+
+
+# options im-> inword
+snippet BQ_speed_functions "usable functions to see the efficiency of the queries"
+
+from google.cloud import bigquery
+from time import time
+
+client = bigquery.Client()
+
+def show_amount_of_data_scanned(query):
+	# dry_run lets us see how much data the query uses without running it
+	dry_run_config = bigquery.QueryJobConfig(dry_run=True)
+	query_job = client.query(query, job_config=dry_run_config)
+	print('Data processed: {} GB'.format(round(query_job.total_bytes_processed / 10**9, 3)))
+
+def show_time_to_run(query):
+	time_config = bigquery.QueryJobConfig(use_query_cache=False)
+	start = time()
+	query_result = client.query(query, job_config=time_config).result()
+	end = time()
+	print('Time to run: {} seconds'.format(round(end-start, 3)))
+
+endsnippet
+
+# === intro to deep learning
+
+# options im-> inword
+snippet model1LinearUnit "for creating a model with one linear unit"
+from tensorflow import keras
+from tensorflow.keras import layers
+
+# Create a network with 1 linear unit
+model = keras.Sequential([
+	layers.Dense(units=1, input_shape=[3])
+])
+endsnippet
+
+
+# options im-> inword
+snippet getWeightsAndBiases "for getting weights and biases"
+w, b = model.weights
+
+print("Weights\n{}\n\nBias\n{}".format(w, b)
+endsnippet
+
+# options im-> inword
+snippet plotOutputOfUntrained "for plotting the output of an untrained linear model"
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+model = keras.Sequential([
+	layers.Dense(1, input_shape=[1]),
+])
+
+x = tf.linspace(-1.0, 1.0, 100)
+y = model.predict(x)
+
+plt.figure(dpi=100)
+plt.plot(x, y, 'k')
+plt.xlim(-1, 1)
+plt.ylim(-1, 1)
+plt.xlabel("Input: x")
+plt.ylabel("Target y")
+w, b = model.weights # you could also use model.get_weights() here
+plt.title("Weight: {:0.2f}\nBias: {:0.2f}".format(w[0][0], b[0]))
+plt.show()
+endsnippet
+
+# options im-> inword
+snippet buildSequencialModel "this is for creating a secuencial model"
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+	# the hidden ReLU layers
+	layers.Dense(units=4, activation='relu', input_shape=[2]),
+	layers.Dense(units=3, activation='relu'),
+	# the linear output layer 
+	layers.Dense(units=1),
+])
+
+
+endsnippet
+
+# options im-> inword
+snippet loss_optimizer "for adding a loss and the optimizer"
+model.compile(
+	optimizer="adam",
+	loss="mae",
+)
+
+endsnippet
+
+# options im-> inword
+snippet train_dl "for training a deep learning model"
+history = model.fit(
+	X_train, y_train,
+	validation_data=(X_valid, y_valid),
+	batch_size=256,
+	epochs=10,
+)
+
+endsnippet
+
+# options im-> inword
+snippet plotLosstrainingData "for plotting loss training data"
+import pandas as pd
+
+# convert the training history to a dataframe
+history_df = pd.DataFrame(history.history)
+# use Pandas native plot method
+history_df['loss'].plot();
+endsnippet
+
+# options im-> inword
+snippet animateDeepLearning "for animating a deep learnig project"
+from learntools.deep_learning_intro.dltools import animate_sgd
+
+
+# YOUR CODE HERE: Experiment with different values for the learning rate, batch size, and number of examples
+learning_rate = 0.05
+batch_size = 32
+num_examples = 256
+
+animate_sgd(
+	learning_rate=learning_rate,
+	batch_size=batch_size,
+	num_examples=num_examples,
+	# You can also change these, if you like
+	steps=50, # total training steps (batches seen)
+	true_w=3.0, # the slope of the data
+	true_b=2.0, # the bias of the data
+)
+endsnippet
+
+
+# options im-> inword
+snippet earlyStopping "for getting an early stopping"
+
+from tensorflow import keras
+from tensorflow.keras import layers, callbacks
+
+early_stopping = callbacks.EarlyStopping(
+	min_delta=0.001, # minimium amount of change to count as an improvement
+	patience=20, # how many epochs to wait before stopping
+	restore_best_weights=True,
+	
+	
+	l = keras.Sequential([
+	layers.Dense(512, activation='relu', input_shape=[11]),
+	layers.Dense(512, activation='relu'),
+	layers.Dense(512, activation='relu'),
+	layers.Dense(1),
+	
+	l.compile(
+	optimizer='adam',
+	loss='mae',
+)
+
+
+history = model.fit(
+	X_train, y_train,
+	validation_data=(X_valid, y_valid),
+	batch_size=256,
+	epochs=500,
+	callbacks=[early_stopping], # put your callbacks in a list
+	verbose=0,  # turn off training log
+)
+
+history_df = pd.DataFrame(history.history)
+history_df.loc[:, ['loss', 'val_loss']].plot();
+print("Minimum validation loss: {}".format(history_df['val_loss'].min()))
+
+endsnippet
+
+
+
+
+# options im-> inword
+snippet dropout_batchNormalization "for using dropout and batch normalization"
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+	layers.Dense(1024, activation='relu', input_shape=[11]),
+	layers.Dropout(0.3),
+	layers.BatchNormalization(),
+	layers.Dense(1024, activation='relu'),
+	layers.Dropout(0.3),
+	layers.BatchNormalization(),
+	layers.Dense(1024, activation='relu'),
+	layers.Dropout(0.3),
+	layers.BatchNormalization(),
+	layers.Dense(1),
+])
+endsnippet
+
+
+
+# options im-> inword
+snippet binaryClassification "for classifying in bynary"
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+	layers.Dense(4, activation='relu', input_shape=[33]),
+	layers.Dense(4, activation='relu'),    
+	layers.Dense(1, activation='sigmoid'),
+])
+
+model.compile(
+	optimizer='adam',
+	loss='binary_crossentropy',
+	metrics=['binary_accuracy'],
+)
+# include early stopping
+early_stopping = keras.callbacks.EarlyStopping(
+	patience=10,
+	min_delta=0.001,
+	restore_best_weights=True,
+)
+
+history = model.fit(
+	X_train, y_train,
+	validation_data=(X_valid, y_valid),
+	batch_size=512,
+	epochs=1000,
+	callbacks=[early_stopping],
+	verbose=0, # hide the output because we have so many epochs
+)
+
+
+
+endsnippet
+
+
+# options im-> inword
+snippet define_pretrained_base "for defining the pre trained base"
+pretrained_base = tf.keras.models.load_model(
+	'../input/cv-course-models/cv-course-models/vgg16-pretrained-base',
+)
+pretrained_base.trainable = False
+endsnippet
+
+# options im-> inword
+snippet attachHeAD "for attaching the head"
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+	pretrained_base,
+	layers.Flatten(),
+	layers.Dense(6, activation='relu'),
+	layers.Dense(1, activation='sigmoid'),
+])
+endsnippet
+
+
+# options im-> inword
+snippet CV_train "for training a simple computer vision algoritm"
+model.compile(
+	optimizer='adam',
+	loss='binary_crossentropy',
+	metrics=['binary_accuracy'],
+)
+
+history = model.fit(
+	ds_train,
+	validation_data=ds_valid,
+	epochs=30,
+	verbose=0,
+)
+endsnippet
+
+# options im-> inword
+snippet CV_plot_acc "for plotting the binary accuracy"
+import pandas as pd
+
+history_frame = pd.DataFrame(history.history)
+history_frame.loc[:, ['loss', 'val_loss']].plot()
+history_frame.loc[:, ['binary_accuracy', 'val_binary_accuracy']].plot();
+endsnippet
+
+
+
+# options im-> inword
+snippet filterWithConvulsion "for filtering with convulsion"
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+	layers.Conv2D(filters=64, kernel_size=3), # activation is None
+	# More layers follow
+])
+endsnippet
+
+
+# options im-> inword
+snippet relu_activation "for activating the relu with te conv2d"
+model = keras.Sequential([
+	layers.Conv2D(filters=64, kernel_size=3, activation='relu')
+	# More layers follow
+])
+endsnippet
+
+# options im-> inword
+snippet CV_tfKernel "for defining a basic tensorflow kernel"
+kernel = tf.constant([
+	[-2, -1, 0],
+	[-1, 1, 1],
+	[0, 1, 2],
+])
+endsnippet
+
+# options im-> inword
+snippet condenseWithMaximumPooling "adding condense with maximum pooling"
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+	layers.Conv2D(filters=64, kernel_size=3), # activation is None
+	layers.MaxPool2D(pool_size=2),
+	# More layers follow
+])
+endsnippet
+
+
+# options im-> inword
+snippet imageCondensePool "for image condensing a pool"
+import tensorflow as tf
+
+image_condense = tf.nn.pool(
+	input=image_detect, # image in the Detect step above
+	window_shape=(2, 2),
+	pooling_type='MAX',
+	# we'll see what these do in the next lesson!
+	strides=(2, 2),
+	padding='SAME',
+)
+
+plt.figure(figsize=(6, 6))
+plt.imshow(tf.squeeze(image_condense))
+plt.axis('off')
+plt.show();
+endsnippet
+
+
+# options im-> inword
+snippet globalAveragePooling ""
+feature_maps = [visiontools.random_map([5, 5], scale=0.1, decay_power=4) for _ in range(8)]
+
+gs = gridspec.GridSpec(1, 8, wspace=0.01, hspace=0.01)
+plt.figure(figsize=(18, 2))
+for i, feature_map in enumerate(feature_maps):
+	plt.subplot(gs[i])
+	plt.imshow(feature_map, vmin=0, vmax=1)
+	plt.axis('off')
+plt.suptitle('Feature Maps', size=18, weight='bold', y=1.1)
+plt.show()
+
+# reformat for TensorFlow
+feature_maps_tf = [tf.reshape(feature_map, [1, *feature_map.shape, 1])
+	for feature_map in feature_maps]
+
+global_avg_pool = tf.keras.layers.GlobalAvgPool2D()
+pooled_maps = [global_avg_pool(feature_map) for feature_map in feature_maps_tf]
+img = np.array(pooled_maps)[:,:,0].T
+
+plt.imshow(img, vmin=0, vmax=1)
+plt.axis('off')
+plt.title('Pooled Feature Maps')
+plt.show();
+endsnippet
+
+
+# options im-> inword
+snippet sliding_window "for the sliding window tecniques padding and stride"
+show_extraction(
+	image, kernel,
+	
+	# Window parameters
+	conv_stride=1,
+	pool_size=2,
+	pool_stride=2,
+	
+	subplot_shape=(1, 4),
+	figsize=(14, 6),
+)
+endsnippet
+
+# options im-> inword
+snippet customConvents "for defining a custom convent"
+### define the model
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+
+	# First Convolutional Block
+	layers.Conv2D(filters=32, kernel_size=5, activation="relu", padding='same',
+		# give the input dimensions in the first layer
+		# [height, width, color channels(RGB)]
+		input_shape=[128, 128, 3]),
+	layers.MaxPool2D(),
+	
+	# Second Convolutional Block
+	layers.Conv2D(filters=64, kernel_size=3, activation="relu", padding='same'),
+	layers.MaxPool2D(),
+	
+	# Third Convolutional Block
+	layers.Conv2D(filters=128, kernel_size=3, activation="relu", padding='same'),
+	layers.MaxPool2D(),
+	
+	# Classifier Head
+	layers.Flatten(),
+	layers.Dense(units=6, activation="relu"),
+	layers.Dense(units=1, activation="sigmoid"),
+])
+model.summary()
+
+#### train the model
+model.compile(
+	optimizer=tf.keras.optimizers.Adam(epsilon=0.01),
+	loss='binary_crossentropy',
+	metrics=['binary_accuracy']
+)
+
+history = model.fit(
+	ds_train,
+	validation_data=ds_valid,
+	epochs=40,
+	verbose=0,
+)
+
+#### test the model
+import pandas as pd
+
+history_frame = pd.DataFrame(history.history)
+history_frame.loc[:, ['loss', 'val_loss']].plot()
+history_frame.loc[:, ['binary_accuracy', 'val_binary_accuracy']].plot();
+endsnippet
+
+
+
+# options im-> inword
+snippet dataAugmentation "for adding features to the cv model"
+from tensorflow import keras
+from tensorflow.keras import layers
+# these are a new feature in TF 2.2
+from tensorflow.keras.layers.experimental import preprocessing
+
+
+pretrained_base = tf.keras.models.load_model(
+	'../input/cv-course-models/cv-course-models/vgg16-pretrained-base',
+)
+pretrained_base.trainable = False
+
+model = keras.Sequential([
+	# Preprocessing
+	preprocessing.RandomFlip('horizontal'), # flip left-to-right
+	preprocessing.RandomContrast(0.5), # contrast change by up to 50%
+	# Base
+	pretrained_base,
+	# Head
+	layers.Flatten(),
+	layers.Dense(6, activation='relu'),
+	layers.Dense(1, activation='sigmoid'),
+])
+endsnippet
+
+
+
+
+
+
+
+
+
+
 
 
 
