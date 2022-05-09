@@ -206,9 +206,28 @@
 
 # === computer vision
 # define_pretrained_base -- for defining the pre trained base
-# 
+# attachHeAD -- for attaching the head
+# CV_train -- for training a simple computer vision algoritm
+# CV_plot_acc -- for plotting the binary accuracy
+# filterWithConvulsion -- for filtering with convulsion
+# relu_activation -- for activating the relu with te conv2d
+# CV_tfKernel -- for defining a basic tensorflow kernel
+# condenseWithMaximumPooling -- adding condense with maximum pooling
+# imageCondensePool -- for image condensing a pool
+# globalAveragePooling -- for global average pooling
+# sliding_window -- for the sliding window tecniques padding and stride
+# customConvents -- for defining a custom convent
+# dataAugmentation -- for adding features to the cv model
 
 
+# == reinforcement learning
+# definingAgents -- for defining an agent for machine learning
+
+
+
+
+# ==  time series
+# fitLinearRegression -- for fitting a linear regression model from a forecasting task
 
 
 
@@ -2595,9 +2614,134 @@ model = keras.Sequential([
 endsnippet
 
 
+# options im-> inword
+snippet RL_setup "for the setup on reinforcement learnig"
+from kaggle_environments import make, evaluate
+
+# Create the game environment
+# Set debug=True to see the errors if your agent refuses to run
+env = make("connectx", debug=True)
+
+# List of available default agents
+print(list(env.agents))
+endsnippet
+
+# options im-> inword
+snippet definingAgents "for defining agents for the competition"
+# Selects random valid column
+def agent_random(obs, config):
+	valid_moves = [col for col in range(config.columns) if obs.board[col] == 0]
+	return random.choice(valid_moves)
+
+# Selects middle column
+def agent_middle(obs, config):
+	return config.columns//2
+
+# Selects leftmost valid column
+def agent_leftmost(obs, config):
+	valid_moves = [col for col in range(config.columns) if obs.board[col] == 0]
+	return valid_moves[0]
+endsnippet
 
 
 
+# options im-> inword
+snippet fitLinearRegression "for fitting a linear regression model from a forecasting task"
+from sklearn.linear_model import LinearRegression
+
+# Training data
+X = df.loc[:, ['Time']]  # features
+y = df.loc[:, 'NumVehicles']  # target
+
+# Train the model
+model = LinearRegression()
+model.fit(X, y)
+
+# Store the fitted values as a time series with the same time index as
+# the training data
+y_pred = pd.Series(model.predict(X), index=X.index)
+endsnippet
+
+# options im-> inword
+snippet lagFeature "for adding a lag feature to a pandas dataframe"
+df['Lag_1'] = df['NumVehicles'].shift(1)
+df.head()
+endsnippet
+
+# options im-> inword
+snippet moving_average_plot "for a moving average plot"
+moving_average = tunnel.rolling(
+	window=365,       # 365-day window
+	center=True,      # puts the average at the center of the window
+	min_periods=183,  # choose about half the window size
+).mean()              # compute the mean (could also do median, std, min, max, ...)
+
+ax = tunnel.plot(style=".", color="0.5")
+moving_average.plot(
+	ax=ax, linewidth=3, title="Tunnel Traffic - 365-Day Moving Average", legend=False,
+);
+endsnippet
+
+# options im-> inword
+snippet splines "an alternative to polinomials that is better"
+from pyearth import Earth
+
+# Target and features are the same as before
+y = average_sales.copy()
+dp = DeterministicProcess(index=y.index, order=1)
+X = dp.in_sample()
+
+# Fit a MARS model with `Earth`
+model = Earth()
+model.fit(X, y)
+
+y_pred = pd.Series(model.predict(X), index=X.index)
+
+ax = y.plot(**plot_params, title="Average Sales", ylabel="items sold")
+ax = y_pred.plot(ax=ax, linewidth=3, label="Trend")
+endsnippet
+
+# options im-> inword
+snippet plotSeasonability "for plotting seasonability"
+X = tunnel.copy()
+
+# days within a week
+X["day"] = X.index.dayofweek  # the x-axis (freq)
+X["week"] = X.index.week  # the seasonal period (period)
+
+# days within a year
+X["dayofyear"] = X.index.dayofyear
+X["year"] = X.index.year
+fig, (ax0, ax1) = plt.subplots(2, 1, figsize=(11, 6))
+seasonal_plot(X, y="NumVehicles", period="week", freq="day", ax=ax0)
+seasonal_plot(X, y="NumVehicles", period="year", freq="dayofyear", ax=ax1);
+
+plot_periodogram(tunnel.NumVehicles);
+
+
+
+
+endsnippet
+
+
+# options im-> inword
+snippet seasonalFeatures "for creating seasonal features"
+from statsmodels.tsa.deterministic import CalendarFourier, DeterministicProcess
+
+fourier = CalendarFourier(freq="A", order=10)  # 10 sin/cos pairs for "A"nnual seasonality
+
+dp = DeterministicProcess(
+	index=tunnel.index,
+	constant=True,               # dummy feature for bias (y-intercept)
+	order=1,                     # trend (order 1 means linear)
+	seasonal=True,               # weekly seasonality (indicators)
+	additional_terms=[fourier],  # annual seasonality (fourier)
+	drop=True,                   # drop terms to avoid collinearity
+)
+
+X = dp.in_sample()  # create features for dates in tunnel.index
+
+endsnippet
 
 
 
