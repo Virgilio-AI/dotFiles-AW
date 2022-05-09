@@ -173,3 +173,14 @@
 #for ignoring all the windows programs
 .local/bin/windowsPrograms
 .local/bin/windowsPrograms/*
+
+.config/X11/.Xmodmap
+.config/X11/temp.sh
+.config/lazygit/config.yml
+.config/mpv/input.conf
+.config/mpv/mpv.conf
+.config/sc-im
+.config/vlc
+.config/zathura
+.config/mimeapps.list
+.config/zsh/.zdirs
