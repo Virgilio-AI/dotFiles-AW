@@ -412,6 +412,13 @@ endfunction
 " ========== python 
 " =================================
 
+function! RunCompetitivePythonTest()
+	let l:StTerminal = ':AsyncRun st -T "floating" -g "100x50" -e sh -c "'
+	let l:StTerminalCLose = ' read -n1 "'
+	let l:filename = expand('%<')
+	exe l:StTerminal . ' python ' . l:filename . '.py ; ' . l:StTerminalCLose
+endfunction
+
 function! RunCompetitivePython()
 	if isdirectory('venv')
 		echom " using environment"

@@ -417,6 +417,7 @@ nnoremap gx :AsyncRun st -e sh -c "brave <c-r><c-a>"
 " =================================
 augroup pythonFiles
 	autocmd BufEnter *.py nnoremap <F11> :w<CR>:call RunCompetitivePython()<CR>
+	autocmd BufEnter *.py nnoremap <F11><F11><F11> :w<CR>:call RunCompetitivePythonTest()<CR>
 	autocmd BufEnter *.py nnoremap <F11><F11> :w<CR>:call RunCompetitivePythonIn()<CR>
 	autocmd BufEnter *.py nnoremap <F5> :call createPythonEnvironment()
 augroup end
