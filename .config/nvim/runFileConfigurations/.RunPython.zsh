@@ -46,7 +46,7 @@ then
 		correctFile=.${name}_Out${i}_Correct.txt
 		echo "===== $tempFile and $correctFile ====="
 		diffVar=$(git diff --no-index $tempFile $correctFile)
-		diff --color='always' -y $tempFile $correctFile
+		cpdiff $tempFile $correctFile
 		# use () instead of [[]] for some examples
 		if [[ $diffVar != "" ]]
 		then
