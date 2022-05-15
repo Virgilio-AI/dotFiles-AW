@@ -184,7 +184,10 @@ export EDITOR=nvim
 export VISUAL=nvim
 export SUDO_EDITOR
 export MANPAGER='nvim +Man!'
-PROMPT='%S%F{green}%n%s%f%B%~%F{yellow} $(parse_git_branch)%f %F{red}$%f%b '
+
+
+precmd() { print "" }
+PROMPT='%S%F{green}%n%s%f%B%~%F{yellow} $(parse_git_branch)%f %F{red}$%f%b'
 
 
 

@@ -42,8 +42,11 @@ then
 	echo " diff files: "
 	errors="n"
 	for (( i=1;i<=$IF;i++ )); do
-		diffVar=$(git diff --no-index .${name}_Out${i}.txt .${name}_Out${i}_Correct.txt)
-		git diff --no-index .${name}_Out${i}.txt .${name}_Out${i}_Correct.txt
+		tempFile=.${name}_Out${i}.txt
+		correctFile=.${name}_Out${i}_Correct.txt
+		echo "===== $tempFile and $correctFile ====="
+		diffVar=$(git diff --no-index $tempFile $correctFile)
+		cpdiff $tempFile $correctFile
 		# use () instead of [[]] for some examples
 		if [[ $diffVar != "" ]]
 		then

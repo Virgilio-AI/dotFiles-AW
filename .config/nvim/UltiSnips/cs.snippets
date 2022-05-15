@@ -5,6 +5,7 @@
 # cout -- for printing
 # readjson -- for reading a json file
 # split -- for splitting string
+# listHelp -- for getting help on list
 
 
 
@@ -117,6 +118,15 @@ endsnippet
 # options im-> inword
 snippet split "for splitting string"
 string[] $3 = $1.Split('$2');
+endsnippet
+
+# options im-> inword
+snippet listHelp "for getting help on list"
+var listOfStrings = new List<string>();
+
+// do stuff...
+
+string[] arrayOfStrings = listOfStrings.ToArray();
 endsnippet
 
 # ==========================
