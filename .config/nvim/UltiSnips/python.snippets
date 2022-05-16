@@ -27,6 +27,7 @@
 # printCommands -- for pringting the commands available for a datatype or some other kind of object
 # ==== strings
 # forString - for iterate string c style
+# doubleFor -- for getting a for with two different objects to iterate
 # ins - insert variable into a string
 
 # ==== data structures
@@ -860,6 +861,12 @@ for element in range(0, len(${1:string_name})):
 	print($1[element])
 endsnippet
 
+
+# options im-> inword
+snippet doubleFor "for getting a for iterating two different objects"
+for ob1,ob2 in zip(obar1,obarr2):
+	print(ob1,ob2)
+endsnippet
 snippet set
 ${1:temp} = {$2}
 endsnippet

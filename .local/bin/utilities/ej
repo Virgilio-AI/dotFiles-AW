@@ -1,12 +1,4 @@
 #!/usr/bin/zsh
-
-
-# dependencies:
-# jupyter-notebook
-# jupyter ascending plugin for nvim and for jupyter
-# jupytext
-# make sure to restart after all is done
-#
 if [[ "$1" == *.sync.py  || "$1" == *.py ]] ; then
 	echo "error: you choosed the python file"
 	exit
