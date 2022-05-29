@@ -65,7 +65,11 @@ Plug 'KabbAmine/vCoolor.vim'
 
 " now a plugin for live editing html css and bootstrap
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
-call plug#end() 
+
+
+" water Linux plugins
+Plug 'Virgilio-AI/vim-code-runner', { 'branch' : 'develop'}
+call plug#end()
 
 
 

@@ -6,22 +6,21 @@
 
 
 " =================================
-" ========== print file 
+" ========== print file
 " =================================
 nnoremap <leader>pp :call PrintFile()
 
+
 " =================================
-" ========== markdown auto commands
+" ========== Paste commands 
 " =================================
 
 
 augroup markdown
 	autocmd!
-	autocmd! FileType markdown nnoremap <F11> :w<CR>:call CompileAndRunMarkDown()
 	autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup END
 
-autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 
 " =================================
 " ========== Shortcuts file
@@ -149,63 +148,15 @@ augroup end
 
 
 
-" ==================================================
-" =========== compile and run code =================
-" ==================================================
-"function to compile and run a cpp file given any sircunstance
-
-
-"compile and run code in nvim
-augroup Run_cpp
-	execute 'autocmd FileType cpp nnoremap <F11> :call CompileAndRunCpp("g++")<CR>' 
-	execute 'autocmd FileType cpp inoremap <F11> <Esc>:call CompileAndRunCpp("g++")<CR>'
-	execute 'autocmd FileType cpp nnoremap <F11><F11> :call GenerateCompileAndRunFile("g++")<CR>' 
-	execute 'autocmd FileType cpp inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("g++")<CR>'
-augroup end
-
-augroup Run_gcc
-	execute 'autocmd BufEnter *.c nnoremap <F11> :call CompileAndRunCpp("gcc")<CR>' 
-	execute 'autocmd BufEnter *.c inoremap <F11> <Esc>:call CompileAndRunCpp("gcc")<CR>'
-	execute 'autocmd BufEnter *.c nnoremap <F11><F11> :call GenerateCompileAndRunFile("gcc")<CR>' 
-	execute 'autocmd BufEnter *.c inoremap <F11><F11> <Esc>:call GenerateCompileAndRunFile("gcc")<CR>'
-
-
-	execute 'autocmd BufEnter *.avr.c nnoremap <F11> :call CompileAVR()<CR>' 
-	execute 'autocmd BufEnter *.avr.c inoremap <F11> <Esc>:call CompileAVR()<CR>'
-	execute 'autocmd BufEnter *.avr.c nnoremap <F11><F11> :call  BurnAtmel16()<CR>'
-	execute 'autocmd BufEnter *.avr.c inoremap <F11><F11> <Esc>:call BurnAtmel16()<CR>'
-
-
-augroup end
-
 " =================================
 " ========== latex shorcuts 
 " =================================
 
 augroup Tex_Shortcuts
 	autocmd FileType tex nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
-	" compile and open single proyect
-	execute 'autocmd FileType tex nnoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
-	" compile and open single file
-	execute 'autocmd FileType tex inoremap <F11> <Esc>:call CompileAndRunLatexSingleFile()' 
-	" compile and open proyect
-	execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProject()' 
-	execute 'autocmd FileType tex nnoremap <F10> <Esc>:call CompileAndRunLatexProject()' 
-	"preview proyect
 	execute 'autocmd FileType tex nnoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
 	execute 'autocmd FileType tex inoremap <F10><F10> <Esc>:w<CR>:LLPStartPreview' 
-
 augroup end
-
-" ------------------ End compile and run code -------------------------
-"
-"
-" ==================================================
-" =========== Plug ins key bindings ===================
-" ==================================================
-
-
-
 
 " =================================
 " ========== nerdtree 
@@ -380,47 +331,16 @@ nmap <leader>cb :CMakeBuild<cr>
 nmap <leader>gt :GTestRunUnderCursor<cr>
 
 " =================================
-" ========== run bash files 
-" =================================
-augroup CompileAndRunBashFiles
-	autocmd!
-	exe 'autocmd BufEnter *.sh nnoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
-	exe 'autocmd BufEnter *.sh inoremap <F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sh %:p ; read -n1"'
-	exe 'autocmd BufEnter *.sh nnoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
-	exe 'autocmd BufEnter *.sh inoremap <F11><F11> :w<CR>:AsyncRun st -T "floating" -e sh -c "sudo sh %:p ; read -n1"'
-augroup end
-" =================================
 " ========== Run elm projects and files 
 " =================================
 
 
-augroup CompileAndRunElm
-	autocmd!
-	let b:RootFolder = trim(system('git rev-parse --show-toplevel'))
-	let b:ElmFile= b:RootFolder . '/src/Main.elm'
-
-	if filereadable(b:ElmFile) || &filetype ==# 'elm'
-		autocmd BufEnter * inoremap <F11> <Esc>:w<CR>:call CompileAndRunElm()
-		autocmd BufEnter * nnoremap <F11> :w<CR>:call CompileAndRunElm()
-		autocmd BufEnter * inoremap <F11><F11> <Esc>:w<CR>:call CompileToJavaScript()
-		autocmd BufEnter * nnoremap <F11><F11> :w<CR>:call CompileToJavaScript()
-	endif
-augroup end
 " =================================
 " ========== browser search 
 " =================================
 
 nnoremap gx :AsyncRun st -e sh -c "brave <c-r><c-a>"
 
-" =================================
-" ========== Run python code and jupyter bindings 
-" =================================
-augroup pythonFiles
-	autocmd BufEnter *.py nnoremap <F11> :w<CR>:call RunCompetitivePython()<CR>
-	autocmd BufEnter *.py nnoremap <F11><F11><F11> :w<CR>:call RunCompetitivePythonTest()<CR>
-	autocmd BufEnter *.py nnoremap <F11><F11> :w<CR>:call RunCompetitivePythonIn()<CR>
-	autocmd BufEnter *.py nnoremap <F5> :call createPythonEnvironment()
-augroup end
 
 autocmd FileType python nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 " =================================
@@ -434,14 +354,7 @@ augroup jupyterNoteBook
 augroup end
 
 
-" =================================
-" ========== assembly code 
-" =================================
 
-augroup assembly
-	autocmd FileType asm nnoremap <F11> :w<CR>:call CompileAndRunAssemblyCode()
-	autocmd FileType asm nnoremap <F5>  :w<CR>:call BurnMicroChip()
-augroup end
 
 " =================================
 " ========== coding competitions 
@@ -451,38 +364,6 @@ augroup hackerRank_clean
 	autocmd!
 	autocmd BufEnter *.cpp nnoremap <space>h :call CleanHackerRankFile()
 augroup END
-" =================================
-" ========== r programming 
-" =================================
-
-augroup r_autocmds
-	autocmd FileType r nnoremap <F11> :w<CR>:call CompileAndRunRCode()
-augroup end
-" =================================
-" ========== zsh scripting 
-" =================================
-augroup zsh_scripting
-	autocmd!
-	autocmd FileType zsh nnoremap <F11> :w<CR>:call RunZshScript()
-augroup END
-
-
-
-
-
-
-" =================================
-" ========== mariadb scripting 
-" =================================
-
-augroup mariadb
-	autocmd!
-	autocmd FileType sql nnoremap <F11> :w<CR>:call RunMariaDb()
-	autocmd FileType sql nnoremap <F11><F11> :w<CR>:call RunMariaDbRoot()
-augroup END
-
-
-
 
 " =================================
 " ========== compile and run html 
@@ -490,7 +371,7 @@ augroup END
 
 augroup html_compile
 	autocmd!
-	autocmd FileType html nnoremap <F11> :w<CR>:call RunHtml()
+"	autocmd FileType html nnoremap <F11> :w<CR>:call RunHtml()
 	autocmd FileType html nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup END
 
@@ -500,14 +381,5 @@ augroup END
 augroup PYTHON
 	autocmd BufEnter *.py nnoremap ff :call FormatPythonCode()<CR>
 	exe 'autocmd BufEnter *.py nnoremap <leader>df :w<CR>:AsyncRun st -T "floating" -g "=150x50" -e sh -c "python -m pudb %:p"'
-augroup END
-
-" =================================
-" ========== Compile And Run c# 
-" =================================
-
-augroup csharp
-	autocmd BufEnter *.cs nnoremap <F11> :call CompileAndRunCsharp()<CR>
-	autocmd BufEnter *.cs nnoremap <F12> :call CompileAndRunCsharpAvalonia()<CR>
 augroup END
 

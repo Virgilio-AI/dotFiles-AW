@@ -357,34 +357,33 @@ function! CleanHackerRankFile()
 	execute "% " . 'g/.close()/d'
 endfunction
 
-function! CompileAndRunMarkDown()
-	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
-	let l:FileName = expand("%")
-
-	let l:Temp = expand("%<")
-	let l:Name = ""
-
-	let l:chars = split(l:Temp,'\zs')
-	let l:strlen = len(l:Temp)
-	let l:cont =0
-	while l:cont < l:strlen
-		if l:cont != 0 || l:chars[l:cont] != '.'
-			let l:Name = l:Name . l:chars[l:cont]
-		endif
-		let l:cont = l:cont + 1
-	endwhile
-
-	let l:CreatePandoc = 'pandoc ' . l:FileName. ' -t beamer -o ' . l:Name . '.pdf ; '
-	let l:OpenPandoc = ' zathura ' . l:Name . '.pdf '
-	exe l:ExecuteCommands . '"' . l:CreatePandoc . l:OpenPandoc . ' ; read -n1 ' . '"'
-endfunction
+" function! CompileAndRunMarkDown()
+" 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
+" 	let l:FileName = expand("%")
+" 
+" 	let l:Temp = expand("%<")
+" 	let l:Name = ""
+" 
+" 	let l:chars = split(l:Temp,'\zs')
+" 	let l:strlen = len(l:Temp)
+" 	let l:cont =0
+" 	while l:cont < l:strlen
+" 		if l:cont != 0 || l:chars[l:cont] != '.'
+" 			let l:Name = l:Name . l:chars[l:cont]
+" 		endif
+" 		let l:cont = l:cont + 1
+" 	endwhile
+" 
+" 	let l:CreatePandoc = 'pandoc ' . l:FileName. ' -t beamer -o ' . l:Name . '.pdf ; '
+" 	let l:OpenPandoc = ' zathura ' . l:Name . '.pdf '
+" 	exe l:ExecuteCommands . '"' . l:CreatePandoc . l:OpenPandoc . ' ; read -n1 ' . '"'
+" endfunction
 
 
 " =================================
 " ========== r programming 
 " =================================
 function! CompileAndRunRCode()
-
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:FileName = expand("%")
 
@@ -399,7 +398,6 @@ endfunction
 " =================================
 
 function! RunZshScript()
-
 	let l:ExecuteCommands = ':AsyncRun st -T "floating" -e sh -c '
 	let l:FileName = expand("%")
 	let l:FileName_NoExtension = expand("%<")

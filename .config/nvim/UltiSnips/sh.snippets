@@ -1,6 +1,10 @@
 #din -- basic input window
 #dout -- basic output window
-#for -- c like for
+#cfor -- c like for
+#for -- for regular for
+# array -- for creating an array in sh
+# forArr -- for iterating through an array
+
 # if -- basic if statement
 # dyesno -- yes,no input box
 
@@ -16,6 +20,10 @@
 # for -- basic structure of a for loop
 # forString -- char for loop on string
 # forFile
+
+
+# paths
+# getScriptFolder -- for getting the script folder
 
 
 
@@ -149,8 +157,8 @@ else
 fi
 endsnippet
 
-snippet for
-for (( $1; ${2:i<= $number} ; ${3:i++} ))
+snippet cfor
+for (( $1; ${2:i<= $number} ; ${3:i+=1} ))
 do
 done
 endsnippet
@@ -219,6 +227,23 @@ for ${1:iterator} in ${2:\$array} ; do
 done
 endsnippet
 
+# options im-> inword
+snippet array "for creating an array"
+array = (it1 it2 it3)
+endsnippet
+
+
+# options im-> inword
+snippet forArr "for iterating through an array"
+
+data=("Banana" "Apple" "Onion" "Peach")
+
+for ((i=0;i< ${#data[@]} ;i+=1));
+do
+	echo ${data[i]}
+done
+endsnippet
+
 snippet forString
 # this doesn't prints new lines
 for (( i=0; i<${#${1:string_name}}; i++ )); do
@@ -231,4 +256,18 @@ for ${1:line} in "${(@f)"$(<${2:name.extendion})"}"
 	{
 		${3:echo $line}
 	}
+endsnippet
+
+# options im-> inword
+snippet getScriptFolder "for getting the script folder"
+
+shopt -s extglob &&
+
+MY_PATH=$(dirname "$0")            # relative
+MY_PATH=$(cd "$MY_PATH" && pwd)    # absolutized and normalized
+if [[ -z "$MY_PATH" ]] ; then
+	# error; for some reason, the path is not accessible
+	# to the script (e.g. permissions re-evaled after suid)
+	exit 1  # fail
+fi
 endsnippet
