@@ -184,3 +184,8 @@
 .config/zathura
 .config/mimeapps.list
 .config/zsh/.zdirs
+
+
+
+
+!version.txt
