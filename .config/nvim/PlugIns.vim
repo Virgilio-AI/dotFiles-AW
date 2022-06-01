@@ -68,7 +68,7 @@ Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 
 
 " water Linux plugins
-Plug 'Virgilio-AI/vim-code-runner', { 'branch' : 'develop'}
+Plug 'Virgilio-AI/vim-code-runner'
 call plug#end()
 
 

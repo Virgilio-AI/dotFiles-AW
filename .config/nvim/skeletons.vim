@@ -2,6 +2,22 @@
 " =================================
 " ========== vim skeletons
 " =================================
+"
+
+
+
+" =================================
+" ========== Competitive programming 
+" =================================
+
+
+
+augroup leetCode_sk_trees
+	autocmd!
+	autocmd BufEnter */leetcode/trees/*.py call ExpandSkeleton('sk_tree_lc')
+augroup END
+
+
 
 " =================================
 " ========== elm skeletons 
@@ -17,10 +33,6 @@ augroup END
 " =================================
 
 
-augroup codeForces_sk
-	autocmd!
-	autocmd BufEnter */codeForces/*.cpp call ExpandSkeleton('sk')
-augroup END
 
 augroup leetCode_sk
 	autocmd!
@@ -28,15 +40,7 @@ augroup leetCode_sk
 augroup END
 
 
-augroup cpp
-	autocmd!
-	autocmd BufEnter */dataStructuresAndAlgos/*/*.cpp call ExpandSkeleton('sk')
-augroup END
 
-augroup cpp_main
-	autocmd!
-	autocmd BufEnter *.cpp call ChooseSkeletonCpp()
-augroup END
 " =================================
 " ========== assembly  
 " =================================
@@ -130,3 +134,5 @@ augroup c_squeleton
 	autocmd!
 	autocmd BufEnter *.c call ExpandSkeleton('sk')
 augroup END
+
+

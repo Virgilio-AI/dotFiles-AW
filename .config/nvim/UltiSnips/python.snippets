@@ -3350,6 +3350,75 @@ if __name__ == '__main__':
 
 endsnippet
 
+# options im-> inword
+snippet sk_tree_lc "for leetcode trees"
+
+# Date: `date +%d/%B/%Y\ -\ %A`
+# Author: Virgilio Murillo Ochoa
+# personal github: Virgilio-AI
+# linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+# contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
+
+from typing import *
+import heapq as hp
+from collections import deque
+from collections import defaultdict
+import sys
+
+# dic = defaultdict(int)
+# set = set() # .remove(val),.add(val)
+# dic = {} # .remove(id),dic[key] = val
+# arr = []
+
+class TreeNode:
+	def __init__(self, x):
+		self.val = x
+		self.left = None
+		self.right = None
+# main part
+
+
+# build the tree
+def tree_builder(values):
+	if not values:
+		return None
+	root = TreeNode(values[0])
+	queue = collections.deque([root])
+	leng = len(values)
+	nums = 1
+	while nums < leng:
+		node = queue.popleft()
+		if node:
+			node.left = TreeNode(values[nums]) if values[nums] else None
+			queue.append(node.left)
+			if nums + 1 < leng:
+				node.right = TreeNode(values[nums+1]) if values[nums+1] else None
+				queue.append(node.right)
+				nums += 1
+			nums += 1
+	return root
+
+# def input(f=open(".`!p snip.rv = snip.basename`_In1.txt")): return f.readline().rstrip() # uncomment for debugging
+
+
+def main():
+	arr = [1,2,3,None]
+	tree = tree_builder(arr)
+	# this lines are for testing the solution locally
+	# Example:
+	# a = Solution()
+	# b = a.Function(tree)
+	# print(b)
+
+
+	$1
+
+
+if __name__ == '__main__':
+	main()
+endsnippet
+
 snippet info
 # Date: `date +%d/%B/%Y\ -\ %A`
 # Author: Virgilio Murillo Ochoa
