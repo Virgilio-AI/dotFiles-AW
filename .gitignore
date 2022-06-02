@@ -40,6 +40,7 @@
 
 !/.config/mpd
 !/.config/mpd/*
+!/.config/mpd/playlist
  
 !/.config/neofetch
 !/.config/neofetch/*
