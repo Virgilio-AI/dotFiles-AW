@@ -57,7 +57,7 @@ function SyncFolder()
 # nvim:
 # the first one has so much folders to ignore so will just create the folder here
 mkdir -p $gitRepoFolder/.config/nvim |& tee /tmp/water_linux/Log/pour.txt
-rsync -aAXv --exclude=personal  --exclude=UltiSnips --exclude=Plugins --exclude=.vimdata $homeFolder/.config/nvim/ $gitRepoFolder/.config/nvim/ |& tee -a /tmp/water_linux/Log/pour.txt
+rsync -aAXv $homeFolder/.config/nvim/ $gitRepoFolder/.config/nvim/ |& tee -a /tmp/water_linux/Log/pour.txt
 
 #
 ### the next ones we can use the function
