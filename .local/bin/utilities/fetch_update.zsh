@@ -150,7 +150,7 @@ function update()
 	# use () instead of [[]] for some examples
 	if [[ $ans == "y" || $ans == "Y" || $ans == "" ]]
 	then
-		SyncFolders /tmp/water_linux /home/rockhight && 
+		SyncFolders /tmp/water_linux/dotFiles-AW /home/rockhight && 
 		echo "la actualizacion se ah echo de forma correcta"
 	fi
 }
