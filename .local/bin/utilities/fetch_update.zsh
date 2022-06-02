@@ -126,7 +126,7 @@ function update()
 	rm -rfd dotFiles-AW/.git
 	rm dotFiles-AW/.gitignore
 	rm dotFiles-AW/.gitmodules
-	rm dotFiles-AW/.README.md
+	rm dotFiles-AW/README.md
 	rm dotFiles-AW/version.txt
 	rm dotFiles-AW/.config/nvim/.netrwhist
 	rm -rfd dotFiles-AW/.config/nvim/UltiSnips
