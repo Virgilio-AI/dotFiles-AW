@@ -22,6 +22,10 @@
 
 !/.config/qutebrowser
 /.config/qutebrowser/*
+
+!/.config/zsh
+!/.config/zsh/*
+
 !/.config/qutebrowser/autoconfig.yml
 
 !/.config/lazygit
