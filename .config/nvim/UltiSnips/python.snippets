@@ -1,3 +1,4 @@
+
 # ------------- global functions ------
 	# create matrix placeholders
 	# create matrix
@@ -3364,6 +3365,7 @@ from typing import *
 import heapq as hp
 from collections import deque
 from collections import defaultdict
+import collections
 import sys
 
 # dic = defaultdict(int)
@@ -3403,16 +3405,45 @@ def tree_builder(values):
 
 
 def main():
-	arr = [1,2,3,None]
-	tree = tree_builder(arr)
+	mat = [
+	[5,3,6,2,4,None,7],
+	[5,3,6,2,4,None,7]
+	]
+
+	treeMat = []
+	for i in range(len(mat)):
+		treeMat.append(tree_builder(mat[i]))
+
+	karr = [9,28]
 	# this lines are for testing the solution locally
+
+
+
 	# Example:
-	# a = Solution()
-	# b = a.Function(tree)
-	# print(b)
+	#for i in range(len(karr)):
+	#	a = Solution()
+	#	b = a.findTarget(treeMat[i],karr[i])
+	#	print(b)
 
 
 	$1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
