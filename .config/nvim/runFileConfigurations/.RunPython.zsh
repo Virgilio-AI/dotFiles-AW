@@ -9,6 +9,7 @@
 name=$2
 IF=$1
 enableDiifParam=$3 # can be (y)es or (n)o
+enableInput=$4
 
 # use () instead of [[]] for some examples
 if [[ $IF == -1 ]]
@@ -31,9 +32,17 @@ then
 	done
 fi
 
-for (( i=1;i<=$IF;i++ )); do
-	python ${name}.py < .${name}_In${i}.txt > .${name}_Out${i}.txt
-done
+# use () instead of [[]] for some examples
+if [[ $enableInput == "Y" ]]
+then
+	for (( i=1;i<=$IF;i++ )); do
+		python ${name}.py < .${name}_In${i}.txt > .${name}_Out${i}.txt
+	done
+else
+	for (( i=1;i<=$IF;i++ )); do
+		python ${name}.py > .${name}_Out${i}.txt
+	done
+fi
 
 echo "end of python running ================ "
 # use () instead of [[]] for some examples
@@ -69,4 +78,5 @@ else
 		echo " ================== "
 	done
 fi
+
 

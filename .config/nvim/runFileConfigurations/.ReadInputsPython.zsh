@@ -10,9 +10,14 @@
 name=$2
 IF=$1
 enableDiff=$3
+enableInput=$4
 
 for (( i=1;i<=IF;i++ )); do
-	nvim .${name}_In${i}.txt
+	# use () instead of [[]] for some examples
+	if [[ $enableInput == "y" ]]
+	then
+		nvim .${name}_In${i}.txt
+	fi
 	# use () instead of [[]] for some examples
 	if [[ $enableDiff == "y" ]]
 	then
