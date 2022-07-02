@@ -42,6 +42,8 @@
 # bit_masquing -- for using bit masquing in python
 # sort -- for sorting in python
 # bit_count -- for counting the number of bits an int has
+# treeFromList -- for creating a tree from a list
+# listStructure -- for a basic list structure from a python list
 
 # ==== files
 # file_open - open a file and read it line by line
@@ -917,6 +919,52 @@ snippet bit_count "for counting the number of bits an int has"
 n = 12
 n.bit_count()
 endsnippet
+
+# options im-> inword
+snippet treeFromList "for creating a tree from a list"
+
+def tree_builder(values):
+	if not values:
+		return None
+	root = TreeNode(values[0])
+	queue = collections.deque([root])
+	leng = len(values)
+	nums = 1
+	while nums < leng:
+		node = queue.popleft()
+		if node:
+			node.left = TreeNode(values[nums]) if values[nums] else None
+			queue.append(node.left)
+			if nums + 1 < leng:
+				node.right = TreeNode(values[nums+1]) if values[nums+1] else None
+				queue.append(node.right)
+				nums += 1
+			nums += 1
+	return root
+
+endsnippet
+
+# options im-> inword
+snippet listStructure "for a basic list structure from a python list"
+class ListNode:
+	def __init__(self, val=0, next=None):
+		self.val = val
+		self.next = next
+
+def listStructure(pyList):
+	if	len(pyList) == 0:
+		return None
+	head = ListNode(pyList[0])
+	it = head
+	for i in range(1,len(pyList)):
+		tmp = ListNode(pyList[i])
+		it.next = tmp
+		it = tmp
+	return head
+
+endsnippet
+
+
 
 # options im-> inword
 snippet sort "for sorting in python"
@@ -3343,6 +3391,20 @@ import sys
 
 
 def main():
+	# this lines are for testing the solution locally
+	# Example:
+	karr = []
+	#arr = [
+	#[5,3,6,2,4,None,7],
+	#[5,3,6,2,4,None,7]
+	#]
+	#for i in range(len(arr)):
+	#	a = Solution()
+	#	b = a.solName(arr[i],karr[i])
+	#	b = a.solName(arr[i])
+	#	print(b)
+
+
 	$1
 
 
@@ -3400,6 +3462,7 @@ def tree_builder(values):
 				nums += 1
 			nums += 1
 	return root
+
 
 # def input(f=open(".`!p snip.rv = snip.basename`_In1.txt")): return f.readline().rstrip() # uncomment for debugging
 
