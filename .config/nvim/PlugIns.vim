@@ -1,3 +1,4 @@
+
 call plug#begin('~/.config/nvim/PlugIns/')
 
 " for color and personalization
@@ -69,6 +70,21 @@ Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 
 " water Linux plugins
 Plug 'Virgilio-AI/vim-code-runner'
+
+
+" edit terminal in neovim
+Plug 'brettanomyces/nvim-editcommand'
+
+
+" preview colors
+Plug 'ObserverOfTime/coloresque.vim'
+
+" for the terminal
+Plug 'kassio/neoterm'
+
+" for interface of neovim and leetcode
+Plug 'Virgilio-AI/leetcode-neovim'
+
 call plug#end()
 
 

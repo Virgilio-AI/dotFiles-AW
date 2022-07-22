@@ -3,7 +3,7 @@
 highlight Normal       ctermfg=15  ctermbg=none cterm=none gui=none guibg=none guibg=none
 
 "For the left line of numbers
-highlight LineNr       ctermfg=98  ctermbg=235  cterm=bold gui=bold guibg=none guifg=#68018F
+highlight LineNr       ctermfg=98  ctermbg=none  cterm=bold gui=bold guibg=none guifg=#68018F
 "For the current line number of the left
 highlight CursorLineNr ctermfg=156 ctermbg=235  cterm=bold gui=bold guibg=none guifg=red
 " for the line in a vertival split
@@ -54,7 +54,7 @@ highlight TermCursorNC ctermfg=235   ctermbg=15   cterm=none gui=none guibg=none
 highlight WildMenu     ctermfg=green ctermbg=1    cterm=bold gui=none guibg=none guifg=none
 
 
-highlight Cursor       ctermfg=1  ctermbg=none cterm=none gui=none guibg=#3BCFD5 guifg=none
+highlight Cursor       ctermfg=1  ctermbg=none cterm=none gui=none guibg=yellow guifg=red
 highlight CursorIM     ctermfg=1  ctermbg=none cterm=bold gui=none guibg=none guifg=1
 highlight CursorColumn ctermfg=none ctermbg=none cterm=italic gui=none guibg=none guifg=none
 highlight DiffAdd      ctermfg=1  ctermbg=none cterm=bold gui=bold guifg=1 guibg=none

@@ -1,13 +1,52 @@
 
+function! TerminalSettings()
+	setlocal nonumber
+	setlocal norelativenumber
+	setlocal noshowmode
+	setlocal noruler
+	setlocal laststatus=0
+endfunction
 
-  "mage} ================================= ========== Main Variables 
+
+function! TerminalClose()
+	setlocal showmode
+	setlocal laststatus=1
+	setlocal nu
+	setlocal rnu
+	setlocal re=1
+endfunction
+
+
+
+augroup terminal
+	autocmd!
+	autocmd TermEnter * call TerminalSettings()
+	autocmd TermOpen * startinsert
+	" autocmd TermOpen * call TerminalSettings()
+augroup END
+
+
+augroup closeTerminal
+	autocmd!
+	autocmd TermLeave * call TerminalClose()
+	"autocmd TermClose * call TerminalCLose()
+
+	"autocmd BufEnter * call TerminalClose()
+augroup END
+
+
+
+"mage} ================================= ========== Main Variables 
 " " =================================
-" 
+
+
+
+
+
 let g:CONFIG_PATH = '~/.config/nvim'
 let g:USER = "rockhight"
 let g:GROUP = "wheel"
 let g:CUR_PATH = expand('%:p:h')
-let g:FILE_MANAGER='cfiles'
 let g:SRC_PATH='~/.local/src'
 let g:tex_flavor='latex'
 let &directory = expand( g:CONFIG_PATH .'/.vimdata/swap//')
@@ -18,12 +57,12 @@ let &undodir = expand(   g:CONFIG_PATH . '/.vimdata/undo//')
 " ========== buffer variables 
 " =================================
 augroup BufferVariables
-au BufEnter * let b:FilePathNoExtension = expand("%:r") " path/main
-au BufEnter * let b:Extension = expand("%:e") " tex
-au BufEnter * let b:FileName = expand("%:t") " main.tex
-au BufEnter * let b:FilePath = expand("%") " path/main.tex
-au BufEnter * let b:FileNameNoExtension = expand("%:t:r") " main
-au BufEnter * let b:CurrentFolder = expand("%:p:h") "pathFolder/folder
+	au BufEnter * let b:FilePathNoExtension = expand("%:r") " path/main
+	au BufEnter * let b:Extension = expand("%:e") " tex
+	au BufEnter * let b:FileName = expand("%:t") " main.tex
+	au BufEnter * let b:FilePath = expand("%") " path/main.tex
+	au BufEnter * let b:FileNameNoExtension = expand("%:t:r") " main
+	au BufEnter * let b:CurrentFolder = expand("%:p:h") "pathFolder/folder
 augroup end
 " for copy paste
 
@@ -44,6 +83,10 @@ exec 'source ' . g:CONFIG_PATH . '/skeletons.vim'
 exec 'source ' . g:CONFIG_PATH . '/customCommands.vim'
 
 
+" c style conditionals == != && || 
+"
+
+
 " =================================
 " ========== PlugIn Variables 
 " =================================
@@ -60,13 +103,13 @@ let g:OmniSharp_server_use_mono = 1
 
 " use for correcting issues
 let g:ale_linters = {
-\ 'cs': ['OmniSharp'],
-\ 'python':['pyright','mypy','pylint'],
-\ 'c':[],
-\}
+			\ 'cs': ['OmniSharp'],
+			\ 'python':['pyright','mypy','pylint'],
+			\ 'c':[],
+			\}
 
 
- let g:OmniSharp_server_use_mono = 1
+let g:OmniSharp_server_use_mono = 1
 let g:livepreview_previewer = 'zathura'    " For Latex
 let NERDTreeIgnore = ['\.aux$','\.idx','\.out$','\.log']   " PlugIn NerdTree
 let g:NERDTreeHijackNetrw=1    " PlugIn NerdTree
@@ -74,61 +117,61 @@ let g:UltiSnipsExpandTrigger="<tab>"    " PlugIn UltiSnips
 let g:UltiSnipsEditSplit="vertical"   " PlugIn UltiSnip
 let g:rainbow_active = 0
 let g:rainbow_conf = {
-\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-\	'ctermfgs': ['Blue', 'Yellow', 'Cyan', 'Magenta','Red'],
-\	'guis': [''],
-\	'cterms': [''],
-\	'operators': '_,\|+\|-\|*\|\/\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
-\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-\	'separately': {
-\		'*': {},
-\		'markdown': {
-\			'parentheses_options': 'containedin=markdownCode contained', 
-\		},
-\		'cpp': {
-\			'operators': '_,\+\-\|*\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
-\		},
-\		'c': {
-\			'operators': '_,\+\-\|*\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
-\		},
-\		'lisp': {
-\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'], 
-\		},
-\		'haskell': {
-\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'], 
-\		},
-\		'vim': {
-\		'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-\		},
-\		'perl': {
-\			'syn_name_prefix': 'perlBlockFoldRainbow', 
-\		},
-\		'tex': {
-	\	'parentheses': [ ' start=/\$/ end=/\$/ ' , 'start=/\$\$/ end=/\$\$/ ' , 'start=/\\begin{large}/ end=/\\end{large}/ ','start=/\\begin{Large}/ end=/\\end{Large}/ ','start=/\\begin{LARGE}/ end=/\\end{LARGE}/ ','start=/\\begin{itemize}/ end=/\\end{itemize}/ ','start=/\\begin{tikzpicture}/ end=/\\end{tikzpicture}/ ','start=/\\begin{document}/ end=/\\end{document}/ ','start=/\\begin{paracol}/ end=/\\end{paracol}/ ','start=/\\begin{rightcolumn}/ end=/\\end{rightcolumn}/ ','start=/\\begin{leftcolumn}/ end=/\\end{leftcolumn}/ ' ,'start=/{/ end=/}/' , 'start=/\\begin{cvsection}/ end=/\\end{cvsection}/' , ' start=/\\begin{minipage}/ end=/\\end{minipage}/ '
-		\],
-	\			'operators': '_._',
-\		},
-\		'css': 0, 
-\	}
-\}
+			\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+			\	'ctermfgs': ['Blue', 'Yellow', 'Cyan', 'Magenta','Red'],
+			\	'guis': [''],
+			\	'cterms': [''],
+			\	'operators': '_,\|+\|-\|*\|\/\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
+			\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+			\	'separately': {
+				\		'*': {},
+				\		'markdown': {
+					\			'parentheses_options': 'containedin=markdownCode contained', 
+					\		},
+					\		'cpp': {
+						\			'operators': '_,\+\-\|*\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
+						\		},
+						\		'c': {
+							\			'operators': '_,\+\-\|*\|===\|!==\|!==\|==\|=\|!\|<\|>\|&\|&&_',
+							\		},
+							\		'lisp': {
+								\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'], 
+								\		},
+								\		'haskell': {
+									\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'], 
+									\		},
+									\		'vim': {
+										\		'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+										\		},
+										\		'perl': {
+											\			'syn_name_prefix': 'perlBlockFoldRainbow', 
+											\		},
+											\		'tex': {
+												\	'parentheses': [ ' start=/\$/ end=/\$/ ' , 'start=/\$\$/ end=/\$\$/ ' , 'start=/\\begin{large}/ end=/\\end{large}/ ','start=/\\begin{Large}/ end=/\\end{Large}/ ','start=/\\begin{LARGE}/ end=/\\end{LARGE}/ ','start=/\\begin{itemize}/ end=/\\end{itemize}/ ','start=/\\begin{tikzpicture}/ end=/\\end{tikzpicture}/ ','start=/\\begin{document}/ end=/\\end{document}/ ','start=/\\begin{paracol}/ end=/\\end{paracol}/ ','start=/\\begin{rightcolumn}/ end=/\\end{rightcolumn}/ ','start=/\\begin{leftcolumn}/ end=/\\end{leftcolumn}/ ' ,'start=/{/ end=/}/' , 'start=/\\begin{cvsection}/ end=/\\end{cvsection}/' , ' start=/\\begin{minipage}/ end=/\\end{minipage}/ '
+												\],
+												\			'operators': '_._',
+												\		},
+												\		'css': 0, 
+												\	}
+												\}
 let g:minimap_width = 10
 
 let g:Hexokinase_highlighters = ['backgroundfull']
-
-
+ 
 " =================================
 " ========== Set variables 
 " =================================
 "
-"
+
+
 
 " for colors
-set showtabline=2
-set termguicolors
+set showtabline=1
 set foldmethod=indent
 set foldnestmax=1
 set wildmenu
 set wildmode=longest,list,full
+" set termguicolors
 
 exec 'set viminfo+=n' . g:CONFIG_PATH . '/.vimdata/viminfo '
 set encoding=utf-8
@@ -159,10 +202,10 @@ set scrolloff=10 " keep the mouse centerd
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
+	" Recently vim can merge signcolumn and number column into one
+	set signcolumn=number
 else
-  set signcolumn=yes
+	set signcolumn=yes
 endif
 
 
@@ -180,4 +223,20 @@ endif
 if !isdirectory(&undodir) | call mkdir(&undodir, "p") | endif
 if !isdirectory(&backupdir) | call mkdir(&backupdir, "p") | endif
 if !isdirectory(&directory) | call mkdir(&directory, "p") | endif
+
+" Terminal Buffer
+
+
+
+" Leetcode Nvim Configs:
+augroup leetcode
+	autocmd!
+	autocmd VimEnter *.leetcode.*.py LeetcodeEnter
+
+	autocmd BufEnter *.leetcode.*.py nnoremap <F11> :LeetcodeTest<CR>
+
+	autocmd BufEnter *.leetcode.*.py nnoremap <F11><F11> :LeetcodeExecute<CR>
+augroup END
+
+
 

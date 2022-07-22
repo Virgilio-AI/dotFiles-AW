@@ -1,8 +1,10 @@
+
 #lias Lines configured by zsh-newuser-install
+XDG_HOME_CONFIG=~/.config
 HISTFILE=$XDG_HOME_CONFIG/zsh/.histfile
-HISTSIZE=1000
+HISTSIZE=10000
 SAVEHIST=10000
-setopt autocd beep extendedglob nomatch notify
+setopt autocd extendedglob nomatch notify appendhistory
 
 # vi mode
 bindkey -v
@@ -119,7 +121,11 @@ export EDITOR=nvim
 export VISUAL=nvim
 export SUDO_EDITOR
 export MANPAGER='nvim +Man!'
-PROMPT='%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%f%b '
+
+precmd() { 
+	print -rP "%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%b"
+}
+PROMPT='%B%{%F{1}%}-->$ %f%b'
 
 
 

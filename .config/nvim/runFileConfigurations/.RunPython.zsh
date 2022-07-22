@@ -23,7 +23,7 @@ then
 		then
 			enableDiifParam="y"
 		fi
-		if [[ -f $file ]]
+		if [[ -f $file2 ]]
 		then
 			IF=$((IF+1))
 		else

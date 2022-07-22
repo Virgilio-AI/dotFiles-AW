@@ -1,0 +1,4 @@
+#!/usr/bin/zsh
+number=$1
+~/.cargo/bin/leetcode edit $number
+
