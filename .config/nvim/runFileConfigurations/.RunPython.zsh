@@ -11,13 +11,30 @@ IF=$1
 enableDiifParam=$3 # can be (y)es or (n)o
 enableInput=$4
 
+folder=.code-runner/$name
+# set standar for enable input
+if [[ $enableInput == "" ]]
+then
+	enableInput="Y"
+fi
+# use () instead of [[]] for some examples
+if [[ $enableInput == "y" ]]
+then
+	enableInput="Y"
+fi
+
+
+
+
+
+
 # use () instead of [[]] for some examples
 if [[ $IF == -1 ]]
 then
 	IF=0
 	for (( i=1;i<200;i++ )); do
-		file=.${name}_In${i}.txt
-		file2=.${name}_Out${i}_Correct.txt
+		file=$folder/.${name}_In${i}.txt
+		file2=$folder/.${name}_Out${i}_Correct.txt
 		# use () instead of [[]] for some examples
 		if [[ -f $file2 ]]
 		then
@@ -36,11 +53,11 @@ fi
 if [[ $enableInput == "Y" ]]
 then
 	for (( i=1;i<=$IF;i++ )); do
-		python ${name}.py < .${name}_In${i}.txt > .${name}_Out${i}.txt
+		python ${name}.py < $folder/.${name}_In${i}.txt > $folder/.${name}_Out${i}.txt
 	done
 else
 	for (( i=1;i<=$IF;i++ )); do
-		python ${name}.py > .${name}_Out${i}.txt
+		python ${name}.py > $folder/.${name}_Out${i}.txt
 	done
 fi
 
@@ -51,8 +68,8 @@ then
 	echo " diff files: "
 	errors="n"
 	for (( i=1;i<=$IF;i++ )); do
-		tempFile=.${name}_Out${i}.txt
-		correctFile=.${name}_Out${i}_Correct.txt
+		tempFile=$folder/.${name}_Out${i}.txt
+		correctFile=$folder/.${name}_Out${i}_Correct.txt
 		echo "===== $tempFile and $correctFile ====="
 		diffVar=$(git diff --no-index $tempFile $correctFile)
 		cpdiff $tempFile $correctFile
@@ -72,7 +89,7 @@ then
 else
 	echo " outputOfTheFiles: "
 	for (( i=1;i<=$IF;i++ )); do
-		tmpOutFile=.${name}_Out${i}.txt
+		tmpOutFile=$folder/.${name}_Out${i}.txt
 		echo "File $tmpOutFile : "
 		cat $tmpOutFile
 		echo " ================== "

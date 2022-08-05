@@ -6,9 +6,14 @@
 
 
 " =================================
+" ========== copy file 
+" =================================
+nnoremap <leader>cf :call CopyFile()<CR>
+
+" =================================
 " ========== print file
 " =================================
-nnoremap <leader>pp :call PrintFile()
+nnoremap <leader>pp :call PrintFile()<CR>
 
 
 " =================================

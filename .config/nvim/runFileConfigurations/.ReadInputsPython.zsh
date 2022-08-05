@@ -12,15 +12,16 @@ IF=$1
 enableDiff=$3
 enableInput=$4
 
+folder=.code-runner/$name
 for (( i=1;i<=IF;i++ )); do
 	# use () instead of [[]] for some examples
 	if [[ $enableInput == "y" ]]
 	then
-		nvim .${name}_In${i}.txt
+		nvim $folder/.${name}_In${i}.txt
 	fi
 	# use () instead of [[]] for some examples
 	if [[ $enableDiff == "y" ]]
 	then
-		nvim .${name}_Out${i}_Correct.txt
+		nvim $folder/.${name}_Out${i}_Correct.txt
 	fi
 done

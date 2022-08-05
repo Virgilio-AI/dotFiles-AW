@@ -4,6 +4,20 @@
 " linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
 " contact: virgiliomurilloochoa1@gmail.com
 
+
+" =================================
+" ========== copy file 
+" =================================
+
+function! CopyFile()
+	" % - relative path
+	" %:p -absolute path
+	:w
+	let l:terminalExe = ':AsyncRun st -T "floating" -e sh -c "'
+	let l:endTerminalExe = ' ; rean -n1 "'
+	let l:command = 'dragon --and-exit ' . expand('%:p')
+	exe l:terminalExe . l:command . l:endTerminalExe
+endfunction
 " =================================
 " ========== paste a clean text 
 " =================================
