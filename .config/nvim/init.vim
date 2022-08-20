@@ -1,4 +1,39 @@
 
+function! TerminalSettings()
+	setlocal nonumber
+	setlocal norelativenumber
+	setlocal noshowmode
+	setlocal noruler
+	setlocal laststatus=0
+endfunction
+
+
+function! TerminalClose()
+	setlocal showmode
+	setlocal laststatus=1
+	setlocal nu
+	setlocal rnu
+	setlocal re=1
+endfunction
+
+
+
+augroup terminal
+	autocmd!
+	autocmd TermEnter * call TerminalSettings()
+	autocmd TermOpen * startinsert
+	" autocmd TermOpen * call TerminalSettings()
+augroup END
+
+
+augroup closeTerminal
+	autocmd!
+	autocmd TermLeave * call TerminalClose()
+	"autocmd TermClose * call TerminalCLose()
+
+	"autocmd BufEnter * call TerminalClose()
+augroup END
+
   "mage} ================================= ========== Main Variables 
 " " =================================
 " 
