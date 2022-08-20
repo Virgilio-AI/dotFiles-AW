@@ -1,0 +1,203 @@
+#!/usr/bin/python
+
+
+# Date: 07/June/2022 - Tuesday
+# Author: Virgilio Murillo Ochoa
+# personal github: Virgilio-AI
+# linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+# contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
+
+
+
+
+# usage:
+# cpdiff correctFile.txt testFile.txt
+
+
+
+from typing import *
+import heapq as hp
+from collections import deque
+from collections import defaultdict
+import sys
+
+import shutil
+
+from termcolor import colored
+
+columns = shutil.get_terminal_size().columns
+
+
+
+
+
+file1 = sys.argv[2]
+file2 = sys.argv[1]
+
+def main():
+	if(len(sys.argv) < 3):
+		print(colored("not enough files to compare".center(columns),"red"))
+		return
+
+
+	correct = open(file1).readlines()
+	test = open(file2).readlines()
+
+
+	compare(correct,test)
+
+
+def colComparisson(correct,test):
+	return colored(test,"red")
+
+
+def printLeft(correct,i="",color="green"):
+	if(i!=""):
+		i=i + ") "
+	offset = (columns // 2 - len(correct) - len(i) - 3 )
+	print(" " * offset + colored(i,"yellow") + colored(correct,color),end='')
+
+
+def printCorrect(correct,test,i):
+	words = str(i) + ") " + (correct + " == " + test)
+	printLeft(correct,str(i))
+	print()
+	# print(colored(" == ","green"),end='')
+	# print(colored(test,"green"))
+
+
+def printIncorrect(correct,test,i):
+	words = str(i) + ") " +correct + " != " + test
+	printLeft(correct,str(i),"green")
+	print(colored(" != ","red") +  colComparisson(correct,test) )
+
+def printExtra(stri,i):
+	print(colored( ("---" + stri + "---").center(columns) ,"red"))
+
+
+
+
+def strike(text):
+	result = ''
+	for c in text:
+		result = result + c + '\u0336'
+	return result
+
+def printDetailedMultiple(arr):
+	for i in range(len(arr)):
+		printDetailed(arr[i])
+
+def printDetailed(arr):
+	correct = arr[0]
+	number = arr[2]
+	test = arr[1]
+
+	carr = correct.split()
+	tarr = test.split()
+	maxarr = max(len(carr),len(tarr))
+	for i in range(maxarr):
+		if(len(tarr) -1 < i):
+			tarr.append(colored("+","red"))
+		elif(len(carr) -1 < i):
+			tarr[i] = colored(strike(tarr[i]),"red")
+		elif( tarr[i] == carr[i]):
+			tarr[i] = colored(tarr[i],"green")
+		else:
+			temp = tarr[i]
+			diff = len(temp) - len(carr[i])
+			if(diff < 0) :
+				tarr[i] = colored(temp + " " * (-diff),"red")
+			else:
+				tarr[i] = colored(temp,"red")
+				carr[i] = carr[i] + " " * diff
+
+
+	print(colored( " --- " + str(number) + " --- ","yellow") )
+	print(colored("  correct -> ","blue"),end='')
+
+	for i in range(len(carr)):
+		print(colored(carr[i],"green") + " ",end='')
+	print()
+
+
+	print(colored("incorrect -> ","blue"),end='')
+	for i in range(len(tarr)):
+		print(tarr[i]  + " ",end='')
+	print()
+#	print(tarr)
+
+
+
+
+def compare(correct,test):
+	incorrectArr = []
+	testBig = False
+	if(len(correct) > len(test)):
+		bigFile = correct
+		smallFile = test
+		testBig = False
+	else:
+		bigFile = test
+		smallFile = correct
+		testBig = True
+
+	maxi = 0
+	printLeft("correct","","blue")
+	print( colored(" -- " + "test","blue") )
+	for i in range(len(smallFile)):
+		cor = correct[i].rstrip()
+		tst = test[i].rstrip()
+
+		if(cor == tst):
+			printCorrect(cor,tst,i)
+		else:
+			incorrectArr.append([cor,tst,i])
+			printIncorrect(cor,tst,i)
+		maxi = i + 1
+
+
+
+
+
+
+	printDetailedMultiple(incorrectArr)
+	if(len(correct) != len(test)):
+		if testBig:
+			typefn = "test"
+		else:
+			typefn = "correct"
+#		if(maxi == 0 and typefn == "correct"):
+#			maxi -= 1
+
+		print()
+		print(colored(( typefn + " is bigger").center(columns),"red"))
+
+		for i in range(maxi,len(bigFile)):
+			printExtra(bigFile[i].rstrip(),i)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+	main()
+
+
+
+
+
+
+
