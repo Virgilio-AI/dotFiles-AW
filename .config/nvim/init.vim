@@ -41,7 +41,6 @@ exec 'source ' . g:CONFIG_PATH . '/shortcuts.vim'
 exec 'source ' . g:CONFIG_PATH . '/IconsAndThemes.vim'
 exec 'source ' . g:CONFIG_PATH . '/autocmds.vim'
 exec 'source ' . g:CONFIG_PATH . '/skeletons.vim'
-exec 'source ' . g:CONFIG_PATH . '/customCommands.vim'
 
 
 " =================================
