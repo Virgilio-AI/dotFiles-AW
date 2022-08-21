@@ -158,7 +158,7 @@ let g:rainbow_conf = {
 "
 
 " for colors
-set showtabline=2
+set showtabline=1
 set foldmethod=indent
 set foldnestmax=1
 set wildmenu
@@ -185,7 +185,7 @@ set list
 set hidden
 set nobackup
 set nowritebackup
-set cmdheight=2
+set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set scrolloff=10 " keep the mouse centerd
