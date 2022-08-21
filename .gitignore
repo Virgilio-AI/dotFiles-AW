@@ -189,3 +189,6 @@
 
 
 !version.txt
+
+!/.leetcode
+!/.leetcode/*
