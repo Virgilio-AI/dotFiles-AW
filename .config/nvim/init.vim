@@ -171,8 +171,6 @@ set foldmethod=indent
 set foldnestmax=1
 set wildmenu
 set wildmode=longest,list,full
-" set termguicolors
-
 exec 'set viminfo+=n' . g:CONFIG_PATH . '/.vimdata/viminfo '
 set encoding=utf-8
 set fileencoding=utf-8
@@ -194,7 +192,7 @@ set list
 set hidden
 set nobackup
 set nowritebackup
-set cmdheight=2
+set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set scrolloff=10 " keep the mouse centerd
