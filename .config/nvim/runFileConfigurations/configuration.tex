@@ -1,0 +1,50 @@
+\documentclass[15pt]{extarticle}
+\usepackage[utf8]{inputenc}
+
+%personal information
+\title{configuracion}
+\author{Virgilio Murillo Ochoa}
+\makeindex
+%langauge of the document spanish english french
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{authblk}
+\usepackage{multicol}
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage[export]{adjustbox}
+\usepackage{amssymb}
+
+%\usepackage{example}
+\usepackage{makeidx}
+%to set the references inside the document
+\usepackage{url}
+%so that references don't get out of the file
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+%to import and to use reference
+
+\usepackage{import}
+\usepackage[colorlinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+colorlinks = true,
+urlcolor=blue
+}
+\newcommand{\sech}{\mathrm{sech} \,}
+\newcommand{\csch}{\mathrm{csch} \,}
+
+% Avoid pandoc bug when there are lists in the body. 
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
+
+\import{./}{tempFileForConfig.tex}
+
+\end{document}
