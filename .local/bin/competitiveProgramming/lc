@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+
+number=$1
+/home/rockhight/.local/bin/competitiveProgramming/leetcode edit $number
