@@ -159,7 +159,6 @@ let g:rainbow_conf = {
 
 " for colors
 set showtabline=2
-set termguicolors
 set foldmethod=indent
 set foldnestmax=1
 set wildmenu
