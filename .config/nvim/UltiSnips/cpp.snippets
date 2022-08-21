@@ -1,30 +1,3 @@
-# c++
-
-
-# ======= c style snippets ========
-# iar -- for init array
-# imat -- for init mat
-# resizestr - to resize a c string
-# random - to input the random function
-# copenFile - to open a file in c style format
-
-
-
-# sk_ncurses - skeleton for ncurses
-# ndoc - basic documentation for ncurses
-
-
-
-
-
-
-
-
-
-
-
-
-
 global !p
 def create_matrix_placeholders(snip):
 	# Create anonymous snippet body
@@ -105,52 +78,19 @@ def getMatchArr():
 endglobal
 
 
-snippet iar
-for(int i=0;i<$1;i++) $2[i] = $3;
-endsnippet
-snippet imat
-for(int i=0;i<$2;i++)
-{
-	for(int j=0;j<$2;j++)
-	{
-		$3[i][j] = $4;
-	}
-}
-endsnippet
-
-snippet copenFile
-// r reading,w write, a append
-// r+ open for reading and writing
-// w+ open for both reading and writing
-// a+ open for both appending and reading
-// append b for binary mode
-ptr = fopen("${1:path}","${2:mode}");
-endsnippet
-
-snippet random
-// float num = rand()%maxNUm;
-srand(time(NULL));
-endsnippet
-
-snippet resizestr
-${1:nombre} = realloc(p_nombre,30*sizeof(char));
-endsnippet
-
-snippet info
-// Date: `date +%d/%B/%Y\ -\ %A`
-// Author: Virgilio Murillo Ochoa
-// personal github: Virgilio-AI
-// linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
-// contact: virgiliomurilloochoa1@gmail.com
-// web: virgiliomurillo.com
-endsnippet
 snippet sk
+// ******************************************************
 // Date: `date +%d/%B/%Y\ -\ %A`
 // Author: Virgilio Murillo Ochoa
-// personal github: Virgilio-AI
-// linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+// github personal: Virgilio-AI
 // contact: virgiliomurilloochoa1@gmail.com
 // web: virgiliomurillo.com
+// $1
+//
+// This is the default snippet sk
+// For a customized skeleton edit the file ~/.config/nvim/UltiSnips/asm.snippets
+// edit the sk snippet to you preference :)
+
 #include<bits/stdc++.h>
 using namespace std;
 const int N = ${2:1000};
@@ -168,70 +108,5 @@ int main()
 }
 
 
-
-void par(int ar[N],int n)
-{
-	for(int i=0;i<n;i++)
-	{
-		cout<<ar[i]<<" ";
-	}
-	cout<<endl;
-}
-
-void pmat(int mat[N][N],int n,int m)
-{
-	for(int i=0;i<n;i++)
-	{
-		for(int j=0;j<m;j++)
-		{
-			cout<<mat[i][j]<<" ";
-		}
-		cout<<endl;
-	}
-	cout<<endl;
-}
-
-void imat(int mat[N][N])
-{
-	for(int i=0;i<N;i++)
-	{
-		for(int j=0;j<N;j++)
-		{
-			mat[i][j] = 0;
-		}
-	}
-}
-
-void iar(int ar[N])
-{
-	for(int i=0;i<N;i++)
-	{
-		ar[i] = 0;
-	}
-}
-
 endsnippet
 
-snippet sk_ncurses
-// Fecha: `date +%d/%B/%Y\ -\ %A`
-// Autor: Virgilio Murillo Ochoa
-// github personal: Virgilio-AI
-#include<bits/stdc++.h>
-#include<ncurses.h>
-using namespace std;
-int main()
-{
-	initscr();
-
-	${1:raw();// for line buffering disabled}
-	${2:noecho(); //so that what we write doesn't gets seen}
-	$3
-	endwin();
-	return 0;
-}
-endsnippet
-snippet ndoc
-// getch(); so you get a character
-// printw(); print in screen
-// refresh(); to refresh screen
-endsnippet

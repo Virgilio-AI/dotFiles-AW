@@ -1,4 +1,10 @@
-
+# Fecha: 12/November/2021 - Friday                                        #
+# Autor: Virgilio Murillo Ochoa                                           #
+# personal github: Virgilio-AI                                            #
+# linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203  #
+# contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
+# #########################################################################
 
 global !p
 def create_matrix_placeholders(snip):
@@ -19,7 +25,6 @@ def create_matrix_placeholders(snip):
 	# Expand anonymous snippet
 	snip.expand_anon(anon_snippet_body)
 endglobal
-
 post_jump "snip"
 global !p
 def returnCommandSplitted(command):
@@ -78,20 +83,26 @@ def getMatchArr():
 			break
 	return arr
 endglobal
+# ==========================
+# ========== temp Functions ======
+# ==========================
 
+# ==========================
+# ========== vim related ======
+# ==========================
 snippet sk
+;******************************************************
+; ${2:Titulo del proyecto}
+;
+; Date: `date +%d/%B/%Y\ -\ %A`
+; Author: Virgilio Murillo Ochoa
+; github personal: Virgilio-AI
+; contact: virgiliomurilloochoa1@gmail.com
+; web: virgiliomurillo.com
+; $1
 
-// ******************************************************
-// Date: `date +%d/%B/%Y\ -\ %A`
-// Author: Virgilio Murillo Ochoa
-// github personal: Virgilio-AI
-// contact: virgiliomurilloochoa1@gmail.com
-// web: virgiliomurillo.com
-// $1
-//
-// This is the default snippet sk
-// For a customized skeleton edit the file ~/.config/nvim/UltiSnips/asm.snippets
-// edit the sk snippet to you preference :)
+; This is the default snippet sk
+; For a customized skeleton edit the file ~/.config/nvim/UltiSnips/asm.snippets
+; edit the sk snippet to you preference :)
 
 endsnippet
-
