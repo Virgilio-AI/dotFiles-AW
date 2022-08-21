@@ -171,8 +171,6 @@ set foldmethod=indent
 set foldnestmax=1
 set wildmenu
 set wildmode=longest,list,full
-" set termguicolors
-
 exec 'set viminfo+=n' . g:CONFIG_PATH . '/.vimdata/viminfo '
 set encoding=utf-8
 set fileencoding=utf-8
