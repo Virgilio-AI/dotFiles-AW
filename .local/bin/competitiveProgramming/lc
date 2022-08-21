@@ -1,4 +1,5 @@
 #!/usr/bin/zsh
-number=$1
-~/.cargo/bin/leetcode edit $number
 
+
+number=$1
+/home/rockhight/.local/bin/competitiveProgramming/leetcode edit $number
