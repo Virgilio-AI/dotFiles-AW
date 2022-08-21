@@ -1,5 +1,3 @@
-# pyfor -- for a for in pytho
-
 global !p
 def create_matrix_placeholders(snip):
 	# Create anonymous snippet body
@@ -78,25 +76,17 @@ def getMatchArr():
 	return arr
 endglobal
 
+snippet sk
 
-
-snippet shebang
-#!/usr/bin/zsh
+# ******************************************************
+# Date: `date +%d/%B/%Y\ -\ %A`
+# Author: Virgilio Murillo Ochoa
+# github personal: Virgilio-AI
+# contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
+# $1
+#
+# This is the default snippet sk
+# For a customized skeleton edit the file ~/.config/nvim/UltiSnips/asm.snippets
+# edit the sk snippet to you preference :)
 endsnippet
-
-snippet temp
-hello world
-${VISUAL}
-ahora le squiero
-endsnippet
-
-
-snippet pyfor
-$1$2$3$4`!p
-ans=""
-for i in range(1,4):
-	ans+=t[i]
-snip.rv = ans
-`
-endsnippet
-

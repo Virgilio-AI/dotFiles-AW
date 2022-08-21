@@ -85,6 +85,10 @@ Plug 'kassio/neoterm'
 " for interface of neovim and leetcode
 Plug 'Virgilio-AI/leetcode-neovim'
 
+
+" for expanding skeletons for neovim
+Plug 'Virgilio-AI/skeleton_neovim'
+
 call plug#end()
 
 
