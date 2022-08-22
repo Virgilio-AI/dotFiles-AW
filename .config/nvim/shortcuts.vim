@@ -6,7 +6,17 @@
 " web: virgiliomurillo.com
 
 
+" ==================================================
+" =========== vimrc ===================
+" ==================================================
 
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+exe "nnoremap <leader>evs :vsplit " . g:CONFIG_PATH . '/shortcuts.vim'  
+exe "nnoremap <leader>evS :vsplit " . g:CONFIG_PATH . '/skeletons.vim'
+exe "nnoremap <leader>eva :vsplit " . g:CONFIG_PATH . '/autocmds.vim'  
+exe "nnoremap <leader>evp :vsplit " . g:CONFIG_PATH . '/PlugIns.vim'
+exe "nnoremap <leader>evc :vsplit " . g:CONFIG_PATH . '/colors.vim'
+exe "nnoremap <leader>evh :call OpenVimrcHeaderRelatedFile()" 
 
 
 " ==================================================
@@ -113,3 +123,4 @@ augroup PYTHON
 	autocmd BufEnter *.py nnoremap ff :call FormatPythonCode()<CR>
 	exe 'autocmd BufEnter *.py nnoremap <leader>df :w<CR>:AsyncRun st -T "floating" -g "=150x50" -e sh -c "python -m pudb %:p"'
 augroup END
+
