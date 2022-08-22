@@ -215,3 +215,15 @@ if !isdirectory(&undodir) | call mkdir(&undodir, "p") | endif
 if !isdirectory(&backupdir) | call mkdir(&backupdir, "p") | endif
 if !isdirectory(&directory) | call mkdir(&directory, "p") | endif
 
+
+
+
+" Leetcode Nvim Configs:
+augroup leetcode
+	autocmd!
+	autocmd VimEnter *.leetcode.*.py LeetcodeEnter
+	autocmd BufEnter *.leetcode.*.py nnoremap <F11> :LeetcodeTest<CR>
+	autocmd BufEnter *.leetcode.*.py nnoremap <F11><F11> :LeetcodeExecute<CR>
+augroup END
+
+
