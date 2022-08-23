@@ -1,3 +1,5 @@
+![image](https://user-images.githubusercontent.com/59902976/186181806-348f74c5-39c3-4415-be45-35dcd49daf40.png)
+
 # dotFiles-AW
 this are the dot files that are used for arch water linux
 
