@@ -12,8 +12,8 @@ setopt +o nomatch
 # ==========================
 # ========== sync the folders of arch water linux ======
 # ==========================
-
-
+sync_files()
+{
 mkdir /tmp/utilities
 touch /tmp/utilities/gitAutoCommit
 
@@ -67,6 +67,8 @@ echo "sync the autoInstaller profile" | tee -a /tmp/utilities/gitAutoCommit
 sudo rsync -aAXv --delete ~/.config/zsh/ ~/Documents/GitRepos/autoInstaller-AW/zdotdir/ | tee -a /tmp/utilities/gitAutoCommit
 sudo rsync -aAXv --delete $ZDOTDIR ~/Documents/GitRepos/autoInstaller-AW/etcZdotdir/ | tee -a /tmp/utilities/gitAutoCommit
 sudo rsync -aAXv --delete /etc/profile ~/Documents/GitRepos/autoInstaller-AW/profile | tee -a /tmp/utilities/gitAutoCommit
+}
+
 
 
 
@@ -106,6 +108,13 @@ recurseFolder(){
 	done
 }
 
+
+
+
 folder=$HOME/Documents/GitRepos
 
-recurseFolder $folder 0
+if [ -d "$folder" ]; then
+	recurseFolder $folder 0
+	sync_files
+fi
+
