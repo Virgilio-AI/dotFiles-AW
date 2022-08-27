@@ -124,3 +124,14 @@ augroup PYTHON
 	exe 'autocmd BufEnter *.py nnoremap <leader>df :w<CR>:AsyncRun st -T "floating" -g "=150x50" -e sh -c "python -m pudb %:p"'
 augroup END
 
+
+" =======
+" nerd tree
+" ======
+" =================================
+" ========== nerdtree 
+" =================================
+
+nnoremap <c-b> :NERDTreeToggle<CR>
+nnoremap <A-b> :NERDTreeFocus<CR>
+
