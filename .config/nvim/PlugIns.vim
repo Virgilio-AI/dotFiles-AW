@@ -15,4 +15,7 @@ Plug 'SirVer/ultisnips' " for snippets
 Plug 'ferrine/md-img-paste.vim' " paste files from clipboard into vim
 Plug 'preservim/nerdtree'
 
+
+Plug 'untitled-ai/jupyter_ascending.vim'
+
 call plug#end()
