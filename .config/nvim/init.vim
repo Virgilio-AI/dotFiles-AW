@@ -71,7 +71,6 @@ let g:mdip_imgdir='img_' . expand("%:t:r")
 exec 'source ' . g:CONFIG_PATH . '/PlugIns.vim'
 exec 'source ' . g:CONFIG_PATH . '/header_shortcuts.vim'
 exec 'source ' . g:CONFIG_PATH . '/header_autocmds.vim'
-exec 'source ' . g:CONFIG_PATH . '/header_skeletons.vim'
 exec 'source ' . g:CONFIG_PATH . '/shortcuts.vim'
 exec 'source ' . g:CONFIG_PATH . '/IconsAndThemes.vim'
 exec 'source ' . g:CONFIG_PATH . '/autocmds.vim'
