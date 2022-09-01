@@ -92,6 +92,10 @@
 !/.config/mimeapps.list
 !/.config/pavucontrol.ini
 
+!/.config/xmodmap
+!/.config/xmodmap/*
+
+
  
 #not ignore .local
 !/.local
