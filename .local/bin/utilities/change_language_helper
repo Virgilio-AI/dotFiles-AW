@@ -1,0 +1,81 @@
+#!/usr/bin/zsh
+###############################
+# Author: Virgilio Murillo Ochoa
+# Date: 10/July/2022 - Sunday
+# personal github: Virgilio-AI
+# linkedin: https://www.linkedin.com/in/virgilio-murillo-ochoa-b29b59203
+# contact: virgiliomurilloochoa1@gmail.com
+# web: virgiliomurillo.com
+# #########################################
+
+configFolder=$1
+numLanguages=0
+
+
+
+
+
+languageFiles=()
+languageNames=()
+defaultLanguage=1
+
+
+
+# ==========================
+# ========== functions ======
+# ==========================
+
+
+
+
+sourceFile()
+{
+	pathToTarget=$1
+	pathToDefault=$languageFiles[$defaultLanguage]
+
+
+	xmodmap $pathToDefault ;
+	xmodmap $pathToTarget
+}
+
+# use () instead of [[]] for some examples
+if [[ $configFolder == "" ]]
+then
+	configFolder=$HOME/.config/xmodmap/configurations
+fi
+
+# :h for name only
+# :t for name with extension
+for file in $configFolder/* ; do
+	#echo "$file:t" # for filename only
+	numLanguages=$((numLanguages + 1))
+	languageFiles+=("$file:a")
+	languageNames+=("$file:a:t")
+done
+
+echo $languageNames
+echo $languageFiles
+echo $numLanguages
+
+
+
+
+opts=""
+
+for (( i=1;i<$numLanguages+1;i++ )); do
+	#options+=\"$languageNames[$i]\"
+	echo $languageNames[$i]
+	opts="$opts $i \"$languageNames[$i]\""
+done
+
+echo $opts
+#echo $options
+
+# select the item
+
+# get the language to change to
+ans=$(dialog --menu "choice" 25 25 25 $(echo $opts) 3>&1 1>&2 2>&3 ) ;
+
+#echo $languageFiles[$ans]
+
+sourceFile $languageFiles[$ans]
