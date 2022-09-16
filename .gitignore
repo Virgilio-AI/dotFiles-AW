@@ -192,3 +192,7 @@
 
 !/.leetcode
 !/.leetcode/*
+
+!.config/zsh
+!.config/zsh/*
+
