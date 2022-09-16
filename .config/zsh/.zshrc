@@ -1,10 +1,8 @@
-
 #lias Lines configured by zsh-newuser-install
-XDG_HOME_CONFIG=~/.config
 HISTFILE=$XDG_HOME_CONFIG/zsh/.histfile
-HISTSIZE=10000
+HISTSIZE=1000
 SAVEHIST=10000
-setopt autocd extendedglob nomatch notify appendhistory
+setopt autocd beep extendedglob nomatch notify
 
 # vi mode
 bindkey -v
@@ -111,7 +109,6 @@ parse_git_branch() {
 }
 
 
-
 # neofetch --gtk-shorthand off --gtk2 off --gtk3 off --color_blocks off
  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ## change sudo default editor
@@ -122,6 +119,7 @@ export SUDO_EDITOR
 export MANPAGER='nvim +Man!'
 
 
+
 # ==========================
 # ========== Prompt Configuration ======
 # ==========================
@@ -130,8 +128,9 @@ autoload -Uz promptinit && promptinit
 
 # Define the theme
 prompt_mytheme_setup() {
+	repoName=$(basename -s .git `git config --get remote.origin.url`)
 	precmd() {
-		print -rP "%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%b"
+		print -rP "%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch) -- $repoName %b"
 	}
 	PS1='%B%{%F{1}%}-->$ %f%b'
 }
@@ -143,6 +142,7 @@ prompt_themes+=( mytheme )
 prompt mytheme
 
 # =========================
+
 
 
 
