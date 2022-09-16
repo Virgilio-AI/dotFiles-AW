@@ -128,8 +128,9 @@ autoload -Uz promptinit && promptinit
 
 # Define the theme
 prompt_mytheme_setup() {
+	repoName=$(basename -s .git `git config --get remote.origin.url`)
 	precmd() {
-		print -rP "%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch)%b"
+		print -rP "%B%{%F{57}%}%~%{%F{11}%}$(parse_git_branch) -- $repoName %b"
 	}
 	PS1='%B%{%F{1}%}-->$ %f%b'
 }
