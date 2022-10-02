@@ -93,9 +93,8 @@ exec 'source ' . g:CONFIG_PATH . '/customCommands.vim'
 
 
 " install coc omnisharp by default
-" let g:coc_global_extensions=['coc-omnisharp']
-let g:coc_global_extensions=['coc-pyright',"coc-git"]
-
+let g:coc_global_extensions=['coc-omnisharp']
+let g:coc_global_extensions=['coc-pyright']
 
 "let g:OmniSharp_highlighting = 0
 let g:OmniSharp_server_stdio = 1
