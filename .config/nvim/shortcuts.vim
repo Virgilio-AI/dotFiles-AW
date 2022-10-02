@@ -352,10 +352,18 @@ autocmd FileType python nmap <buffer><silent> <leader>p :call mdip#MarkdownClipb
 " ========== bindings for vim and jupyter notebooks 
 " =================================
 augroup jupyterNoteBook
-	autocmd BufEnter *.sync.py nnoremap <space>x :w<CR>:call jupyter_ascending#execute()<CR>:call jupyter_ascending#execute()<CR>
-	autocmd BufEnter *.sync.py nnoremap <space>X :w<CR>:call jupyter_ascending#execute_all()<CR>
-	autocmd BufEnter *.sync.py nnoremap B $a<CR><Esc>:normal! i# %%<CR>o<Esc>
-	autocmd BufEnter *.sync.py nnoremap M $a<CR><Esc>:normal! i# %% [markdown]<CR>o<Esc>
+	autocmd BufEnter *.sync.py nnoremap <F11> :w<CR>:call jupyter_ascending#execute()<CR>:call jupyter_ascending#execute()<CR>
+	autocmd BufEnter *.sync.py nnoremap <F11><F11> :w<CR>:call jupyter_ascending#execute_all()<CR>
+	autocmd BufEnter *.sync.py inoremap <F11> :w<CR>:call jupyter_ascending#execute()<CR>:call jupyter_ascending#execute()<CR>i
+	autocmd BufEnter *.sync.py inoremap <F11><F11> :w<CR>:call jupyter_ascending#execute_all()<CR>i
+
+
+
+	autocmd BufEnter *.sync.py nnoremap <C-l> $a<CR><Esc>:normal! i# %%<CR>o<Esc>
+	autocmd BufEnter *.sync.py nnoremap <C-a> $a<CR><Esc>:normal! i# %% [markdown]<CR>o<Esc>
+	autocmd BufEnter *.sync.py inoremap <C-l> <CR><Esc>:normal! i# %%<CR>o<Esc>i
+	autocmd BufEnter *.sync.py inoremap <C-a> <CR><Esc>:normal! i# %% [markdown]<CR>o<Esc>i
+
 augroup end
 
 
@@ -387,4 +395,16 @@ augroup PYTHON
 	autocmd BufEnter *.py nnoremap ff :call FormatPythonCode()<CR>
 	exe 'autocmd BufEnter *.py nnoremap <leader>df :w<CR>:AsyncRun st -T "floating" -g "=150x50" -e sh -c "python -m pudb %:p"'
 augroup END
+
+
+nnoremap <leader>[c <Plug>(coc-git-prevconflict)
+nnoremap <leader>]c <Plug>(coc-git-nextconflict)
+" show chunk diff at current position
+nnoremap <leader>gs <Plug>(coc-git-chunkinfo)
+
+nnoremap <leader>gS :CocCommand git.chunkStage<cr>
+nnoremap <leader>gU :CocCommand git.chunkUnstage<cr>
+nnoremap <leader>gF :CocCommand git.foldUnchanged<cr>
+nnoremap <leader>gdc :CocCommand git.diffCached
+
 
