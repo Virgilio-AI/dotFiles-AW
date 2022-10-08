@@ -5,6 +5,41 @@
 " contact: virgiliomurilloochoa1@gmail.com
 
 
+" Github Copilot mappings
+inoremap <C-h> <Plug>(copilot-next)
+inoremap <C-h>p <Plug>(copilot-previous)
+nnoremap <C-h>o :Copilot disable<CR>
+
+
+" github configurations
+" navigate chunks of current buffer
+nmap <g <Plug>(coc-git-prevchunk)
+nmap >g <Plug>(coc-git-nextchunk)
+" navigate conflicts of current buffer
+nmap [c <Plug>(coc-git-prevconflict)
+nmap ]c <Plug>(coc-git-nextconflict)
+" show chunk diff at current position
+nmap gs <Plug>(coc-git-chunkinfo)
+" show commit contains current position
+nmap gc <Plug>(coc-git-commit)
+" create text object for git chunks
+omap ig <Plug>(coc-git-chunk-inner)
+xmap ig <Plug>(coc-git-chunk-inner)
+omap ag <Plug>(coc-git-chunk-outer)
+xmap ag <Plug>(coc-git-chunk-outer)
+
+
+" stage chunk changes
+nmap gS :CocCommand git.chunkStage<CR>
+" show commit of chunk
+nmap gC :CocCommand git.showCommit<CR>
+" unduo chunk changes
+nmap gU :CocCommand git.chunkUndo<CR>
+" unstage chunk changes
+nmap gR :CocCommand git.chunkUnstage<CR>
+" fold unchanged chunks
+nmap gF :CocCommand git.foldUnchanged<CR>
+
 " =================================
 " ========== copy file 
 " =================================
@@ -222,11 +257,22 @@ nmap ga <Plug>(EasyAlign)
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <C-n>
-			\ pumvisible() ? "\<C-n>" :
-			\ <SID>check_back_space() ? "\<C-n>" :
-			\ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+
+
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 if has('nvim')
 	inoremap <silent><expr> <c-space> coc#refresh()
@@ -351,20 +397,19 @@ autocmd FileType python nmap <buffer><silent> <leader>p :call mdip#MarkdownClipb
 " =================================
 " ========== bindings for vim and jupyter notebooks 
 " =================================
+
 augroup jupyterNoteBook
 	autocmd BufEnter *.sync.py nnoremap <F11> :w<CR>:call jupyter_ascending#execute()<CR>:call jupyter_ascending#execute()<CR>
 	autocmd BufEnter *.sync.py nnoremap <F11><F11> :w<CR>:call jupyter_ascending#execute_all()<CR>
-	autocmd BufEnter *.sync.py inoremap <F11> :w<CR>:call jupyter_ascending#execute()<CR>:call jupyter_ascending#execute()<CR>i
-	autocmd BufEnter *.sync.py inoremap <F11><F11> :w<CR>:call jupyter_ascending#execute_all()<CR>i
-
-
+	autocmd BufEnter *.sync.py inoremap <F11> <Esc>:w<CR>:call jupyter_ascending#execute()<CR>:call jupyter_ascending#execute()<CR>i
+	autocmd BufEnter *.sync.py inoremap <F11><F11> <Esc>:w<CR>:call jupyter_ascending#execute_all()<CR>i
 
 	autocmd BufEnter *.sync.py nnoremap <C-l> $a<CR><Esc>:normal! i# %%<CR>o<Esc>
 	autocmd BufEnter *.sync.py nnoremap <C-a> $a<CR><Esc>:normal! i# %% [markdown]<CR>o<Esc>
-	autocmd BufEnter *.sync.py inoremap <C-l> <CR><Esc>:normal! i# %%<CR>o<Esc>i
-	autocmd BufEnter *.sync.py inoremap <C-a> <CR><Esc>:normal! i# %% [markdown]<CR>o<Esc>i
-
-augroup end
+	autocmd BufEnter *.sync.py inoremap <C-l> <Esc>:normal! i# %%<CR>o<Esc>i
+	autocmd BufEnter *.sync.py inoremap <C-a> <Esc>:normal! i# %% [markdown]<CR>o<Esc>i
+ 
+ augroup end
 
 
 

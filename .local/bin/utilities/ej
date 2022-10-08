@@ -1,9 +1,36 @@
 #!/usr/bin/zsh
+
+currect_dir=$(pwd)
+
+
+configure_jupyter_ascending(){
+	jupyter nbextension install --py --sys-prefix jupyter_ascending
+	jupyter nbextension     enable jupyter_ascending --sys-prefix --py
+	jupyter serverextension enable jupyter_ascending --sys-prefix --py
+}
+
+activate_venv(){
+# check if the venv folder exists
+# if not, create it
+# if yes, activate it
+# if the venv folder exists, but the venv is not activated, activate it
+if [[ ! -d venv ]] ; then
+	python3 -m venv venv
+	source venv/bin/activate
+	pip install jupyterlab jupyter-ascending pynvim jupytext
+	configure_jupyter_ascending
+else
+	source venv/bin/activate
+fi
+}
+
+
 if [[ "$1" == *.sync.py  || "$1" == *.py ]] ; then
 	echo "error: you choosed the python file"
 	exit
 fi
 
+activate_venv
 if [[ "$1" == *.sync.ipynb ]] ; then
 	echo "primero"
 	name=$(basename $1 .sync.ipynb)
@@ -13,7 +40,6 @@ if [[ "$1" == *.sync.ipynb ]] ; then
 	jupytext $1 --to py:percent ;
 	jupyter-notebook $1 &
 	st -e sh -c "nvim $1:r.py" &
-
 elif [[ "$1" == *.ipynb ]] ; then
 	echo "segundo"
 	name=$(basename $1 .ipynb)
@@ -26,7 +52,7 @@ elif [[ "$1" == *.ipynb ]] ; then
 	jupyter-notebook $name.sync.ipynb &
 	st -e sh -c "nvim $name.sync.py" &
 else
-	echo "cuarto"
+	echo "tercero"
 	ne=.sync.ipynb
 	nm=$1
 	notebook_name=$nm$ne
