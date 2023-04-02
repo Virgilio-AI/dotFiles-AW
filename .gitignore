@@ -42,6 +42,9 @@
 !/.config/ncmpcpp/*
 
 
+!/.config/awesome
+!/.config/awesome/*
+
 !/.config/mpd
 !/.config/mpd/*
 !/.config/mpd/playlist

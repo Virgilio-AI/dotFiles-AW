@@ -68,7 +68,7 @@ local function run_once(cmd_arr)
     end
 end
 
-run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
+run_once({ "st", "unclutter -root" }) -- comma-separated entries
 
 -- This function implements the XDG autostart specification
 --[[
@@ -114,23 +114,6 @@ awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.max,
-    --awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
-    --awful.layout.suit.spiral,
-    --awful.layout.suit.spiral.dwindle,
-    --awful.layout.suit.max,
-    --awful.layout.suit.max.fullscreen,
-    --awful.layout.suit.magnifier,
-    --awful.layout.suit.corner.nw,
-    --awful.layout.suit.corner.ne,
-    --awful.layout.suit.corner.sw,
-    --awful.layout.suit.corner.se,
-    --lain.layout.cascade,
-    --lain.layout.cascade.tile,
-    --lain.layout.centerwork,
-    --lain.layout.centerwork.horizontal,
-    --lain.layout.termfair,
-    --lain.layout.termfair.center
 }
 
 lain.layout.termfair.nmaster           = 3
@@ -393,7 +376,7 @@ globalkeys = mytable.join(
               {description = "delete tag", group = "tag"}),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
+    awful.key({ modkey,     "Shift"      }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
@@ -559,10 +542,41 @@ globalkeys = mytable.join(
                     history_path = awful.util.get_cache_dir() .. "/history_eval"
                   }
               end,
-              {description = "lua execute prompt", group = "awesome"})
+              {description = "lua execute prompt", group = "awesome"}),
+
+
+    -- Custom keybindings
+    awful.key({ modkey }, "n", function() awful.spawn("open_notes") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ modkey }, "v", function() awful.spawn("show_clipboard.sh") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ modkey }, "l", function() awful.spawn(TERMINAL .. " -T \"floating\" -g \"=75x45+550+100\" -e sh -c \"keyboardConfiguration\"") end),
+    awful.key({ modkey }, "p", function() awful.spawn("open_program") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ modkey, "Shift" }, "p", function() awful.spawn("open_pass") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ }, "XF86PowerOff", function() awful.spawn("runShutdownMenu") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ }, "Print", function() awful.spawn("printscreen.sh") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ modkey, "Control" }, "p", function() awful.spawn("printscreen.sh") end,
+              {description = "move to master", group = "launcher"}),
+
+    -- Execute personal scripts
+    awful.key({ "Mod1" }, "1", function() awful.spawn("qutebrowser") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ "Mod1" }, "2", function() awful.spawn("open_nvim.sh") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ "Mod1" }, "3", function() awful.spawn(TERMINAL .. " open_ranger.sh") end,
+              {description = "move to master", group = "launcher"}),
+    awful.key({ "Mod1" }, "4", function() awful.spawn("open_music.sh") end,
+              {description = "move to master", group = "launcher"})
+
+
+
     --]]
 )
-
+--
 clientkeys = mytable.join(
     awful.key({ altkey, "Shift"   }, "m",      lain.util.magnify_client,
               {description = "magnify client", group = "client"}),
@@ -606,27 +620,7 @@ clientkeys = mytable.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end ,
-        {description = "(un)maximize horizontally", group = "client"}),
-
-
-
-    -- Custom keybindings
-    awful.key({ modkey }, "n", function() awful.spawn("open_notes") end),
-    awful.key({ modkey }, "v", function() awful.spawn("show_clipboard.sh") end),
-    awful.key({ modkey }, "l", function() awful.spawn(TERMINAL .. " -T \"floating\" -g \"=75x45+550+100\" -e sh -c \"keyboardConfiguration\"") end),
-    awful.key({ modkey }, "p", function() awful.spawn("open_program") end),
-    awful.key({ modkey, "Shift" }, "p", function() awful.spawn("open_pass") end),
-    awful.key({ }, "XF86PowerOff", function() awful.spawn("runShutdownMenu") end),
-    awful.key({ }, "Print", function() awful.spawn("printscreen.sh") end),
-    awful.key({ modkey, "Control" }, "p", function() awful.spawn("printscreen.sh") end),
-
-    -- Execute personal scripts
-    awful.key({ "Mod1" }, "1", function() awful.spawn("qutebrowser") end),
-    awful.key({ "Mod1" }, "2", function() awful.spawn("open_nvim.sh") end),
-    awful.key({ "Mod1" }, "3", function() awful.spawn(TERMINAL .. " open_ranger.sh") end),
-    awful.key({ "Mod1" }, "4", function() awful.spawn("open_music.sh") end)
-
-
+        {description = "(un)maximize horizontally", group = "client"})
 )
 
 -- Bind all key numbers to tags.
