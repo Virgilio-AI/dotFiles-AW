@@ -364,16 +364,16 @@ globalkeys = mytable.join(
               {description = "decrement useless gaps", group = "tag"}),
 
     -- Dynamic tagging
-    awful.key({ modkey, "Shift" }, "n", function () lain.util.add_tag() end,
-              {description = "add new tag", group = "tag"}),
-    awful.key({ modkey, "Shift" }, "r", function () lain.util.rename_tag() end,
-              {description = "rename tag", group = "tag"}),
-    awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
-              {description = "move tag to the left", group = "tag"}),
-    awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
-              {description = "move tag to the right", group = "tag"}),
-    awful.key({ modkey, "Shift" }, "d", function () lain.util.delete_tag() end,
-              {description = "delete tag", group = "tag"}),
+ --   awful.key({ modkey, "Shift" }, "n", function () lain.util.add_tag() end,
+ --             {description = "add new tag", group = "tag"}),
+ --   awful.key({ modkey, "Shift" }, "r", function () lain.util.rename_tag() end,
+ --             {description = "rename tag", group = "tag"}),
+ --   awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
+ --             {description = "move tag to the left", group = "tag"}),
+ --   awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
+ --             {description = "move tag to the right", group = "tag"}),
+ --   awful.key({ modkey, "Shift" }, "d", function () lain.util.delete_tag() end,
+ --             {description = "delete tag", group = "tag"}),
 
     -- Standard program
     awful.key({ modkey,     "Shift"      }, "Return", function () awful.spawn(terminal) end,
@@ -409,16 +409,16 @@ globalkeys = mytable.join(
     end, {description = "restore minimized", group = "client"}),
 
     -- Dropdown application
-    awful.key({ modkey, }, "z", function () awful.screen.focused().quake:toggle() end,
-              {description = "dropdown application", group = "launcher"}),
+--    awful.key({ modkey, }, "z", function () awful.screen.focused().quake:toggle() end,
+--              {description = "dropdown application", group = "launcher"}),
 
     -- Widgets popups
-    awful.key({ altkey, }, "c", function () if beautiful.cal then beautiful.cal.show(7) end end,
-              {description = "show calendar", group = "widgets"}),
-    awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
-              {description = "show filesystem", group = "widgets"}),
-    awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
-              {description = "show weather", group = "widgets"}),
+--    awful.key({ altkey, }, "c", function () if beautiful.cal then beautiful.cal.show(7) end end,
+--              {description = "show calendar", group = "widgets"}),
+--    awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
+--              {description = "show filesystem", group = "widgets"}),
+--    awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
+--              {description = "show weather", group = "widgets"}),
 
     -- Screen brightness
     awful.key({ }, "XF86MonBrightnessUp", function () os.execute("xbacklight -inc 10") end,
@@ -458,55 +458,55 @@ globalkeys = mytable.join(
         end,
         {description = "volume 0%", group = "hotkeys"}),
 
-    -- MPD control
-    awful.key({ altkey, "Control" }, "Up",
-        function ()
-            os.execute("mpc toggle")
-            beautiful.mpd.update()
-        end,
-        {description = "mpc toggle", group = "widgets"}),
-    awful.key({ altkey, "Control" }, "Down",
-        function ()
-            os.execute("mpc stop")
-            beautiful.mpd.update()
-        end,
-        {description = "mpc stop", group = "widgets"}),
-    awful.key({ altkey, "Control" }, "Left",
-        function ()
-            os.execute("mpc prev")
-            beautiful.mpd.update()
-        end,
-        {description = "mpc prev", group = "widgets"}),
-    awful.key({ altkey, "Control" }, "Right",
-        function ()
-            os.execute("mpc next")
-            beautiful.mpd.update()
-        end,
-        {description = "mpc next", group = "widgets"}),
-    awful.key({ altkey }, "0",
-        function ()
-            local common = { text = "MPD widget ", position = "top_middle", timeout = 2 }
-            if beautiful.mpd.timer.started then
-                beautiful.mpd.timer:stop()
-                common.text = common.text .. lain.util.markup.bold("OFF")
-            else
-                beautiful.mpd.timer:start()
-                common.text = common.text .. lain.util.markup.bold("ON")
-            end
-            naughty.notify(common)
-        end,
-        {description = "mpc on/off", group = "widgets"}),
-
-    -- Copy primary to clipboard (terminals to gtk)
-    awful.key({ modkey }, "c", function () awful.spawn.with_shell("xsel | xsel -i -b") end,
-              {description = "copy terminal to gtk", group = "hotkeys"}),
-    -- Copy clipboard to primary (gtk to terminals)
-    awful.key({ modkey }, "v", function () awful.spawn.with_shell("xsel -b | xsel") end,
-              {description = "copy gtk to terminal", group = "hotkeys"}),
-
-    -- User programs
-    awful.key({ modkey }, "q", function () awful.spawn(browser) end,
-              {description = "run browser", group = "launcher"}),
+--    -- MPD control
+--    awful.key({ altkey, "Control" }, "Up",
+--        function ()
+--            os.execute("mpc toggle")
+--            beautiful.mpd.update()
+--        end,
+--        {description = "mpc toggle", group = "widgets"}),
+--    awful.key({ altkey, "Control" }, "Down",
+--        function ()
+--            os.execute("mpc stop")
+--            beautiful.mpd.update()
+--        end,
+--        {description = "mpc stop", group = "widgets"}),
+--    awful.key({ altkey, "Control" }, "Left",
+--        function ()
+--            os.execute("mpc prev")
+--            beautiful.mpd.update()
+--        end,
+--        {description = "mpc prev", group = "widgets"}),
+--    awful.key({ altkey, "Control" }, "Right",
+--        function ()
+--            os.execute("mpc next")
+--            beautiful.mpd.update()
+--        end,
+--        {description = "mpc next", group = "widgets"}),
+--    awful.key({ altkey }, "0",
+--        function ()
+--            local common = { text = "MPD widget ", position = "top_middle", timeout = 2 }
+--            if beautiful.mpd.timer.started then
+--                beautiful.mpd.timer:stop()
+--                common.text = common.text .. lain.util.markup.bold("OFF")
+--            else
+--                beautiful.mpd.timer:start()
+--                common.text = common.text .. lain.util.markup.bold("ON")
+--            end
+--            naughty.notify(common)
+--        end,
+--        {description = "mpc on/off", group = "widgets"}),
+--
+--    -- Copy primary to clipboard (terminals to gtk)
+--    awful.key({ modkey }, "c", function () awful.spawn.with_shell("xsel | xsel -i -b") end,
+--              {description = "copy terminal to gtk", group = "hotkeys"}),
+--    -- Copy clipboard to primary (gtk to terminals)
+--    awful.key({ modkey }, "v", function () awful.spawn.with_shell("xsel -b | xsel") end,
+--              {description = "copy gtk to terminal", group = "hotkeys"}),
+--
+--    -- User programs
+--    awful.key({ modkey }, "q", function () awful.spawn(browser) end,
+--              {description = "run browser", group = "launcher"}),
 
     -- Default
     --[[ Menubar
@@ -547,12 +547,12 @@ globalkeys = mytable.join(
 
     -- Custom keybindings
     awful.key({ modkey }, "n", function() awful.spawn("open_notes") end,
-              {description = "move to master", group = "launcher"}),
+              {description = "to open notes", group = "launcher"}),
     awful.key({ modkey }, "v", function() awful.spawn("show_clipboard.sh") end,
-              {description = "move to master", group = "launcher"}),
+              {description = "to show the clipboard", group = "launcher"}),
     awful.key({ modkey }, "l", function() awful.spawn(TERMINAL .. " -T \"floating\" -g \"=75x45+550+100\" -e sh -c \"keyboardConfiguration\"") end),
     awful.key({ modkey }, "p", function() awful.spawn("open_program") end,
-              {description = "move to master", group = "launcher"}),
+              {description = "to look and open an executable", group = "launcher"}),
     awful.key({ modkey, "Shift" }, "p", function() awful.spawn("open_pass") end,
               {description = "move to master", group = "launcher"}),
     awful.key({ }, "XF86PowerOff", function() awful.spawn("runShutdownMenu") end,
@@ -560,7 +560,7 @@ globalkeys = mytable.join(
     awful.key({ }, "Print", function() awful.spawn("printscreen.sh") end,
               {description = "move to master", group = "launcher"}),
     awful.key({ modkey, "Control" }, "p", function() awful.spawn("printscreen.sh") end,
-              {description = "move to master", group = "launcher"}),
+              {description = "take a screen shot", group = "hotkeys"}),
 
     -- Execute personal scripts
     awful.key({ "Mod1" }, "1", function() awful.spawn("qutebrowser") end,
@@ -734,6 +734,7 @@ awful.rules.rules = {
         -- and the name shown there might not match defined rules here.
         name = {
           "Event Tester",  -- xev.
+			 "floating",
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
