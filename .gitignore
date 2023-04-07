@@ -45,6 +45,14 @@
 !/.config/awesome
 !/.config/awesome/*
 
+
+!/.config/lain
+!/.config/lain/*
+
+
+!/.config/freedesktop
+!/.config/freedesktop/*
+
 !/.config/mpd
 !/.config/mpd/*
 !/.config/mpd/playlist
