@@ -49,8 +49,97 @@ import numpy as np
 import pandas as pd
 from scipy.stats import pearsonr
 from sklearn.feature_selection import SelectKBest, chi2, RFE, SelectFromModel
-from sklearn.linear_model import LogisticRegression, LassoCV
+from sklearn.linear_model import LogisticRegression, LassoCV, LinearRegression
 from sklearn.ensemble import RandomForestClassifier
+
+
+
+from sklearn.preprocessing import StandardScaler, RobustScaler
+
+
+
+
+
+class CustomEncoders():
+	class IntegerTargetEncoder():
+		def __init__(self,col_names = None, model = None):
+			self.col_names = col_names
+			if model == None:
+				self.model = LinearRegression()	
+			else:
+				self.model = model
+				
+			self.avg_value_dic = {}
+			self.fitted_model_dic = {}
+		def fit_column(self,x:pd.core.frame.DataFrame,y:pd.core.series.Series):
+			# get the name of the x column
+			col_name = list(x.columns)[0]
+			# copy the dataframe so that we can modify it without problem
+			full_df = x.copy()
+			# pass the target variable to the full dataframe
+			full_df['y'] = y
+			# get the average value of the target column, when the x column is null
+			avg_value = full_df[full_df[col_name].isnull()].y.mean()
+			# get the dataframe of non null values so that we can fit the model
+			non_null = full_df[full_df[col_name].notnull()]
+			# get the class model
+			tmp_model = self.model
+			# get x to train
+			x = non_null[[col_name]]
+			y = non_null[['y']]
+			# fit the model
+			tmp_model = tmp_model.fit(x,y)
+			# add the values to the class dictionaries
+			self.avg_value_dic[col_name] = avg_value
+			self.fitted_model_dic[col_name] = tmp_model
+		def fit(self,X,y):
+			if self.col_names == None:
+				self.col_names = list(X.columns)
+			for col_name in self.col_names:
+				x = X[[col_name]]
+				self.fit_column(x,y)
+		def transform_col(self,x:pd.core.frame.DataFrame):
+			col_name = list(x.columns)[0]
+			# we will separate x into nan and non nan, for nan values we will impute the average value
+			# and for non nan values we will predict using
+			avg_value = self.avg_value_dic[col_name]
+			model = self.fitted_model_dic[col_name]
+			def predict_value(age):
+				if pd.isna(age):
+					ans = avg_value
+				else:
+					ans = model.predict([[age]])[0][0]
+				return ans
+			ans_col = x[col_name].apply(lambda x: predict_value(x))
+			# now we will scale using standard scaler
+			scaler = StandardScaler()
+			ans_col = scaler.fit_transform(ans_col.to_numpy().reshape(-1, 1))
+			ans_col = pd.Series(ans_col.flatten())
+			return ans_col
+			
+		def transform(self, X:pd.core.frame.DataFrame):
+			for col_name in self.col_names:
+				x = X[[col_name]]
+				ans = self.transform_col(x)
+				X.loc[:, col_name] = ans
+			return X
+		
+		def fit_transform(self,X,y):
+			self.fit(X,y)
+			ans = self.transform(X)
+			return ans
+				
+			
+		def debug(self):
+			print(self.col_names)
+			print(self.model)
+			print(self.avg_value_dic)
+			print(self.fitted_model_dic)
+
+
+
+
+
 
 
 
@@ -215,7 +304,7 @@ class pipeline():
 		if added_cols:
 			ans += "\nadded columns: \n"
 			for col in added_cols:
-				ans += colored(col, "red") + " "
+				ans += colored(col, "green") + " "
 				tmpstr += col + " "
 				if len(tmpstr) >60:
 					tmpstr = ""

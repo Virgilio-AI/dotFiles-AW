@@ -71,6 +71,8 @@ if 'STARTED_X' not in ${...}:
 				recurseFolder(f)
 	# call the function
 	recurseFolder($HOME + "/.local/bin")
+	# append the root path
+	arr.append($HOME + "/.local/bin")
 	# set the new values for PATH
 	$PATH.__dict__['_l'] = arr
 

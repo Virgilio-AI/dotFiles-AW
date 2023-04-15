@@ -1,0 +1,77 @@
+#!/usr/bin/xonsh
+import argparse
+import argcomplete  # Tab completion support with xontrib-argcomplete
+from argcomplete.completers import ChoicesCompleter
+import os
+
+
+
+def main(args):
+	# get the name of the project
+
+	name = str(args.param)
+	print(name)
+	splitted = name.split('.')
+	print(splitted)
+	if splitted[-1] != 'ipynb':
+		name = name + '.sync.ipynb'
+	print(name)
+
+	# check if name + ".sync.ipynb" exists
+	filename = name
+
+	# check if main.ipynb exists
+	if not os.path.isfile("main.sync.ipynb"):
+		# copy the default ipynb file
+		ejsk
+
+	if not os.path.isfile(filename):
+		# rename the file
+		mv main.sync.ipynb @(filename)
+
+	# chek if simpleml.py exists
+	if not os.path.isfile("simpleml.py"):
+		# copy the personal files
+		cp ~/.local/bin/utilities/fileModifiers/file_helpers/simpleml.py .
+
+	# activate vox
+	xontrib load vox
+
+	# chcek if the folder envi exists
+	if not os.path.isdir("envi"):
+		# first we will create the environment
+		python -m venv envi
+		vox activate ./envi
+		pip install --upgrade pip
+		# now install the basic packages
+		pip install mapply tqdm category_encoders kaggle sklearn seaborn xgboost termcolor
+		pip install pandas numpy matplotlib seaborn sklearn statsmodels scipy tqdm mapply
+		pip install jupyterlab
+		pip install jupyterlab-spellchecker
+		# install jupyterlab extensions
+		jupyter labextension install @axlair/jupyterlab_vim
+		pip install jupyterlab-spellchecker
+		jupyter labextension install @ijmbarr/jupyterlab_spellchecker
+		# install debuger extension
+		pip install jupyterlab-debugger
+		jupyter labextension install @jupyterlab/debugger
+	else:
+		vox activate ./envi
+
+
+
+
+	# now open jupyter lab
+	jupyter lab @(filename)
+
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser()
+	parser.add_argument('param', help='A positional argument')
+	args = parser.parse_args()
+	main(args)
+
+
+
+
+
